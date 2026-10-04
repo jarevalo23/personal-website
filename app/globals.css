@@ -1,0 +1,742 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens ─────────────────────────
+   Palette, fonts and easing live here. Section accents are switched with
+   data-accent="soccer|basketball|swim|contact|github|linkedin" on any element;
+   use `text-accent`, `bg-accent/20`, `border-accent/40` etc. inside it. */
+@theme {
+  --color-ink-950: #04060d;
+  --color-ink-900: #070b18;
+  --color-ink-800: #0c1328;
+  --color-ink-700: #131c38;
+  --color-ink-600: #1d2a52;
+  --color-fog: #eef2ff; /* primary text */
+  --color-mist: #a9b4d6; /* secondary text (AA on ink) */
+  --color-brand: #6f8cff; /* global menu accent */
+  --color-pitch: #3dff8a;
+  --color-hoop: #ff8a1f;
+  --color-pool: #2ee6ff;
+  --color-press: #ffd23f;
+  --color-redcard: #ff4d5e;
+
+  --font-display: var(--font-bebas), "Impact", "Arial Narrow Bold", sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-snap: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --ease-wipe: cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+}
+
+:root {
+  --accent: var(--color-brand);
+  --accent-ink: #050a1f;
+  --hud-h: 3.5rem;
+  color-scheme: dark;
+}
+
+[data-accent="menu"] {
+  --accent: var(--color-brand);
+  --accent-ink: #050a1f;
+}
+[data-accent="soccer"] {
+  --accent: var(--color-pitch);
+  --accent-ink: #03170b;
+}
+[data-accent="basketball"] {
+  --accent: var(--color-hoop);
+  --accent-ink: #1f0d00;
+}
+[data-accent="swim"] {
+  --accent: var(--color-pool);
+  --accent-ink: #001a20;
+}
+[data-accent="contact"] {
+  --accent: var(--color-press);
+  --accent-ink: #1f1700;
+}
+[data-accent="github"] {
+  --accent: #eef2ff;
+  --accent-ink: #0c1328;
+}
+[data-accent="linkedin"] {
+  --accent: #5aa9ff;
+  --accent-ink: #001226;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+html {
+  background: var(--color-ink-950);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-ink-950);
+  color: var(--color-fog);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Component classes live in a layer so Tailwind utilities (hidden, py-4, …) can override them. */
+@layer components {
+  .font-display {
+    letter-spacing: 0.02em;
+    line-height: 0.9;
+  }
+
+  /* Outlined display text (intro splash, big numbers). */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--stroke, var(--color-fog));
+  }
+  .text-outline-accent {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--accent);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 18px color-mix(in oklab, var(--accent) 55%, transparent);
+  }
+
+  /* Glassy HUD-style panel. */
+  .panel {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-ink-700) 94%, transparent),
+      color-mix(in oklab, var(--color-ink-800) 97%, transparent)
+    );
+    border: 1px solid color-mix(in oklab, white 9%, transparent);
+    border-radius: 1rem;
+    box-shadow:
+      0 20px 60px -30px rgb(0 0 0 / 0.8),
+      inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+  }
+
+  .panel-accent {
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--accent) 10%, transparent),
+      0 24px 70px -35px color-mix(in oklab, var(--accent) 45%, transparent),
+      inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+  }
+
+  /* Keyboard key caps used in hints ("Esc", "Enter"). */
+  .keycap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6em;
+    height: 1.6em;
+    padding: 0 0.4em;
+    border-radius: 0.35em;
+    border: 1px solid color-mix(in oklab, white 22%, transparent);
+    border-bottom-width: 3px;
+    background: color-mix(in oklab, white 6%, transparent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--color-fog);
+  }
+
+  /* Big action button (game style). */
+  .btn-game {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.6rem;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    transition:
+      transform 160ms var(--ease-snap),
+      box-shadow 160ms var(--ease-snap),
+      filter 160ms;
+    box-shadow:
+      0 6px 0 color-mix(in oklab, var(--accent) 45%, black),
+      0 10px 30px -10px color-mix(in oklab, var(--accent) 70%, transparent);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .btn-game:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+  .btn-game:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 color-mix(in oklab, var(--accent) 45%, black);
+  }
+  .btn-game:disabled {
+    filter: grayscale(0.7) brightness(0.7);
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 0.6rem;
+    border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    color: var(--color-fog);
+    background: color-mix(in oklab, var(--accent) 8%, transparent);
+    font-weight: 600;
+    transition:
+      background 160ms,
+      border-color 160ms,
+      transform 160ms var(--ease-snap);
+  }
+  .btn-ghost:hover {
+    background: color-mix(in oklab, var(--accent) 18%, transparent);
+    border-color: var(--accent);
+  }
+
+  /* Animated underline for links. */
+  .link-underline {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 250ms var(--ease-snap);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  /* Visually hidden but available to screen readers. */
+  .sr-only-focusable:not(:focus):not(:focus-visible) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* ───────────────────────── Screen enter (after client navigation) ───────────────────────── */
+html.js-nav .screen-enter {
+  animation: screen-in 480ms var(--ease-snap) backwards;
+}
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translate3d(36px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tile-enter {
+  animation: tile-in 560ms var(--ease-snap) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+}
+html:not(.js-nav):not(.intro-played) .tile-enter {
+  animation: none;
+}
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Intro splash is skipped (before paint) when already seen this session. */
+html[data-intro-skip] .intro-splash,
+html[data-intro-done] .intro-splash {
+  display: none;
+}
+/* No-JS safety net: the splash hides itself even if scripts never run. */
+.intro-splash {
+  animation: intro-auto-hide 300ms ease-out 3.4s forwards;
+}
+@keyframes intro-auto-hide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+.intro-progress {
+  transform-origin: left;
+  animation: intro-load 1.5s linear both;
+}
+@keyframes intro-load {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.intro-slide {
+  animation: intro-slide 650ms var(--ease-snap) both;
+  animation-delay: var(--delay, 0ms);
+}
+@keyframes intro-slide {
+  from {
+    opacity: 0;
+    transform: translate3d(-60px, 0, 0) skewX(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ───────────────────────── Menu grid ───────────────────────── */
+.menu-grid {
+  display: grid;
+  gap: 0.875rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "about about" "projects projects" "fun fun" "contact contact" "github linkedin";
+}
+@media (min-width: 640px) {
+  .menu-grid {
+    gap: 1rem;
+    grid-template-areas: "about projects" "fun contact" "github linkedin";
+  }
+}
+@media (min-width: 1024px) {
+  .menu-grid {
+    grid-template-columns: 1.3fr 1fr 1fr 0.62fr 0.62fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "about projects fun contact contact"
+      "about projects fun github linkedin";
+  }
+}
+
+/* ───────────────────────── Menu tiles ───────────────────────── */
+.menu-tile {
+  --tile-glow: color-mix(in oklab, var(--accent) 55%, transparent);
+  transition:
+    transform 260ms var(--ease-snap),
+    box-shadow 260ms var(--ease-snap),
+    border-color 200ms;
+  transform: translateZ(0);
+}
+.menu-tile[data-selected="true"] {
+  transform: scale(1.035);
+  z-index: 2;
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 0 40px -6px var(--tile-glow),
+    0 30px 80px -30px var(--tile-glow);
+}
+.menu-tile .tile-underline {
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform 380ms var(--ease-snap);
+}
+.menu-tile[data-selected="true"] .tile-underline {
+  transform: scaleX(1);
+}
+.menu-tile .tile-art {
+  transition:
+    transform 500ms var(--ease-snap),
+    opacity 300ms;
+  opacity: 0.85;
+}
+.menu-tile[data-selected="true"] .tile-art {
+  transform: scale(1.08) rotate(-3deg);
+  opacity: 1;
+}
+.menu-tile .tile-shine {
+  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.16) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.menu-tile[data-selected="true"] .tile-shine {
+  animation: shine 900ms var(--ease-snap) 1;
+}
+@keyframes shine {
+  to {
+    transform: translateX(120%);
+  }
+}
+.menu-tile .tile-cta {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 200ms,
+    transform 250ms var(--ease-snap);
+}
+.menu-tile[data-selected="true"] .tile-cta {
+  opacity: 1;
+  transform: none;
+}
+
+/* ───────────────────────── Stadium background (menu) ───────────────────────── */
+.stadium-floor {
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  bottom: -10%;
+  height: 75%;
+  transform: perspective(700px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to top, black 30%, transparent 95%);
+}
+.stadium-floor-inner {
+  position: absolute;
+  inset: -100% 0 0 0;
+  background:
+    repeating-linear-gradient(90deg, rgb(61 255 138 / 0.05) 0 80px, rgb(61 255 138 / 0.09) 80px 160px),
+    linear-gradient(rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.1)) 50% 0 / 2px 100% no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 238px, rgb(255 255 255 / 0.1) 238px 240px);
+  animation: pan-field 22s linear infinite;
+  will-change: transform;
+}
+@keyframes pan-field {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 50%, 0);
+  }
+}
+.floodlight {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(190 210 255 / 0.2), transparent 60%);
+  animation: flicker 7s ease-in-out infinite;
+  will-change: opacity;
+}
+@keyframes flicker {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  45% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  55% {
+    opacity: 0.95;
+  }
+}
+.particle {
+  position: absolute;
+  bottom: -10px;
+  width: var(--s, 3px);
+  height: var(--s, 3px);
+  border-radius: 9999px;
+  background: rgb(220 230 255 / 0.7);
+  box-shadow: 0 0 8px rgb(180 200 255 / 0.8);
+  animation: float-up var(--d, 14s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+@keyframes float-up {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--o, 0.6);
+  }
+  90% {
+    opacity: var(--o, 0.6);
+  }
+  100% {
+    transform: translate3d(var(--dx, 20px), -105vh, 0);
+    opacity: 0;
+  }
+}
+
+/* ───────────────────────── Section backgrounds ───────────────────────── */
+.scene-pitch {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgb(61 255 138 / 0.18), transparent 55%),
+    repeating-linear-gradient(90deg, rgb(61 255 138 / 0.035) 0 90px, rgb(61 255 138 / 0.065) 90px 180px), var(--color-ink-950);
+}
+.scene-court {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgb(255 138 31 / 0.2), transparent 55%),
+    repeating-linear-gradient(
+      90deg,
+      rgb(255 160 80 / 0.035) 0 46px,
+      rgb(255 160 80 / 0.06) 46px 48px,
+      rgb(255 160 80 / 0.025) 48px 94px,
+      rgb(255 160 80 / 0.05) 94px 96px
+    ),
+    var(--color-ink-950);
+}
+.scene-pool {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgb(46 230 255 / 0.22), transparent 55%),
+    linear-gradient(180deg, #031a2e 0%, #04121f 45%, var(--color-ink-950) 100%);
+}
+.scene-press {
+  background: radial-gradient(ellipse at 50% -10%, rgb(255 210 63 / 0.16), transparent 55%), var(--color-ink-950);
+}
+
+/* Water caustics: two tiled light networks drifting in opposite directions. */
+.caustics {
+  position: absolute;
+  inset: -20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%2378f0ff' stroke-width='2.2' stroke-opacity='.55' stroke-linecap='round'%3E%3Cpath d='M0 40c30-18 52 14 80-2s40-30 70-10 52 6 90-12'/%3E%3Cpath d='M0 120c22 10 44-24 76-8s34 32 66 18 52-30 98-6'/%3E%3Cpath d='M0 200c28-14 56 18 86 2s46-26 74-6 46 8 80-10'/%3E%3Cpath d='M40 0c-12 26 16 44 4 72s-20 44 6 74 12 52-6 94'/%3E%3Cpath d='M150 0c14 22-12 48 4 74s28 40 8 70-10 56 10 96'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  animation: drift-a 26s linear infinite;
+  will-change: transform;
+}
+.caustics.b {
+  background-size: 330px 330px;
+  opacity: 0.14;
+  animation: drift-b 34s linear infinite;
+}
+@keyframes drift-a {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0.001deg);
+  }
+  to {
+    transform: translate3d(240px, 120px, 0) rotate(0.001deg);
+  }
+}
+@keyframes drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(-330px, -165px, 0) scale(1.05);
+  }
+}
+
+/* Press-room "step and repeat" sponsor wall. */
+.step-repeat {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='340' height='120' viewBox='0 0 340 120'%3E%3Cg font-family='Impact,Arial Narrow,sans-serif' font-size='22' fill='%23ffd23f' fill-opacity='.05' letter-spacing='2'%3E%3Ctext x='10' y='40'%3EPRESS ROOM%3C/text%3E%3Ctext x='180' y='100'%3EPOST-MATCH%3C/text%3E%3C/g%3E%3C/svg%3E");
+  mask-image: linear-gradient(to bottom, black 20%, transparent 90%);
+}
+
+/* ───────────────────────── Game bits ───────────────────────── */
+.bar-fill {
+  transform-origin: left;
+  animation: bar-grow 900ms var(--ease-snap) backwards;
+  animation-delay: calc(var(--i, 0) * 70ms + 250ms);
+}
+@keyframes bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.keeper-sway {
+  animation: keeper-sway 1.3s ease-in-out infinite;
+}
+@keyframes keeper-sway {
+  0%,
+  100% {
+    transform: translateX(-7px);
+  }
+  50% {
+    transform: translateX(7px);
+  }
+}
+
+.score-pop {
+  animation: score-pop 700ms var(--ease-snap) both;
+}
+@keyframes score-pop {
+  0% {
+    transform: scale(0.4) rotate(-6deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(1.15) rotate(2deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.bump {
+  animation: bump 380ms var(--ease-snap);
+}
+@keyframes bump {
+  40% {
+    transform: scale(1.3);
+  }
+}
+
+.ripple-ring {
+  animation: ripple 1.6s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes ripple {
+  from {
+    transform: scale(0.4);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 1.1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.wave-bob {
+  animation: wave-bob 2.4s ease-in-out infinite;
+}
+@keyframes wave-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+/* Pulsing ring around court hotspots. */
+.pulse-ring {
+  animation: pulse-ring 2s ease-out infinite;
+}
+@keyframes pulse-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.9);
+    opacity: 0;
+  }
+}
+
+/* Project drawer (native <dialog>). */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+.project-dialog[open] .dialog-content {
+  animation: drawer-in 380ms var(--ease-snap) backwards;
+}
+.project-dialog[open]::backdrop {
+  animation: fade-in 250ms ease-out;
+}
+@keyframes drawer-in {
+  from {
+    transform: translate3d(48px, 0, 0);
+    opacity: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.shooter-crouch {
+  transform: translateY(6px);
+  transition: transform 200ms var(--ease-snap);
+}
+
+/* Swimmer arm strokes in the race. */
+.swim-stroke path {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: swim-arm 0.45s ease-in-out infinite alternate;
+}
+.swim-stroke .swim-stroke-b {
+  animation-delay: -0.45s;
+}
+@keyframes swim-arm {
+  from {
+    transform: scaleX(0.35);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Flash bulbs on the contact success screen. */
+.flashbulb {
+  animation: flashbulb 1.6s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+@keyframes flashbulb {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  8% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  30% {
+    opacity: 0;
+  }
+}
+
+/* ───────────────────────── Reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .particle,
+  .caustics,
+  .stadium-floor-inner,
+  .floodlight,
+  .ripple-ring,
+  .keeper-sway,
+  .pulse-ring {
+    animation: none !important;
+  }
+  .particle {
+    display: none;
+  }
+  .menu-tile[data-selected="true"] {
+    transform: none;
+  }
+}

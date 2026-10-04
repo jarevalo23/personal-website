@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3dff8a" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#3dff8a" stop-opacity=".08"/>
+    </linearGradient>
+  </defs>
+  <!-- Placeholder silhouette: replace with your photo (see data/profile.ts) -->
+  <circle cx="200" cy="140" r="74" fill="url(#g)"/>
+  <path d="M60 400c0-92 62-160 140-160s140 68 140 160z" fill="url(#g)"/>
+  <path d="M168 236l32 44 32-44" fill="none" stroke="#3dff8a" stroke-opacity=".6" stroke-width="6" stroke-linejoin="round"/>
+  <text x="200" y="345" text-anchor="middle" font-family="Impact, Arial Narrow, sans-serif" font-size="30" letter-spacing="3" fill="#eef2ff" fill-opacity=".55">YOUR PHOTO</text>
+</svg>

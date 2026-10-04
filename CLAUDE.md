@@ -4,23 +4,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-A single-page static personal portfolio site deployed on Cloudflare Pages. Plain HTML, CSS, and vanilla JS — **no frameworks, no build step, no npm**. Deploying means uploading the files as-is; keep it that way (the only external dependency allowed is Google Fonts).
+A personal portfolio styled as a sports video-game main menu (FIFA / NBA 2K feel). Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion, deployed on Vercel. Every page is statically prerendered. The only server code is `app/api/contact/route.ts`. Keep dependencies lean: no physics, confetti or audio libraries (all of that is hand-rolled in `lib/`), and no extra UI kits.
 
-## Development
-
-No build or test commands. Preview locally with any static server, e.g.:
+## Commands
 
 ```
-python3 -m http.server 8000
+npm run dev        # http://localhost:3000
+npm run build      # production build
+npm run lint       # ESLint (eslint-config-next incl. react-hooks v7 compiler rules)
+npm run typecheck  # tsc --noEmit
 ```
 
-Deployment is Cloudflare Pages with no build command and output directory `/` (Git integration or Direct Upload).
+No test suite. Verify interactive changes in a browser (Playwright is available globally in cloud sessions).
 
 ## Structure
 
-- `index.html` — the entire page: sticky nav, hero, About, Projects, Resume, footer. Project cards are `<article class="project-card">` blocks meant to be duplicated by hand to add projects.
-- `styles.css` — all styling. Design tokens (colors, fonts, radii, nav height) live in `:root` CSS variables at the top; change the palette there, not inline. Warm light theme: cream background, terracotta accent, Fraunces serif headings + Inter body.
-- `script.js` — hamburger menu toggle, nav scroll shadow, IntersectionObserver-driven `.fade-in` animations, footer year.
-- `assets/` — user-supplied files referenced by the page: `profile.jpg` (hero photo) and `resume.pdf`.
+- `data/`: **all editable content** (profile, menu/site copy, projects, fun items). Components read from here; never hard-code personal content in components. Bracketed markers like `[EMAIL]`, `[LINKEDIN_URL]` and `[DOMAIN_TO_BE_PROVIDED]`, plus "Placeholder" text, are intentional and filled in by the site owner.
+- `app/`: one route folder per screen (`about`, `projects`, `fun`, `contact`), plus metadata files (`opengraph-image.tsx`, `icon.svg`, `apple-icon.tsx`, `manifest.ts`, `robots.ts`, `sitemap.ts`). `template.tsx` wraps every screen for the enter animation.
+- `components/providers/`: `SoundProvider` (Web Audio synth, off by default, `useSyncExternalStore` over localStorage), `TransitionProvider` (stripe-wipe screen transitions, `navigate()`), `GamepadBridge` (maps the Gamepad API onto synthetic key events).
+- `components/GameLink.tsx`: use instead of `next/link` for internal navigation so the wipe plays.
+- `components/Hud.tsx`: sticky top bar on every screen (Back button and Esc→menu handler, sound toggle).
+- `components/ScreenShell.tsx`: frame for sub-screens (accent, themed backdrop, title, focus on arrival).
+- `lib/`: `sound.ts`, `confetti.ts`, `spatial.ts` (arrow-key spatial nav), `contact.ts` (shared validation), `usePersistentNumber.ts`, `site.ts` (site URL resolution).
 
-Placeholder values (`YOUR_USERNAME` in GitHub/LinkedIn URLs, "Your Name", bio text) are intentional and filled in by the site owner.
+## Conventions
+
+- Design tokens are in `app/globals.css` (`@theme`). Section accents switch with `data-accent="soccer|basketball|swim|contact|github|linkedin"`; inside, use `text-accent`, `bg-accent/20`, etc. Reusable component classes (`panel`, `btn-game`, `keycap`, …) live in `@layer components` so utilities can override them. Don't name custom classes after theme colors (e.g. `bg-pool`), because they collide with Tailwind utilities.
+- First paint must not depend on JS. Use CSS animations for entrances; avoid Framer Motion `initial` hidden states on server-rendered content. Use `m.*` components (LazyMotion `strict`), never `motion.*`.
+- Respect `prefers-reduced-motion`: CSS handles ambient animation; games check `useReducedMotion()` and resolve instantly.
+- Mini-games must never gate content. Anything they reveal must also be reachable without playing.
+- Values rendered from `Math.sin`/random math into SVG must be rounded (`toFixed`) to avoid hydration mismatches.
+- `react-hooks` lint rules forbid `setState` synchronously inside effects and impure calls (`performance.now`, `Math.random`) during render. Keep those in handlers and timers.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

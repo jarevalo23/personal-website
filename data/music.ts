@@ -1,33 +1,21 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
- *  NOW PLAYING — the in-game "radio" in the bottom bar.
+ *  NOW PLAYING — the in-game "radio" in the bottom bar, powered by Spotify.
  *
- *  [SOUNDCLOUD_URL] Paste SoundCloud links below: single tracks
- *  (https://soundcloud.com/artist/track) or a playlist
- *  (https://soundcloud.com/artist/sets/playlist). Only use tracks whose
- *  uploader allows embedding; the official SoundCloud player stays visible
- *  so the artist is credited and linked.
+ *  [SPOTIFY_URL] Paste a public Spotify playlist, album or track link
+ *  (Share → Copy link). Tracking parameters after "?" are ignored.
+ *  Visitors logged into Spotify hear full songs; everyone else gets
+ *  30-second previews. Editing the playlist in Spotify updates the site.
  *
- *  Nothing loads from SoundCloud until a visitor presses play.
- *  With an empty list the bar is hidden on the live site.
+ *  Nothing loads from Spotify until a visitor presses play.
+ *  Leave `spotifyUrl` empty to hide the bar.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-export type Track = {
-  url: string;
-  /** Optional label shown before the player loads, e.g. "Artist — Song". */
-  label?: string;
-};
-
 export const music = {
-  tracks: [
-    {
-      url: "https://soundcloud.com/user-507758071-745656517/sets/best-fifa-songs-14-23-fifa-23",
-      label: "Best FIFA Songs 14–23",
-    },
-  ] as Track[],
-  /** 0–100 */
-  volume: 50,
+  spotifyUrl: "https://open.spotify.com/playlist/1y9yDEFTKBimrRdmIOjJlz",
+  /** Shown on the bar before the player loads. */
+  label: "My playlist",
   /** Name shown on the bar, like an in-game radio station. */
   station: "Arevalo FM",
 };

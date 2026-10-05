@@ -25,7 +25,7 @@ No test suite. Verify interactive changes in a browser (Playwright is available 
 - `components/GameLink.tsx`: use instead of `next/link` for internal navigation so the wipe plays.
 - `components/Hud.tsx`: sticky top chrome on every screen: status strip, sound toggle, FIFA-style tab bar; handles Esc→menu and Q/E tab switching.
 - `components/PromptBar.tsx`: fixed bottom controller prompts ("Select", clickable "Back"), the Now Playing bar and the wordmark.
-- `components/NowPlaying.tsx` + `lib/soundcloud.ts`: SoundCloud radio driven by `data/music.ts`. Uses the official embed + Widget API, lazy-loaded on first play, player kept visible for attribution. Never self-host or download songs.
+- `components/NowPlaying.tsx` + `lib/spotify.ts`: Spotify radio driven by `data/music.ts` (one public playlist/album/track URL). Uses Spotify's official Embed iFrame API, lazy-loaded on first play; the Spotify player floats above the bar while open. Logged-in Spotify users get full songs, others 30s previews. Never self-host or download songs.
 - `components/GameBackground.tsx`: fixed purple arena backdrop with brush-stroke art (`art={false}` on sub-screens).
 - `components/ScreenShell.tsx`: frame for sub-screens (accent, themed backdrop, title, focus on arrival).
 - `lib/`: `sound.ts`, `confetti.ts`, `spatial.ts` (arrow-key spatial nav), `contact.ts` (shared validation), `usePersistentNumber.ts`, `site.ts` (site URL resolution).

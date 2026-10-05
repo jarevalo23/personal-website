@@ -45,7 +45,7 @@ All personal content lives in **`/data`**:
 | `data/site.ts` | **Domain**, SEO title/description, the text on every main-menu tile and screen header |
 | `data/projects.ts` | Projects: title, description, tech stack, links, screenshots, and position on the court |
 | `data/fun.ts` | Pool-lane items: hobbies, playlists, favorite teams, random facts… |
-| `data/music.ts` | The "Now Playing" radio: SoundCloud track or playlist links, station name, volume |
+| `data/music.ts` | The "Now Playing" radio: your Spotify playlist link, label and station name |
 
 ### Placeholders to fill in
 
@@ -60,7 +60,7 @@ grep -rn "\[EMAIL\]\|\[LINKEDIN_URL\]\|\[DOMAIN_TO_BE_PROVIDED\]\|\[PHOTO\]\|\[B
 - **`[PHOTO]`**: drop your photo into `public/images/` (for example `profile.jpg`) and set `profile.photo = "/images/profile.jpg"`. A roughly square cut-out PNG looks most like a real FUT card.
 - **`[NATION]`**: `profile.card.nation`, with a flag image in `public/images/`
 - **`[BIO]`**: `profile.scouting` (headline, summary paragraphs, strengths, attributes, verdict)
-- **`[SOUNDCLOUD_URL]`**: paste SoundCloud track or playlist links into `data/music.ts`. Only use tracks whose uploader allows embedding. The bar stays hidden on the live site until at least one link is added.
+- **`[SPOTIFY_URL]`**: the Spotify playlist in `data/music.ts`. It must be public (Spotify → ⋯ → Share → Copy link). Edit the playlist in Spotify and the site picks up the changes. Leave the URL empty to hide the bar.
 - **`[DOMAIN_TO_BE_PROVIDED]`**: `site.domain` in `data/site.ts`. See [Custom domain](#custom-domain).
 - **Projects**: the three seed projects in `data/projects.ts` are placeholders, as are their screenshots in `public/images/projects/`.
 - **Fun items**: every lane in `data/fun.ts` is a placeholder.
@@ -76,7 +76,7 @@ Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its 
 - **Main menu:** move with the mouse, arrow keys, or a **game controller** (D-pad or left stick moves, A selects, B goes back). Enter selects. On a phone the tiles stack in a two-column grid, and you tap one to play.
 - **Tabs:** the tab bar is on every screen. **Q / E** (or LB / RB on a controller) switch to the previous / next tab. On the Practice Arena tile, **R** cycles the mini-game.
 - **Back:** every screen has a **Back** prompt in the bottom bar, and **Esc** returns to the menu. Esc inside a form field first leaves the field, so a half-written message is never lost.
-- **Music:** the bottom bar has a "Now Playing" radio using the official SoundCloud player. It never autoplays, and nothing loads from SoundCloud until a visitor presses play. **M** toggles play/pause, and music keeps playing across screens.
+- **Music:** the bottom bar has a "Now Playing" radio using Spotify's official player. It never autoplays, and nothing loads from Spotify until a visitor presses play. Visitors logged into Spotify hear full songs; everyone else hears 30-second previews. **M** toggles play/pause, music keeps playing across screens, and songs are skipped with the Spotify player's own controls.
 - **Sound:** synthesized with the Web Audio API, so there are no audio files. It is **off by default**. The Sound toggle in the top bar turns it on, and the choice is remembered.
 - **Intro splash:** the "player loading" card plays once per browser session on the home page. Click, tap, or press any key to skip.
 - **Mini-games are optional.** Everything they reveal is also reachable without playing. For example, "Skip the shootout — show all fun facts" lists every fact.

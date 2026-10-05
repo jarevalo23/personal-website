@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CloseIcon } from "@/components/icons";
 import { music } from "@/data/music";
-import { isPlaylist, loadSoundCloud, widgetSrc, type SCWidget } from "@/lib/soundcloud";
+import { loadSpotify, toSpotifyUri, type SpotifyController } from "@/lib/spotify";
 
 type Status = "idle" | "loading" | "playing" | "paused" | "error";
 
@@ -12,7 +13,7 @@ function Equalizer({ active }: { active: boolean }) {
       {[0, 1, 2, 3].map((i) => (
         <span
           key={i}
-          className={`w-[3px] bg-[#ff5bd6] ${active ? "eq-bar" : ""}`}
+          className={`w-[3px] bg-[#1ed760] ${active ? "eq-bar" : ""}`}
           style={{ height: active ? undefined : "30%", animationDelay: `${i * -0.22}s` }}
         />
       ))}
@@ -28,51 +29,35 @@ function PlayPauseIcon({ playing }: { playing: boolean }) {
   );
 }
 
+const uri = toSpotifyUri(music.spotifyUrl);
+
 /**
- * In-game "radio": a FIFA-style Now Playing bar backed by the official
- * SoundCloud player. The SoundCloud iframe only loads after the first click,
- * and stays visible so the artist is credited. M toggles play/pause.
+ * In-game "radio": a FIFA-style Now Playing bar backed by Spotify's official
+ * embed. The Spotify player only loads after the first click and floats above
+ * the bar while open (use its own controls to skip songs). M toggles play/pause.
  */
 export function NowPlaying() {
-  const tracks = music.tracks;
   const [status, setStatus] = useState<Status>("idle");
-  const [index, setIndex] = useState(0);
-  const [mounted, setMounted] = useState(false);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-  const widgetRef = useRef<SCWidget | null>(null);
-  const indexRef = useRef(0);
-
-  const goTo = (i: number) => {
-    const w = widgetRef.current;
-    if (!w || tracks.length === 0) return;
-    const next = (i + tracks.length) % tracks.length;
-    indexRef.current = next;
-    setIndex(next);
-    w.load(tracks[next].url, { auto_play: true, visual: false, show_teaser: false });
-  };
+  const [open, setOpen] = useState(false);
+  const hostRef = useRef<HTMLDivElement>(null);
+  const controllerRef = useRef<SpotifyController | null>(null);
 
   const start = async () => {
-    setMounted(true);
+    if (!uri) return;
+    setOpen(true);
     setStatus("loading");
     try {
-      const SC = await loadSoundCloud();
-      // Wait a frame so the iframe exists in the DOM.
+      const api = await loadSpotify();
       await new Promise((r) => requestAnimationFrame(r));
-      const iframe = iframeRef.current;
-      if (!iframe) return;
-      const w = SC.Widget(iframe);
-      widgetRef.current = w;
-      const E = SC.Widget.Events;
-      w.bind(E.READY, () => {
-        w.setVolume(music.volume);
-        w.play();
-      });
-      w.bind(E.PLAY, () => setStatus("playing"));
-      w.bind(E.PAUSE, () => setStatus("paused"));
-      w.bind(E.ERROR, () => setStatus("error"));
-      w.bind(E.FINISH, () => {
-        // Playlists advance on their own; a list of single tracks loops through.
-        if (!isPlaylist(tracks[indexRef.current].url)) goTo(indexRef.current + 1);
+      const container = hostRef.current;
+      if (!container) return;
+      // Spotify replaces the element it's given, so hand it a node React doesn't own.
+      const el = document.createElement("div");
+      container.replaceChildren(el);
+      api.createController(el, { uri, width: "100%", height: 80 }, (controller) => {
+        controllerRef.current = controller;
+        controller.addListener("ready", () => controller.play());
+        controller.addListener("playback_update", (e) => setStatus(e.data.isPaused ? "paused" : "playing"));
       });
     } catch {
       setStatus("error");
@@ -80,19 +65,16 @@ export function NowPlaying() {
   };
 
   const toggle = () => {
-    if (!widgetRef.current) {
-      void start();
-      return;
-    }
-    widgetRef.current.toggle();
+    if (controllerRef.current) controllerRef.current.togglePlay();
+    else void start();
   };
 
-  const skip = () => {
-    const w = widgetRef.current;
-    if (!w) return;
-    if (tracks.length > 1) goTo(indexRef.current + 1);
-    else if (isPlaylist(tracks[0].url)) w.next();
-    else w.seekTo(0);
+  const close = () => {
+    controllerRef.current?.destroy();
+    controllerRef.current = null;
+    hostRef.current?.replaceChildren();
+    setOpen(false);
+    setStatus("idle");
   };
 
   // "M" toggles the music from anywhere (except while typing).
@@ -111,71 +93,56 @@ export function NowPlaying() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  if (tracks.length === 0) {
-    // Only nudge the site owner during development; hidden on the live site.
-    if (process.env.NODE_ENV !== "development") return null;
-    return (
-      <div className="pointer-events-auto flex items-center gap-2 border border-dashed border-white/30 bg-ink-900/90 px-3 py-1.5 text-xs text-fog/80">
-        <Equalizer active={false} />
-        Now Playing: add SoundCloud links in <code className="font-semibold">data/music.ts</code>
-      </div>
-    );
-  }
+  if (!uri) return null;
 
   const playing = status === "playing";
-  const label = tracks[index].label;
 
   return (
-    <div
-      className="pointer-events-auto flex max-w-full items-center gap-2 border border-white/20 bg-ink-900/95 py-1 pl-3 pr-1 shadow-[0_10px_30px_rgba(0,0,0,0.35)]"
-      role="region"
-      aria-label="Music player"
-    >
-      <Equalizer active={playing} />
-      <div className={`min-w-0 leading-tight ${mounted ? "hidden sm:block" : ""}`}>
-        <p className="font-display text-xs tracking-wide text-[#ff5bd6]">
-          {music.station} · {playing ? "Now playing" : "Radio"}
-        </p>
-        {!mounted && <p className="truncate text-xs font-semibold text-fog/90">{label ?? "Press play for music"}</p>}
-        {status === "error" && <p className="text-xs text-redcard">Couldn&apos;t load SoundCloud</p>}
-      </div>
-      {mounted && (
-        // Official SoundCloud mini player: credits and links the artist.
-        <iframe
-          ref={iframeRef}
-          title="SoundCloud player"
-          src={widgetSrc(tracks[0].url)}
-          allow="autoplay"
-          loading="lazy"
-          className="h-5 w-36 shrink-0 border-0 sm:w-64"
-        />
-      )}
-      <button
-        type="button"
-        onClick={toggle}
-        className="flex h-8 w-8 shrink-0 items-center justify-center bg-white/10 text-fog hover:bg-white/20"
-        aria-label={playing ? "Pause music" : "Play music"}
-        title="Play / pause (M)"
+    <div className="pointer-events-auto relative" role="region" aria-label="Music player">
+      {/* Official Spotify player, floating above the bar while open. */}
+      <div
+        className={`absolute bottom-full left-1/2 mb-2 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 overflow-hidden border border-white/20 bg-ink-900 shadow-[0_14px_40px_rgba(0,0,0,0.45)] ${
+          open ? "" : "hidden"
+        }`}
       >
-        {status === "loading" ? (
-          <span className="h-3 w-3 animate-spin rounded-full border-2 border-fog border-t-transparent" />
-        ) : (
-          <PlayPauseIcon playing={playing} />
-        )}
-      </button>
-      {mounted && (
+        <div ref={hostRef} className="h-20 w-full" />
+      </div>
+
+      <div className="flex items-center gap-2 border border-white/20 bg-ink-900/95 py-1 pl-3 pr-1 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+        <Equalizer active={playing} />
+        <div className="min-w-0 leading-tight">
+          <p className="font-display text-xs tracking-wide text-[#1ed760]">
+            {music.station} · {playing ? "Now playing" : "Radio"}
+          </p>
+          <p className="max-w-[11rem] truncate text-xs font-semibold text-fog/90 sm:max-w-[16rem]">
+            {status === "error" ? "Couldn't load Spotify" : music.label}
+          </p>
+        </div>
         <button
           type="button"
-          onClick={skip}
+          onClick={toggle}
           className="flex h-8 w-8 shrink-0 items-center justify-center bg-white/10 text-fog hover:bg-white/20"
-          aria-label="Next track"
-          title="Next track"
+          aria-label={playing ? "Pause music" : "Play music"}
+          title="Play / pause (M)"
         >
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-            <path d="M5 5v14l9-7zM15 5h3v14h-3z" />
-          </svg>
+          {status === "loading" ? (
+            <span className="h-3 w-3 animate-spin rounded-full border-2 border-fog border-t-transparent" />
+          ) : (
+            <PlayPauseIcon playing={playing} />
+          )}
         </button>
-      )}
+        {open && (
+          <button
+            type="button"
+            onClick={close}
+            className="flex h-8 w-8 shrink-0 items-center justify-center bg-white/10 text-fog hover:bg-white/20"
+            aria-label="Close music player"
+            title="Close player"
+          >
+            <CloseIcon className="h-4 w-4" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

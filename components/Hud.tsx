@@ -3,37 +3,53 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { fullName, profile } from "@/data/profile";
-import { sections } from "@/data/site";
+import { sections, type AccentKey } from "@/data/site";
 import { GameLink } from "./GameLink";
-import { ArrowLeftIcon, Crest, SpeakerIcon } from "./icons";
+import { Crest, SpeakerIcon } from "./icons";
 import { useSound } from "./providers/SoundProvider";
 import { useScreenTransition } from "./providers/TransitionProvider";
 
 const initials = `${profile.firstName[0]}${profile.lastName[0]}`;
+const gamertag = profile.links.github.split("/").filter(Boolean).pop() ?? profile.lastName;
+
+const TABS: { href: string; label: string; accent: AccentKey }[] = [
+  { href: "/", label: "Home", accent: "menu" },
+  ...Object.values(sections).map((s) => ({ href: s.href, label: s.title, accent: s.accent })),
+];
 
 function isEditable(el: EventTarget | null): el is HTMLElement {
   return el instanceof HTMLElement && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
 }
 
-/** Esc anywhere on a sub-screen goes back to the main menu. */
-function useEscapeToMenu(enabled: boolean) {
+/** Esc → main menu (from sub-screens); Q / E (or LB / RB) → previous / next tab. */
+function useHudKeys(pathname: string) {
   const { navigate } = useScreenTransition();
   useEffect(() => {
-    if (!enabled) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape" || e.defaultPrevented) return;
-      // Let open dialogs close themselves first.
-      if (document.querySelector("dialog[open]")) return;
-      // First Esc inside a form field just leaves the field (so a draft message is never lost by accident).
-      if (isEditable(e.target)) {
-        e.target.blur();
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (document.querySelector("dialog[open]")) return; // let dialogs handle their own keys
+
+      if (e.key === "Escape") {
+        if (isEditable(e.target)) {
+          // First Esc in a form field just leaves the field, so a draft is never lost by accident.
+          e.target.blur();
+          return;
+        }
+        if (pathname !== "/") navigate("/", { label: "Main Menu", accent: "menu" });
         return;
       }
-      navigate("/", { label: "Main Menu", accent: "menu" });
+
+      const key = e.key.toLowerCase();
+      if ((key === "q" || key === "e") && !isEditable(e.target)) {
+        const i = TABS.findIndex((t) => t.href === pathname);
+        if (i < 0) return;
+        const next = TABS[(i + (key === "e" ? 1 : -1) + TABS.length) % TABS.length];
+        navigate(next.href, { label: next.label, accent: next.accent, sound: "move" });
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [enabled, navigate]);
+  }, [pathname, navigate]);
 }
 
 function SoundToggle() {
@@ -44,9 +60,9 @@ function SoundToggle() {
       onClick={toggle}
       aria-pressed={enabled}
       title="Toggle sound effects"
-      className="flex h-10 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-semibold uppercase tracking-wider text-fog transition-colors hover:border-accent/60 hover:bg-accent/10"
+      className="flex h-7 items-center gap-1.5 px-2 text-xs font-semibold uppercase tracking-wider text-fog/90 transition-colors hover:text-fog"
     >
-      <SpeakerIcon muted={!enabled} className="h-5 w-5" />
+      <SpeakerIcon muted={!enabled} className="h-4 w-4" />
       <span>Sound</span>
       <span aria-hidden="true" className={enabled ? "text-accent" : "text-mist"}>
         {enabled ? "On" : "Off"}
@@ -55,56 +71,71 @@ function SoundToggle() {
   );
 }
 
-/** Sticky top bar shared by every screen: crest/back button + sound toggle. */
+/** Top chrome shared by every screen: status strip + FIFA-style tab bar. */
 export function Hud() {
   const pathname = usePathname();
-  const isMenu = pathname === "/";
-  const section = Object.values(sections).find((s) => s.href === pathname);
-  useEscapeToMenu(!isMenu);
+  useHudKeys(pathname);
 
   return (
     <header
-      className="sticky top-0 z-40 h-(--hud-h) border-b border-white/[0.06] bg-ink-950/75 backdrop-blur-md"
-      data-accent={section?.accent ?? "menu"}
+      className="sticky top-0 z-40 h-(--hud-h) bg-gradient-to-b from-ink-950/90 via-ink-950/60 to-transparent backdrop-blur-[2px]"
+      data-accent="menu"
     >
-      <div className="mx-auto flex h-full max-w-7xl items-center gap-3 px-4 sm:px-6">
-        {isMenu ? (
-          <div className="flex min-w-0 items-center gap-2.5">
-            <Crest initials={initials} className="h-9 w-8 shrink-0" />
-            <div className="min-w-0 leading-tight">
-              <p className="font-display truncate text-xl tracking-wider">{fullName}</p>
-              <p className="hidden truncate text-[11px] uppercase tracking-[0.18em] text-mist sm:block">{profile.tagline}</p>
-            </div>
-          </div>
-        ) : (
-          <>
-            <GameLink
-              href="/"
-              transitionLabel="Main Menu"
-              transitionAccent="menu"
-              className="group flex h-10 items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 pl-2 pr-3 font-display text-xl tracking-wider text-fog transition-colors hover:bg-accent/20"
-            >
-              <ArrowLeftIcon className="h-5 w-5 text-accent transition-transform group-hover:-translate-x-0.5" />
-              Back<span className="sr-only"> to main menu</span>
-              <span className="keycap ml-1 hidden font-sans sm:inline-flex" aria-hidden="true">
-                Esc
-              </span>
-            </GameLink>
-            <nav aria-label="Breadcrumb" className="hidden min-w-0 md:block">
-              <ol className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-mist">
-                <li>Main Menu</li>
-                <li aria-hidden="true">/</li>
-                <li className="truncate text-accent" aria-current="page">
-                  {section?.title ?? "Off the pitch"}
-                </li>
-              </ol>
-            </nav>
-          </>
-        )}
-        <div className="ml-auto flex items-center gap-2">
+      {/* status strip */}
+      <div className="mx-auto flex h-9 max-w-7xl items-center gap-3 px-4 text-xs sm:px-6">
+        <GameLink
+          href="/"
+          transitionLabel="Main Menu"
+          className="flex min-w-0 items-center gap-2"
+          aria-label={`${fullName} — home`}
+        >
+          <Crest initials={initials} className="h-6 w-5 shrink-0" />
+          <span className="font-display truncate text-base tracking-wide">{fullName}</span>
+        </GameLink>
+        <p
+          className="mx-auto hidden items-center gap-1.5 font-semibold uppercase tracking-wider text-mist lg:flex"
+          aria-hidden="true"
+        >
+          Press <span className="keycap">Q</span> <span className="keycap">E</span> to switch tabs
+        </p>
+        <div className="ml-auto flex items-center gap-3">
+          <span className="hidden font-semibold text-fog/90 sm:inline">{gamertag}</span>
           <SoundToggle />
         </div>
       </div>
+
+      {/* tab bar */}
+      <nav aria-label="Sections" className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="flex items-center gap-1">
+          <span className="keycap mr-1 hidden shrink-0 sm:inline-flex" aria-hidden="true">
+            Q
+          </span>
+          <ul className="flex min-w-0 flex-1 overflow-x-auto [scrollbar-width:none]">
+            {TABS.map((tab) => {
+              const active = tab.href === pathname;
+              return (
+                <li key={tab.href} className="shrink-0">
+                  <GameLink
+                    href={tab.href}
+                    transitionLabel={tab.label}
+                    transitionAccent={tab.accent}
+                    aria-current={active ? "page" : undefined}
+                    className={`font-display relative block px-4 py-2 text-lg tracking-wide transition-colors sm:px-6 sm:text-xl ${
+                      active ? "bg-ink-950/80 text-fog" : "bg-ink-800/60 text-mist hover:bg-ink-700/80 hover:text-fog"
+                    }`}
+                  >
+                    {tab.label}
+                    {active && <span className="absolute inset-x-0 bottom-0 h-[3px] bg-[#ff3d7f]" aria-hidden="true" />}
+                  </GameLink>
+                </li>
+              );
+            })}
+          </ul>
+          <span className="keycap ml-1 hidden shrink-0 sm:inline-flex" aria-hidden="true">
+            E
+          </span>
+        </div>
+      </nav>
     </header>
   );
 }

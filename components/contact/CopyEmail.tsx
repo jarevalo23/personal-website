@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CheckIcon, CopyIcon } from "@/components/icons";
 import { useSound } from "@/components/providers/SoundProvider";
 
-async function copyText(text: string) {
+export async function copyText(text: string) {
   try {
     await navigator.clipboard.writeText(text);
     return true;
@@ -44,7 +44,7 @@ export function CopyEmail({ email }: { email: string }) {
         className="group flex w-full items-center justify-between gap-4 rounded-xl border border-accent/30 bg-ink-800 p-4 text-left transition-colors hover:border-accent hover:bg-ink-700"
       >
         <span className="min-w-0">
-          <span className="block text-[11px] font-bold uppercase tracking-[0.2em] text-mist">
+          <span className="block text-xs font-bold uppercase tracking-wider text-mist">
             <span className="sr-only">Copy </span>Email
           </span>
           <span className="mt-0.5 block break-all text-lg font-semibold text-fog sm:text-xl">{email}</span>

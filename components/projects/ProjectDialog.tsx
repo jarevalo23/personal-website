@@ -48,7 +48,7 @@ export function ProjectDialog({ project, onClose, onPrev, onNext, position }: Pr
       {project && (
         <div key={project.slug} className="dialog-content flex min-h-full flex-col">
           <header className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-white/[0.07] bg-ink-900/90 px-5 py-3 backdrop-blur">
-            <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-mist">
+            <p className="text-xs font-bold uppercase tracking-wider text-mist">
               Box score · {position.index + 1}/{position.total}
             </p>
             <div className="flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export function ProjectDialog({ project, onClose, onPrev, onNext, position }: Pr
                 {project.jersey}
               </span>
               <div>
-                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-accent">
+                <p className="text-xs font-bold uppercase tracking-wider text-accent">
                   {project.role} · {project.year} · {project.status}
                 </p>
                 <h2 id="project-title" className="font-display text-5xl leading-none">

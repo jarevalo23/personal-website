@@ -101,7 +101,7 @@ export function ContactForm() {
             aria-hidden="true"
           />
         ))}
-        <div className="score-pop mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accent-ink shadow-[0_0_40px_var(--accent)]">
+        <div className="score-pop mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-accent text-accent-ink">
           <CheckIcon className="h-10 w-10" />
         </div>
         <h3 ref={successRef} tabIndex={-1} className="font-display mt-5 text-5xl outline-none">
@@ -135,7 +135,7 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="cf-name" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-mist">
+          <label htmlFor="cf-name" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-mist">
             Name
           </label>
           <input
@@ -161,7 +161,7 @@ export function ContactForm() {
           )}
         </div>
         <div>
-          <label htmlFor="cf-email" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.2em] text-mist">
+          <label htmlFor="cf-email" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-mist">
             Email
           </label>
           <input
@@ -192,7 +192,7 @@ export function ContactForm() {
 
       <div>
         <div className="mb-1.5 flex items-baseline justify-between">
-          <label htmlFor="cf-message" className="block text-[11px] font-bold uppercase tracking-[0.2em] text-mist">
+          <label htmlFor="cf-message" className="block text-xs font-bold uppercase tracking-wider text-mist">
             Your question
           </label>
           <span className="text-xs tabular-nums text-mist" aria-hidden="true">

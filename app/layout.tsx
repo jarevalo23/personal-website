@@ -1,14 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import { Barlow, Barlow_Condensed } from "next/font/google";
 import { Hud } from "@/components/Hud";
+import { PromptBar } from "@/components/PromptBar";
 import { Providers } from "@/components/providers/Providers";
 import { fullName } from "@/data/profile";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
-const display = Bebas_Neue({ weight: "400", subsets: ["latin"], variable: "--font-bebas", display: "swap" });
-const sans = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const display = Barlow_Condensed({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-condensed",
+  display: "swap",
+});
+const sans = Barlow({ weight: ["400", "500", "600", "700"], subsets: ["latin"], variable: "--font-barlow", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -34,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#04060d",
+  themeColor: "#18114a",
   colorScheme: "dark",
 };
 
@@ -62,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <main id="main" tabIndex={-1} className="outline-none">
             {children}
           </main>
+          <PromptBar />
         </Providers>
       </body>
     </html>

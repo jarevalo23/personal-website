@@ -257,10 +257,10 @@ export function PenaltyGame() {
   const result = outcome ? RESULT_TEXT[outcome] : null;
 
   return (
-    <section aria-labelledby="penalty-title" className="panel panel-accent overflow-hidden">
+    <section id="penalty" aria-labelledby="penalty-title" className="scroll-mt-28 panel panel-accent overflow-hidden">
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.06] px-5 py-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-accent">Mini-game</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-accent">Mini-game</p>
           <h2 id="penalty-title" className="font-display text-4xl">
             Penalty Shootout
           </h2>
@@ -419,8 +419,10 @@ export function PenaltyGame() {
             className="pointer-events-none absolute inset-x-0 top-[6%] flex flex-col items-center text-center"
             key={kicks.length}
           >
-            <p className={`score-pop font-display glow-text text-6xl sm:text-7xl ${result.tone}`}>{result.title}</p>
-            <p className="mt-1 rounded bg-ink-950/70 px-2 py-0.5 text-xs font-semibold uppercase tracking-[0.2em] text-fog">
+            <p className={`score-pop font-display [text-shadow:0_3px_0_rgba(0,0,0,0.5)] text-6xl sm:text-7xl ${result.tone}`}>
+              {result.title}
+            </p>
+            <p className="mt-1 rounded bg-ink-950/70 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-fog">
               {result.sub}
             </p>
           </div>
@@ -441,7 +443,7 @@ export function PenaltyGame() {
             <p className="text-sm text-mist">⚽ Score a penalty to unlock a fun fact about me.</p>
           ) : (
             <>
-              <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">
+              <p className="text-xs font-bold uppercase tracking-wider text-accent">
                 Fun fact {factIndex + 1}/{facts.length}
               </p>
               <p key={factIndex} className="score-pop mt-1 text-fog">

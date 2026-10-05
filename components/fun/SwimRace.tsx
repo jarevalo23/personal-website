@@ -199,24 +199,24 @@ export function SwimRace() {
 
   const you = field.find((s) => s.isYou)!;
   const standings = [...field].sort((a, b) => (a.total ?? 99) - (b.total ?? 99));
-  const lightColor =
-    phase === "go" || phase === "racing"
-      ? "bg-pitch shadow-[0_0_24px_#3dff8a]"
-      : phase === "marks"
-        ? "bg-redcard shadow-[0_0_24px_#ff4d5e]"
-        : "bg-white/15";
+  const lightColor = phase === "go" || phase === "racing" ? "bg-pitch" : phase === "marks" ? "bg-redcard" : "bg-white/15";
 
   return (
-    <section aria-labelledby="race-title" className="panel panel-accent overflow-hidden" onKeyDown={onKeyDown}>
+    <section
+      id="swim-race"
+      aria-labelledby="race-title"
+      className="scroll-mt-28 panel panel-accent overflow-hidden"
+      onKeyDown={onKeyDown}
+    >
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.06] px-5 py-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-accent">Mini-game · optional</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-accent">Mini-game · optional</p>
           <h2 id="race-title" className="font-display text-4xl">
             50m Free — Reaction Start
           </h2>
         </div>
         <div className="rounded-lg bg-ink-950/80 px-3 py-1.5 text-center">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-mist">Best reaction</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-mist">Best reaction</p>
           <p className="font-display text-3xl leading-none tabular-nums text-press">{best != null ? `${fmt(best)}s` : "–"}</p>
         </div>
       </div>
@@ -230,7 +230,7 @@ export function SwimRace() {
               {/* start block */}
               <div className="z-10 flex h-full w-14 shrink-0 flex-col items-center justify-center border-r-4 border-white/40 bg-ink-950/60 sm:w-20">
                 <span className="font-display text-2xl leading-none">{s.lane}</span>
-                <span className={`text-[9px] font-bold uppercase tracking-wider ${s.isYou ? "text-accent" : "text-mist"}`}>
+                <span className={`text-xs font-bold uppercase tracking-wider ${s.isYou ? "text-accent" : "text-mist"}`}>
                   {s.isYou ? "You" : "CPU"}
                 </span>
               </div>
@@ -257,9 +257,9 @@ export function SwimRace() {
         {phase === "results" && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-ink-950/80 p-3 backdrop-blur-sm">
             <div className="w-full max-w-lg">
-              <p className="mb-2 text-center text-xs font-bold uppercase tracking-[0.3em] text-accent">Official results</p>
+              <p className="mb-2 text-center text-xs font-bold uppercase tracking-wider text-accent">Official results</p>
               <table className="w-full text-left text-sm tabular-nums">
-                <thead className="text-[10px] uppercase tracking-[0.2em] text-mist">
+                <thead className="text-xs uppercase tracking-wider text-mist">
                   <tr>
                     <th className="py-1 pr-2 font-bold">Pl</th>
                     <th className="py-1 pr-2 font-bold">Ln</th>

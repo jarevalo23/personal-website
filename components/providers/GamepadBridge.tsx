@@ -37,6 +37,9 @@ export function GamepadBridge() {
       if (btn(15) || ax > 0.55) pressed.add("ArrowRight");
       if (btn(0)) pressed.add("A");
       if (btn(1)) pressed.add("B");
+      if (btn(4)) pressed.add("q"); // LB: previous tab
+      if (btn(5)) pressed.add("e"); // RB: next tab
+      if (btn(11)) pressed.add("r"); // R3: cycle carousel
 
       for (const key of held.keys()) if (!pressed.has(key)) held.delete(key);
 
@@ -49,7 +52,7 @@ export function GamepadBridge() {
         held.set(key, { since: state?.since ?? t, last: t });
 
         const active = (document.activeElement as HTMLElement | null) ?? document.body;
-        if (isArrow) sendKey(key, active);
+        if (isArrow || key.length === 1) sendKey(key, active);
         else if (key === "A" && active !== document.body) active.click();
         else if (key === "B") {
           // Synthetic Esc can't close a native <dialog>, so close it directly.
@@ -95,7 +98,7 @@ export function GamepadBridge() {
             <span aria-hidden="true">🎮</span>
             <span>
               <strong className="font-semibold">Controller connected.</strong>{" "}
-              <span className="text-mist">D-pad to move · A to select · B to go back</span>
+              <span className="text-mist">D-pad to move · A select · B back · LB/RB switch tabs</span>
             </span>
           </m.div>
         )}

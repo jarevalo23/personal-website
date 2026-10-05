@@ -264,10 +264,10 @@ export function FreeThrowGame() {
   const clock = timeLeft >= 5 ? Math.ceil(timeLeft).toString() : timeLeft.toFixed(1);
 
   return (
-    <section aria-labelledby="ft-title" className="panel panel-accent mt-6 overflow-hidden">
+    <section id="free-throw" aria-labelledby="ft-title" className="scroll-mt-28 panel panel-accent mt-6 overflow-hidden">
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-white/[0.06] px-5 py-4">
         <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-accent">Mini-game · optional</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-accent">Mini-game · optional</p>
           <h2 id="ft-title" className="font-display text-4xl">
             Free-Throw Challenge
           </h2>
@@ -339,7 +339,9 @@ export function FreeThrowGame() {
 
           {banner && phase !== "over" && (
             <div key={banner.id} className="pointer-events-none absolute inset-x-0 top-[8%] flex justify-center">
-              <p className={`score-pop font-display glow-text text-5xl sm:text-7xl ${banner.made ? "text-accent" : "text-mist"}`}>
+              <p
+                className={`score-pop font-display [text-shadow:0_3px_0_rgba(0,0,0,0.5)] text-5xl sm:text-7xl ${banner.made ? "text-accent" : "text-mist"}`}
+              >
                 {banner.text}
               </p>
             </div>
@@ -350,7 +352,7 @@ export function FreeThrowGame() {
 
           {phase === "over" && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-ink-950/80 text-center backdrop-blur-sm">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-accent">Final buzzer</p>
+              <p className="text-xs font-bold uppercase tracking-wider text-accent">Final buzzer</p>
               <p className="font-display text-6xl sm:text-7xl">
                 {made} <span className="text-mist">made</span>
               </p>
@@ -367,7 +369,7 @@ export function FreeThrowGame() {
         <div className="flex flex-col gap-4 border-t border-white/[0.06] p-5 lg:border-l lg:border-t-0">
           <dl className="grid grid-cols-4 gap-2 text-center lg:grid-cols-2">
             <div className="rounded-lg bg-ink-950/80 px-3 py-1.5">
-              <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-mist">Shot clock</dt>
+              <dt className="text-xs font-bold uppercase tracking-wider text-mist">Shot clock</dt>
               <dd
                 className={`font-display text-3xl leading-none tabular-nums ${timeLeft < 5 && running ? "text-redcard" : "text-press"}`}
               >
@@ -375,26 +377,26 @@ export function FreeThrowGame() {
               </dd>
             </div>
             <div className="rounded-lg bg-ink-950/80 px-3 py-1.5">
-              <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-mist">Made</dt>
+              <dt className="text-xs font-bold uppercase tracking-wider text-mist">Made</dt>
               <dd className="font-display text-3xl leading-none">
                 {made}
                 <span className="text-lg text-mist">/{attempts}</span>
               </dd>
             </div>
             <div className="rounded-lg bg-ink-950/80 px-3 py-1.5">
-              <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-mist">Streak</dt>
+              <dt className="text-xs font-bold uppercase tracking-wider text-mist">Streak</dt>
               <dd key={streak} className={`font-display text-3xl leading-none ${streak > 0 ? "bump text-accent" : ""}`}>
                 {streak}
                 {streak >= 3 && <span aria-label="on fire"> 🔥</span>}
               </dd>
             </div>
             <div className="rounded-lg bg-ink-950/80 px-3 py-1.5">
-              <dt className="text-[10px] font-bold uppercase tracking-[0.2em] text-mist">Best</dt>
+              <dt className="text-xs font-bold uppercase tracking-wider text-mist">Best</dt>
               <dd className="font-display text-3xl leading-none">{best ?? "–"}</dd>
             </div>
           </dl>
           <div>
-            <div className="mb-1 flex justify-between text-[10px] font-bold uppercase tracking-[0.2em] text-mist">
+            <div className="mb-1 flex justify-between text-xs font-bold uppercase tracking-wider text-mist">
               <span>Power</span>
               <span>Release in the green</span>
             </div>

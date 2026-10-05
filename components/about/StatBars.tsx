@@ -14,7 +14,7 @@ export function StatBars() {
         <h2 id="stats-title" className="font-display text-3xl">
           Attributes
         </h2>
-        <p className="text-xs uppercase tracking-[0.2em] text-mist">Out of 99</p>
+        <p className="text-xs uppercase tracking-wider text-mist">Out of 99</p>
       </div>
       <ul className="space-y-3">
         {profile.stats.map((s, i) => (

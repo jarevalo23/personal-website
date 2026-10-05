@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- Placeholder silhouette: replace with your photo (see data/profile.ts) -->
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#3dff8a" stop-opacity=".55"/>
-      <stop offset="1" stop-color="#3dff8a" stop-opacity=".08"/>
+      <stop offset="0" stop-color="#f4f1ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#f4f1ff" stop-opacity=".12"/>
     </linearGradient>
   </defs>
-  <!-- Placeholder silhouette: replace with your photo (see data/profile.ts) -->
-  <circle cx="200" cy="140" r="74" fill="url(#g)"/>
-  <path d="M60 400c0-92 62-160 140-160s140 68 140 160z" fill="url(#g)"/>
-  <path d="M168 236l32 44 32-44" fill="none" stroke="#3dff8a" stroke-opacity=".6" stroke-width="6" stroke-linejoin="round"/>
-  <text x="200" y="345" text-anchor="middle" font-family="Impact, Arial Narrow, sans-serif" font-size="30" letter-spacing="3" fill="#eef2ff" fill-opacity=".55">YOUR PHOTO</text>
+  <circle cx="210" cy="130" r="70" fill="url(#g)"/>
+  <path d="M70 400c0-95 62-170 140-170s140 75 140 170z" fill="url(#g)"/>
+  <text x="210" y="330" text-anchor="middle" font-family="Arial Narrow, Arial, sans-serif" font-weight="700" font-size="22" letter-spacing="2" fill="#2c2379" fill-opacity=".7">ADD YOUR PHOTO</text>
 </svg>

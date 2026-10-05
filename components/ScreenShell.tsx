@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { sections, type SectionKey } from "@/data/site";
+import { GameBackground } from "./GameBackground";
 import { FocusOnArrival } from "./FocusOnArrival";
 
 const backgrounds: Record<SectionKey, string> = {
@@ -23,19 +24,20 @@ export function ScreenShell({
   const s = sections[section];
   return (
     <div data-accent={s.accent} className="relative isolate min-h-[calc(100dvh-var(--hud-h))]">
-      <div className={`pointer-events-none fixed inset-0 -z-10 overflow-hidden ${backgrounds[section]}`} aria-hidden="true">
+      <GameBackground art={false} />
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+        <div className={backgrounds[section]} />
         {backdrop}
       </div>
-      <div className="mx-auto max-w-7xl px-4 pb-20 pt-6 sm:px-6 sm:pt-10">
+      <div className="mx-auto max-w-7xl px-4 pb-24 pt-4 sm:px-6 sm:pt-6">
         <header className="mb-8 sm:mb-10">
-          <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-accent">
-            <span className="rounded bg-accent px-2 py-0.5 text-accent-ink">{s.tag}</span>
-            <span className="text-mist">{s.sport}</span>
+          <p className="text-sm font-semibold uppercase tracking-wider text-accent">
+            {s.tag} · {s.sport}
           </p>
-          <h1 id="screen-title" tabIndex={-1} className="font-display glow-text mt-3 text-7xl outline-none sm:text-8xl">
+          <h1 id="screen-title" tabIndex={-1} className="font-display mt-1 text-6xl outline-none sm:text-7xl">
             {s.title}
           </h1>
-          <p className="mt-2 max-w-xl text-mist">{s.subtitle}</p>
+          <p className="mt-1 max-w-xl text-lg text-fog/80">{s.subtitle}</p>
         </header>
         {children}
       </div>

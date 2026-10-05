@@ -12,7 +12,7 @@ export function ScoutingReport() {
         Top prospect
       </div>
 
-      <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-accent">Scouting report · {fullName}</p>
+      <p className="text-xs font-bold uppercase tracking-wider text-accent">Scouting report · {fullName}</p>
       <h2 id="scout-title" className="font-display mt-2 max-w-2xl text-4xl sm:pr-44 sm:text-5xl lg:pr-0">
         {scouting.headline}
       </h2>
@@ -64,11 +64,11 @@ export function ScoutingReport() {
             ))}
           </dl>
           <div>
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-mist">Plays like</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-mist">Plays like</h3>
             <p className="mt-1 font-display text-2xl">{scouting.playsLike}</p>
           </div>
           <div className="rounded-xl border-l-4 border-accent bg-accent/[0.07] p-4">
-            <h3 className="text-[11px] font-bold uppercase tracking-[0.25em] text-accent">Scout&apos;s verdict</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-accent">Scout&apos;s verdict</h3>
             <p className="mt-1 text-fog">{scouting.verdict}</p>
           </div>
         </div>

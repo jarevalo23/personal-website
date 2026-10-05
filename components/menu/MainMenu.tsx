@@ -1,39 +1,33 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { copyText } from "@/components/contact/CopyEmail";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { useSound } from "@/components/providers/SoundProvider";
 import { profile } from "@/data/profile";
-import { externalTiles, sections, site } from "@/data/site";
+import { externalTiles, sections } from "@/data/site";
 import { findNeighbor, KEY_TO_DIRECTION } from "@/lib/spatial";
 import { MenuTile, type MenuTileProps } from "./MenuTile";
-import { BasketballArt, MicArt, SoccerArt, SwimArt } from "./TileArt";
+import { AboutTileArt, ContactTileArt, EnvelopeIcon, FunTileArt, GoalIcon, HoopIcon, PoolIcon, ProjectsTileArt } from "./TileArt";
 
-type TileConfig = Omit<MenuTileProps, "index" | "selected" | "onSelect" | "setRef">;
-
-const tiles: TileConfig[] = [
-  { area: "about", ...sections.about, variant: "feature", pattern: "pitch", art: <SoccerArt /> },
-  { area: "projects", ...sections.projects, variant: "standard", pattern: "court", art: <BasketballArt /> },
-  { area: "fun", ...sections.fun, variant: "standard", pattern: "lanes", art: <SwimArt /> },
-  { area: "contact", ...sections.contact, variant: "wide", pattern: "press", art: <MicArt /> },
-  { area: "github", ...externalTiles.github, external: true, variant: "mini", art: <GitHubIcon className="h-full w-full" /> },
-  {
-    area: "linkedin",
-    ...externalTiles.linkedin,
-    external: true,
-    variant: "mini",
-    art: <LinkedInIcon className="h-full w-full" />,
-  },
+const PRACTICE = [
+  { title: "Penalty Shootout", href: "/about#penalty", Icon: GoalIcon },
+  { title: "Free Throws", href: "/projects#free-throw", Icon: HoopIcon },
+  { title: "Swim Start", href: "/fun#swim-race", Icon: PoolIcon },
 ];
+
+const githubHandle = `@${profile.links.github.split("/").filter(Boolean).pop()}`;
 
 // Remembered across client-side navigations so "Back" returns to the same tile.
 let lastSelected = 0;
 
-export function MainMenu({ footer }: { footer: React.ReactNode }) {
+export function MainMenu() {
   const { play } = useSound();
   const [selected, setSelected] = useState(() => lastSelected);
+  const [practice, setPractice] = useState(0);
+  const [copied, setCopied] = useState(false);
   const selectedRef = useRef(selected);
-  const tileEls = useRef<(HTMLAnchorElement | null)[]>([]);
+  const tileEls = useRef<(HTMLElement | null)[]>([]);
 
   const select = useCallback(
     (i: number) => {
@@ -46,9 +40,91 @@ export function MainMenu({ footer }: { footer: React.ReactNode }) {
     [play],
   );
 
-  const setRef = useCallback((i: number, el: HTMLAnchorElement | null) => {
+  const setRef = useCallback((i: number, el: HTMLElement | null) => {
     tileEls.current[i] = el;
   }, []);
+
+  const tiles: Omit<MenuTileProps, "index" | "selected" | "onSelect" | "setRef">[] = [
+    { area: "about", kind: "link", ...sections.about, description: sections.about.subtitle, children: <AboutTileArt /> },
+    {
+      area: "projects",
+      kind: "link",
+      ...sections.projects,
+      description: sections.projects.subtitle,
+      children: <ProjectsTileArt />,
+    },
+    { area: "fun", kind: "link", ...sections.fun, description: sections.fun.subtitle, children: <FunTileArt /> },
+    { area: "contact", kind: "link", ...sections.contact, description: sections.contact.subtitle, children: <ContactTileArt /> },
+    {
+      area: "github",
+      kind: "external",
+      ...externalTiles.github,
+      description: "Code, repos and side quests on GitHub",
+      children: (
+        <div className="absolute inset-x-4 bottom-3 flex items-center justify-between sm:inset-x-5">
+          <GitHubIcon className="h-11 w-11 sm:h-14 sm:w-14" />
+          <span className="text-sm font-semibold text-fog/85">{githubHandle}</span>
+        </div>
+      ),
+    },
+    {
+      area: "linkedin",
+      kind: "external",
+      ...externalTiles.linkedin,
+      description: "Career stats, experience and endorsements",
+      children: (
+        <div className="absolute inset-x-4 bottom-3 flex items-center justify-between sm:inset-x-5">
+          <LinkedInIcon className="h-11 w-11 sm:h-14 sm:w-14" />
+          <span className="text-sm font-semibold text-fog/85">Connect</span>
+        </div>
+      ),
+    },
+    {
+      area: "practice",
+      kind: "link",
+      href: PRACTICE[practice].href,
+      title: "Practice Arena",
+      accent: "menu",
+      description: `Jump straight into a mini-game: ${PRACTICE[practice].title}. Press R to cycle.`,
+      badge: <p className="mt-1 text-sm font-semibold text-fog/85">{PRACTICE[practice].title}</p>,
+      children: (
+        <>
+          {PRACTICE.map(({ title, Icon }, i) => (
+            <Icon
+              key={title}
+              className={`absolute bottom-4 right-4 h-9 w-auto transition-opacity duration-300 sm:h-14 lg:h-16 ${i === practice ? "opacity-100" : "opacity-0"}`}
+            />
+          ))}
+          <div className="absolute bottom-3 left-4 flex items-center gap-1.5 sm:left-5" aria-hidden="true">
+            <span className="keycap mr-1">R</span>
+            {PRACTICE.map((p, i) => (
+              <span key={p.title} className={`h-2 w-2 rounded-full ${i === practice ? "bg-[#ff6a3d]" : "bg-white/40"}`} />
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
+      area: "email",
+      kind: "action",
+      title: "Email",
+      accent: "menu",
+      description: `Copy ${profile.email} to your clipboard`,
+      onActivate: async () => {
+        if (await copyText(profile.email)) {
+          setCopied(true);
+          window.setTimeout(() => setCopied(false), 2000);
+        }
+      },
+      badge: (
+        <p className="mt-1 truncate text-sm font-semibold text-fog/85" role="status">
+          {copied ? "Copied to clipboard!" : profile.email}
+        </p>
+      ),
+      children: <EnvelopeIcon className="absolute bottom-4 right-4 h-8 w-auto sm:h-12" />,
+    },
+  ];
+  const practiceIndex = tiles.findIndex((t) => t.area === "practice");
 
   // Coming back from another screen: put keyboard focus back on the last tile.
   useEffect(() => {
@@ -57,11 +133,24 @@ export function MainMenu({ footer }: { footer: React.ReactNode }) {
     }
   }, []);
 
-  // Arrow keys / D-pad move between tiles using their on-screen positions.
+  // Practice Arena carousel: auto-advances unless it's the selected tile.
+  useEffect(() => {
+    if (selected === practiceIndex || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => setPractice((p) => (p + 1) % PRACTICE.length), 3200);
+    return () => window.clearInterval(id);
+  }, [selected, practiceIndex]);
+
+  // Arrow keys / D-pad move between tiles using their on-screen positions; R cycles the carousel.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.key.toLowerCase() === "r" && selectedRef.current === practiceIndex) {
+        setPractice((p) => (p + 1) % PRACTICE.length);
+        play("move");
+        return;
+      }
       const dir = KEY_TO_DIRECTION[e.key];
-      if (!dir || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (!dir) return;
       const els = tileEls.current;
       const focused = els.findIndex((el) => el === document.activeElement);
       const elsewhere = document.activeElement && document.activeElement !== document.body && focused < 0;
@@ -80,63 +169,29 @@ export function MainMenu({ footer }: { footer: React.ReactNode }) {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [practiceIndex, play]);
 
   return (
     <section
       aria-labelledby="menu-title"
-      className="relative mx-auto flex min-h-[calc(100dvh-var(--hud-h))] max-w-7xl flex-col px-4 pb-5 pt-5 sm:px-6 sm:pt-7"
+      className="relative mx-auto flex min-h-[calc(100dvh-var(--hud-h))] max-w-7xl flex-col px-4 pb-20 pt-2 sm:px-6"
     >
-      <div className="mb-4 flex items-end justify-between gap-4 sm:mb-6">
-        <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-mist">{site.seasonLabel} · Select your mode</p>
-          <h1 id="menu-title" className="font-display text-6xl sm:text-7xl">
-            Main Menu
-          </h1>
-        </div>
-        <div
-          className="panel hidden items-center gap-4 px-4 py-3 md:flex"
-          data-accent={profile.card.finish === "gold" ? "contact" : "soccer"}
-        >
-          <div className="text-center leading-none">
-            <p className="font-display text-4xl text-accent">{profile.card.rating}</p>
-            <p className="font-display text-lg text-mist">{profile.card.position}</p>
-          </div>
-          <div className="leading-tight">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-mist">Player</p>
-            <p className="font-display text-2xl">
-              {profile.lastName} <span className="text-accent">#{profile.jerseyNumber}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <nav aria-label="Main menu" className="menu-grid flex-1 lg:min-h-[30rem]">
+      <h1 id="menu-title" className="sr-only">
+        Main menu
+      </h1>
+      <nav aria-label="Main menu" className="menu-grid lg:h-[min(36rem,calc(100dvh-var(--hud-h)-8rem))] lg:min-h-[28rem]">
         {tiles.map((tile, i) => (
           <MenuTile key={tile.area} {...tile} index={i} selected={selected === i} onSelect={select} setRef={setRef} />
         ))}
       </nav>
-
-      <div className="mt-5 flex flex-wrap items-center justify-between gap-3 text-xs text-mist">
-        <div className="hidden items-center gap-5 sm:flex" aria-hidden="true">
-          <span className="flex items-center gap-1.5">
-            <span className="keycap">←</span>
-            <span className="keycap">↑</span>
-            <span className="keycap">↓</span>
-            <span className="keycap">→</span>
-            Navigate
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="keycap">Enter</span> Select
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="keycap">Esc</span> Back
-          </span>
-          <span className="hidden items-center gap-1.5 lg:flex">🎮 Controller supported</span>
-        </div>
-        <p className="sm:hidden">Tap a mode to play</p>
-        {footer}
-      </div>
+      {/* Black Ops-style description of the highlighted option */}
+      <p className="mt-4 flex items-start gap-2 text-sm text-fog/90 sm:text-base" aria-live="polite">
+        <span
+          className="mt-1.5 inline-block h-0 w-0 border-y-[5px] border-l-[7px] border-y-transparent border-l-fog"
+          aria-hidden="true"
+        />
+        {tiles[selected]?.description}
+      </p>
     </section>
   );
 }

@@ -107,9 +107,7 @@ export function ProjectsBoard() {
                   aria-label={`#${p.jersey} ${p.title} — ${p.summary}`}
                   aria-haspopup="dialog"
                   className={`relative flex h-11 w-11 items-center justify-center rounded-full border-2 font-display text-xl transition-transform duration-200 sm:h-12 sm:w-12 ${
-                    active
-                      ? "scale-115 border-fog bg-accent text-accent-ink shadow-[0_0_30px_var(--accent)]"
-                      : "border-accent bg-ink-950/85 text-accent"
+                    active ? "scale-115 border-fog bg-accent text-accent-ink" : "border-accent bg-ink-950/85 text-accent"
                   }`}
                 >
                   <span className="pulse-ring absolute inset-0 rounded-full border-2 border-accent" aria-hidden="true" />
@@ -126,19 +124,19 @@ export function ProjectsBoard() {
                       aria-hidden="true"
                     >
                       <div className="panel panel-accent p-3.5 text-left">
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+                        <p className="text-xs font-bold uppercase tracking-wider text-accent">
                           #{p.jersey} · {p.role}
                         </p>
                         <p className="font-display mt-0.5 text-2xl leading-none">{p.title}</p>
                         <p className="mt-1.5 text-xs text-mist">{p.summary}</p>
                         <div className="mt-2 flex flex-wrap gap-1">
                           {p.tech.map((t) => (
-                            <span key={t} className="rounded bg-white/[0.07] px-1.5 py-0.5 text-[10px] font-semibold">
+                            <span key={t} className="rounded bg-white/[0.07] px-1.5 py-0.5 text-xs font-semibold">
                               {t}
                             </span>
                           ))}
                         </div>
-                        <p className="mt-2 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Click for details ▸</p>
+                        <p className="mt-2 text-xs font-bold uppercase tracking-wider text-accent">Click for details ▸</p>
                       </div>
                     </m.div>
                   )}
@@ -155,7 +153,7 @@ export function ProjectsBoard() {
           <h2 id="roster-title" className="font-display text-3xl">
             Roster
           </h2>
-          <p className="text-xs uppercase tracking-[0.2em] text-mist">{projects.length} players</p>
+          <p className="text-xs uppercase tracking-wider text-mist">{projects.length} players</p>
         </div>
         <ul className="space-y-3">
           {projects.map((p) => {
@@ -169,16 +167,14 @@ export function ProjectsBoard() {
                   onMouseLeave={() => preview(null)}
                   aria-haspopup="dialog"
                   className={`group flex w-full items-stretch gap-4 rounded-xl border p-3 text-left transition-all duration-200 ${
-                    active
-                      ? "border-accent bg-accent/10 shadow-[0_0_30px_-10px_var(--accent)]"
-                      : "border-white/[0.08] bg-ink-950/40 hover:border-accent/50"
+                    active ? "border-accent bg-accent/10" : "border-white/[0.08] bg-ink-950/40 hover:border-accent/50"
                   }`}
                 >
                   <span className="font-display flex w-14 shrink-0 items-center justify-center rounded-lg bg-accent text-4xl text-accent-ink">
                     {p.jersey}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="flex flex-wrap items-center gap-x-2 text-[10px] font-bold uppercase tracking-[0.18em] text-mist">
+                    <span className="flex flex-wrap items-center gap-x-2 text-xs font-bold uppercase tracking-wider text-mist">
                       {p.role} · {p.year}
                       <span
                         className={`rounded px-1.5 py-0.5 ${p.status === "In progress" ? "bg-press/15 text-press" : "bg-accent/15 text-accent"}`}
@@ -190,7 +186,7 @@ export function ProjectsBoard() {
                     <span className="mt-1 block text-sm text-mist">{p.summary}</span>
                     <span className="mt-2 flex flex-wrap gap-1">
                       {p.tech.map((t) => (
-                        <span key={t} className="rounded bg-white/[0.07] px-1.5 py-0.5 text-[11px] font-semibold text-fog">
+                        <span key={t} className="rounded bg-white/[0.07] px-1.5 py-0.5 text-xs font-semibold text-fog">
                           {t}
                         </span>
                       ))}

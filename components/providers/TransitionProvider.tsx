@@ -21,9 +21,9 @@ type TransitionContextValue = {
 
 const TransitionContext = createContext<TransitionContextValue | null>(null);
 
-type Wipe = { href: string; label: string; accent: AccentKey; covered: boolean };
+type Wipe = { href: string; path: string; label: string; accent: AccentKey; covered: boolean };
 
-const STRIPES = ["bg-accent", "bg-ink-600", "bg-ink-950"] as const;
+const STRIPES = ["bg-accent", "bg-ink-600", "bg-ink-900"] as const;
 
 function markClientNavigation() {
   document.documentElement.classList.add("js-nav");
@@ -54,7 +54,8 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
         return;
       }
       setWipe({
-        href: targetPath,
+        href,
+        path: targetPath,
         label: options.label ?? (targetPath === "/" ? "Main Menu" : ""),
         accent: options.accent ?? "menu",
         covered: false,
@@ -77,7 +78,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
     return () => window.clearTimeout(t);
   }, [covered]);
 
-  const revealing = wipe !== null && wipe.covered && pathname === wipe.href;
+  const revealing = wipe !== null && wipe.covered && pathname === wipe.path;
 
   const onStripeDone = () => {
     if (!wipe) return;
@@ -117,8 +118,8 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
             animate={revealing ? { opacity: 0, scale: 1.04 } : { opacity: 1, scale: 1 }}
             transition={{ duration: revealing ? 0.15 : 0.25, delay: revealing ? 0 : 0.18 }}
           >
-            {wipe.label && <p className="font-display glow-text text-6xl text-accent sm:text-8xl">{wipe.label}</p>}
-            <div className="h-1 w-40 overflow-hidden rounded-full bg-white/10">
+            {wipe.label && <p className="font-display text-6xl text-fog sm:text-8xl">{wipe.label}</p>}
+            <div className="h-1 w-40 overflow-hidden bg-white/10">
               <m.div
                 className="h-full bg-accent"
                 initial={{ x: "-100%" }}

@@ -47,8 +47,8 @@ export function IntroSplash() {
 
   return (
     <m.div
-      className="intro-splash fixed inset-0 z-[90] flex cursor-pointer flex-col overflow-hidden bg-ink-950"
-      data-accent="soccer"
+      className="intro-splash scene-base fixed inset-0 z-[90] flex cursor-pointer flex-col overflow-hidden"
+      data-accent="menu"
       animate={phase === "exit" ? { y: "-100%" } : { y: "0%" }}
       transition={{ duration: 0.55, ease: [0.7, 0, 0.3, 1] }}
       onAnimationComplete={() => {
@@ -59,22 +59,13 @@ export function IntroSplash() {
       onClick={() => finishRef.current()}
       role="presentation"
     >
-      {/* diagonal stripes */}
-      <div
-        className="absolute inset-0 opacity-60"
-        style={{
-          background:
-            "repeating-linear-gradient(115deg, transparent 0 60px, color-mix(in oklab, var(--accent) 6%, transparent) 60px 120px)",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse at 30% 50%, color-mix(in oklab, var(--accent) 22%, transparent), transparent 60%)",
-        }}
-        aria-hidden="true"
-      />
+      {/* brush-stroke shards */}
+      <svg className="absolute -right-10 top-0 h-full w-auto opacity-90" viewBox="0 0 600 900" aria-hidden="true">
+        <polygon points="120,0 600,0 600,60 40,260" fill="#ff5bd6" opacity="0.75" />
+        <polygon points="260,200 600,90 600,150 220,330" fill="#48e9ff" opacity="0.7" />
+        <polygon points="300,330 600,250 600,262 300,345" fill="#fff" opacity="0.6" />
+        <polygon points="200,420 600,300 600,380 160,560" fill="#8d5bff" opacity="0.8" />
+      </svg>
       <p
         className="font-display text-outline pointer-events-none absolute -right-[4vw] bottom-[-6vw] select-none text-[46vw] leading-none text-white/[0.07]"
         aria-hidden="true"
@@ -82,14 +73,14 @@ export function IntroSplash() {
         {profile.jerseyNumber}
       </p>
 
-      <div className="relative flex items-center gap-2 px-6 pt-6 text-xs font-bold uppercase tracking-[0.3em] text-accent sm:px-10 sm:pt-8">
-        <span className="blink inline-block h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+      <div className="relative flex items-center gap-2 px-6 pt-6 text-sm font-semibold uppercase tracking-wider text-fog sm:px-10 sm:pt-8">
+        <span className="blink inline-block h-2 w-2 rounded-full bg-[#ff5bd6]" aria-hidden="true" />
         Player loading
       </div>
 
       <div className="relative flex flex-1 flex-col justify-center px-6 sm:px-10">
         <p
-          className="intro-slide text-sm font-semibold uppercase tracking-[0.35em] text-mist"
+          className="intro-slide text-base font-semibold uppercase tracking-wider text-fog/80"
           style={{ "--delay": "50ms" } as React.CSSProperties}
         >
           Now entering the pitch
@@ -101,19 +92,19 @@ export function IntroSplash() {
           {profile.firstName}
         </p>
         <p
-          className="intro-slide font-display glow-text -mt-[2vw] text-[22vw] text-accent sm:text-[15vw] lg:-mt-6 lg:text-[11rem]"
+          className="intro-slide font-display -mt-[2vw] text-[22vw] text-fog sm:text-[15vw] lg:-mt-6 lg:text-[11rem]"
           style={{ "--delay": "220ms" } as React.CSSProperties}
         >
           {profile.lastName}
         </p>
         <div
-          className="intro-slide mt-6 flex flex-wrap gap-2 text-sm font-bold uppercase tracking-[0.2em]"
+          className="intro-slide font-display mt-6 flex flex-wrap gap-2 text-xl"
           style={{ "--delay": "340ms" } as React.CSSProperties}
         >
-          <span className="rounded-md bg-accent px-3 py-1.5 text-accent-ink">#{profile.jerseyNumber}</span>
-          <span className="rounded-md border border-white/20 px-3 py-1.5">{profile.card.position}</span>
-          <span className="rounded-md border border-white/20 px-3 py-1.5">{profile.card.role}</span>
-          <span className="rounded-md border border-white/20 px-3 py-1.5">OVR {profile.card.rating}</span>
+          <span className="bg-[#ff5bd6] px-3 py-1 text-ink-950">#{profile.jerseyNumber}</span>
+          <span className="border border-white/40 px-3 py-1">{profile.card.position}</span>
+          <span className="border border-white/40 px-3 py-1">{profile.card.role}</span>
+          <span className="border border-white/40 px-3 py-1">OVR {profile.card.rating}</span>
         </div>
       </div>
 
@@ -127,7 +118,7 @@ export function IntroSplash() {
             e.stopPropagation();
             finishRef.current();
           }}
-          className="shrink-0 text-xs font-bold uppercase tracking-[0.25em] text-mist hover:text-fog"
+          className="flex shrink-0 items-center gap-2 text-sm font-semibold text-fog/90 hover:text-fog"
         >
           <span className="hidden sm:inline">Press any key to </span>Skip
         </button>

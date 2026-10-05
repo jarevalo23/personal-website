@@ -23,13 +23,17 @@ No test suite. Verify interactive changes in a browser (Playwright is available 
 - `app/`: one route folder per screen (`about`, `projects`, `fun`, `contact`), plus metadata files (`opengraph-image.tsx`, `icon.svg`, `apple-icon.tsx`, `manifest.ts`, `robots.ts`, `sitemap.ts`). `template.tsx` wraps every screen for the enter animation.
 - `components/providers/`: `SoundProvider` (Web Audio synth, off by default, `useSyncExternalStore` over localStorage), `TransitionProvider` (stripe-wipe screen transitions, `navigate()`), `GamepadBridge` (maps the Gamepad API onto synthetic key events).
 - `components/GameLink.tsx`: use instead of `next/link` for internal navigation so the wipe plays.
-- `components/Hud.tsx`: sticky top bar on every screen (Back button and Esc→menu handler, sound toggle).
+- `components/Hud.tsx`: sticky top chrome on every screen: status strip, sound toggle, FIFA-style tab bar; handles Esc→menu and Q/E tab switching.
+- `components/PromptBar.tsx`: fixed bottom controller prompts ("Select", clickable "Back") and the wordmark.
+- `components/GameBackground.tsx`: fixed purple arena backdrop with brush-stroke art (`art={false}` on sub-screens).
 - `components/ScreenShell.tsx`: frame for sub-screens (accent, themed backdrop, title, focus on arrival).
 - `lib/`: `sound.ts`, `confetti.ts`, `spatial.ts` (arrow-key spatial nav), `contact.ts` (shared validation), `usePersistentNumber.ts`, `site.ts` (site URL resolution).
 
 ## Conventions
 
+- Visual direction: FIFA 21 menu. Flat indigo/purple surfaces, thin light borders, square corners (radius tokens are overridden to 1–4px), selection = solid purple fill + white rim, no glows or glassy shadows, Barlow Condensed uppercase display type with Barlow body text. Don't reintroduce neon glows, tiny widely-tracked micro-labels or emoji-as-icons.
 - Design tokens are in `app/globals.css` (`@theme`). Section accents switch with `data-accent="soccer|basketball|swim|contact|github|linkedin"`; inside, use `text-accent`, `bg-accent/20`, etc. Reusable component classes (`panel`, `btn-game`, `keycap`, …) live in `@layer components` so utilities can override them. Don't name custom classes after theme colors (e.g. `bg-pool`), because they collide with Tailwind utilities.
+- `body` is transparent on purpose so fixed `-z-10` backdrops render; the page colour comes from `html`.
 - First paint must not depend on JS. Use CSS animations for entrances; avoid Framer Motion `initial` hidden states on server-rendered content. Use `m.*` components (LazyMotion `strict`), never `motion.*`.
 - Respect `prefers-reduced-motion`: CSS handles ambient animation; games check `useReducedMotion()` and resolve instantly.
 - Mini-games must never gate content. Anything they reveal must also be reachable without playing.

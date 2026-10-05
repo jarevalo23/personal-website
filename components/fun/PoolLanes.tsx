@@ -24,7 +24,7 @@ export function PoolLanes() {
         <h2 id="lanes-title" className="font-display text-3xl">
           Lane Assignments
         </h2>
-        <p className="text-xs uppercase tracking-[0.2em] text-mist">{funItems.length} lanes</p>
+        <p className="text-xs uppercase tracking-wider text-mist">{funItems.length} lanes</p>
       </div>
       <div className="overflow-hidden rounded-2xl border border-pool/20 bg-[#04243a]/70">
         <LaneRope />
@@ -38,7 +38,7 @@ export function PoolLanes() {
                   aria-hidden="true"
                 />
                 <div className="relative flex w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-pool text-accent-ink sm:w-20">
-                  <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Lane</span>
+                  <span className="text-xs font-bold uppercase tracking-wider">Lane</span>
                   <span className="font-display text-4xl leading-none">{i + 1}</span>
                 </div>
                 <div className="relative flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
@@ -49,7 +49,7 @@ export function PoolLanes() {
                     {item.emoji}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-accent">{item.category}</p>
+                    <p className="text-xs font-bold uppercase tracking-wider text-accent">{item.category}</p>
                     <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.title}</h3>
                     <p className="mt-1 text-sm text-mist">{item.description}</p>
                   </div>

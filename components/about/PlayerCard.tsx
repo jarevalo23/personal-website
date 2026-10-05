@@ -60,7 +60,7 @@ export function PlayerCard() {
   return (
     <div className="mx-auto w-full max-w-[300px] [perspective:1100px]">
       <m.div
-        className="group relative aspect-[5/7.2] drop-shadow-[0_25px_45px_rgba(61,255,138,0.25)]"
+        className="group relative aspect-[5/7.2] drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)]"
         style={{ rotateX: rx, rotateY: ry, color: finish.text } as never}
         onPointerMove={onMove}
         onPointerLeave={onLeave}

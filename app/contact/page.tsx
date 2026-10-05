@@ -24,7 +24,7 @@ export default function ContactPage() {
         <section aria-labelledby="presser-title" className="panel panel-accent p-6 sm:p-8">
           <div className="mb-6 flex items-start justify-between gap-4">
             <div>
-              <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.3em] text-mist">
+              <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-mist">
                 <span className="blink inline-block h-2 w-2 rounded-full bg-redcard" aria-hidden="true" />
                 Live · Post-match press conference
               </p>
@@ -60,15 +60,15 @@ export default function ContactPage() {
             <h2 className="font-display text-2xl text-accent">Media guide</h2>
             <dl className="mt-3 space-y-3 text-sm">
               <div>
-                <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-mist">Availability</dt>
+                <dt className="text-xs font-bold uppercase tracking-wider text-mist">Availability</dt>
                 <dd className="mt-0.5">{profile.availability}</dd>
               </div>
               <div>
-                <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-mist">Response time</dt>
+                <dt className="text-xs font-bold uppercase tracking-wider text-mist">Response time</dt>
                 <dd className="mt-0.5">{profile.responseTime}</dd>
               </div>
               <div>
-                <dt className="text-[11px] font-bold uppercase tracking-[0.2em] text-mist">Home ground</dt>
+                <dt className="text-xs font-bold uppercase tracking-wider text-mist">Home ground</dt>
                 <dd className="mt-0.5">{profile.location}</dd>
               </div>
             </dl>

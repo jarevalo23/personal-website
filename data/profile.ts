@@ -55,7 +55,7 @@ export const profile = {
     nation: { name: "Nation", flag: "/images/flag-placeholder.svg" },
     club: "Stanford",
     /** Card finish: "gold" | "neon" | "icon". */
-    finish: "neon" as "gold" | "neon" | "icon",
+    finish: "gold" as "gold" | "neon" | "icon",
   },
 
   /** Six stats show on the card face; all of them show as bars. */

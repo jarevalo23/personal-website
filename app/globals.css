@@ -5,22 +5,33 @@
    data-accent="soccer|basketball|swim|contact|github|linkedin" on any element;
    use `text-accent`, `bg-accent/20`, `border-accent/40` etc. inside it. */
 @theme {
-  --color-ink-950: #04060d;
-  --color-ink-900: #070b18;
-  --color-ink-800: #0c1328;
-  --color-ink-700: #131c38;
-  --color-ink-600: #1d2a52;
-  --color-fog: #eef2ff; /* primary text */
-  --color-mist: #a9b4d6; /* secondary text (AA on ink) */
-  --color-brand: #6f8cff; /* global menu accent */
+  /* FIFA-style indigo/purple base */
+  --color-ink-950: #120c37;
+  --color-ink-900: #18114a;
+  --color-ink-800: #221a63;
+  --color-ink-700: #2c2379;
+  --color-ink-600: #3b2f99;
+  --color-fog: #f4f1ff; /* primary text */
+  --color-mist: #bdb6e8; /* secondary text (AA on ink) */
+  --color-brand: #a35bff; /* selection purple */
   --color-pitch: #3dff8a;
   --color-hoop: #ff8a1f;
   --color-pool: #2ee6ff;
   --color-press: #ffd23f;
   --color-redcard: #ff4d5e;
 
-  --font-display: var(--font-bebas), "Impact", "Arial Narrow Bold", sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-condensed), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Sharp, game-UI corners everywhere (rounded-full is untouched). */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
 
   --ease-snap: cubic-bezier(0.2, 0.9, 0.2, 1);
   --ease-wipe: cubic-bezier(0.7, 0, 0.3, 1);
@@ -33,14 +44,14 @@
 
 :root {
   --accent: var(--color-brand);
-  --accent-ink: #050a1f;
-  --hud-h: 3.5rem;
+  --accent-ink: #ffffff;
+  --hud-h: 5.25rem;
   color-scheme: dark;
 }
 
 [data-accent="menu"] {
   --accent: var(--color-brand);
-  --accent-ink: #050a1f;
+  --accent-ink: #ffffff;
 }
 [data-accent="soccer"] {
   --accent: var(--color-pitch);
@@ -74,7 +85,8 @@ html {
 }
 
 body {
-  background: var(--color-ink-950);
+  /* Transparent so fixed -z-10 backdrops (GameBackground) show; the canvas takes html's colour. */
+  background: transparent;
   color: var(--color-fog);
   font-family: var(--font-sans);
   min-height: 100dvh;
@@ -87,16 +99,21 @@ body {
   color: var(--accent-ink);
 }
 
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
+/* In the base layer so utilities like outline-none can override it. */
+@layer base {
+  :focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+  }
 }
 
 /* Component classes live in a layer so Tailwind utilities (hidden, py-4, …) can override them. */
 @layer components {
   .font-display {
-    letter-spacing: 0.02em;
-    line-height: 0.9;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.95;
   }
 
   /* Outlined display text (intro splash, big numbers). */
@@ -104,38 +121,20 @@ body {
     color: transparent;
     -webkit-text-stroke: 2px var(--stroke, var(--color-fog));
   }
-  .text-outline-accent {
-    color: transparent;
-    -webkit-text-stroke: 2px var(--accent);
-  }
 
-  .glow-text {
-    text-shadow: 0 0 18px color-mix(in oklab, var(--accent) 55%, transparent);
-  }
-
-  /* Glassy HUD-style panel. */
+  /* Flat game-UI panel: solid fill, thin light border, square corners. */
   .panel {
-    background: linear-gradient(
-      180deg,
-      color-mix(in oklab, var(--color-ink-700) 94%, transparent),
-      color-mix(in oklab, var(--color-ink-800) 97%, transparent)
-    );
-    border: 1px solid color-mix(in oklab, white 9%, transparent);
-    border-radius: 1rem;
-    box-shadow:
-      0 20px 60px -30px rgb(0 0 0 / 0.8),
-      inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+    background: linear-gradient(160deg, var(--color-ink-700), var(--color-ink-800));
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 2px;
   }
 
+  /* Panel with a coloured top edge in the section accent. */
   .panel-accent {
-    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
-    box-shadow:
-      0 0 0 1px color-mix(in oklab, var(--accent) 10%, transparent),
-      0 24px 70px -35px color-mix(in oklab, var(--accent) 45%, transparent),
-      inset 0 1px 0 color-mix(in oklab, white 6%, transparent);
+    box-shadow: inset 0 3px 0 var(--accent);
   }
 
-  /* Keyboard key caps used in hints ("Esc", "Enter"). */
+  /* Keyboard / controller prompt glyphs ("Esc", "Enter", "Q"). */
   .keycap {
     display: inline-flex;
     align-items: center;
@@ -143,17 +142,16 @@ body {
     min-width: 1.6em;
     height: 1.6em;
     padding: 0 0.4em;
-    border-radius: 0.35em;
-    border: 1px solid color-mix(in oklab, white 22%, transparent);
-    border-bottom-width: 3px;
-    background: color-mix(in oklab, white 6%, transparent);
-    font-size: 0.75rem;
-    font-weight: 600;
+    border-radius: 9999px;
+    border: 1.5px solid rgb(255 255 255 / 0.75);
+    background: rgb(0 0 0 / 0.25);
+    font-size: 0.7rem;
+    font-weight: 700;
     line-height: 1;
     color: var(--color-fog);
   }
 
-  /* Big action button (game style). */
+  /* Primary action button: flat block of accent colour. */
   .btn-game {
     position: relative;
     display: inline-flex;
@@ -162,35 +160,31 @@ body {
     gap: 0.5rem;
     min-height: 2.75rem;
     padding: 0.6rem 1.4rem;
-    border-radius: 0.6rem;
+    border-radius: 2px;
     background: var(--accent);
     color: var(--accent-ink);
     font-family: var(--font-display);
-    font-size: 1.35rem;
-    letter-spacing: 0.06em;
+    font-weight: 700;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     line-height: 1;
     transition:
-      transform 160ms var(--ease-snap),
-      box-shadow 160ms var(--ease-snap),
-      filter 160ms;
-    box-shadow:
-      0 6px 0 color-mix(in oklab, var(--accent) 45%, black),
-      0 10px 30px -10px color-mix(in oklab, var(--accent) 70%, transparent);
+      filter 150ms,
+      transform 150ms var(--ease-snap);
     user-select: none;
     -webkit-user-select: none;
   }
   .btn-game:hover {
-    filter: brightness(1.08);
-    transform: translateY(-1px);
+    filter: brightness(1.1);
   }
   .btn-game:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 color-mix(in oklab, var(--accent) 45%, black);
+    transform: scale(0.98);
   }
-  .btn-game:disabled {
-    filter: grayscale(0.7) brightness(0.7);
+  .btn-game:disabled,
+  .btn-game[aria-disabled="true"] {
+    filter: grayscale(0.6) brightness(0.75);
     cursor: not-allowed;
-    transform: none;
   }
 
   .btn-ghost {
@@ -199,18 +193,17 @@ body {
     gap: 0.5rem;
     min-height: 2.75rem;
     padding: 0.55rem 1.1rem;
-    border-radius: 0.6rem;
-    border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+    border-radius: 2px;
+    border: 1px solid rgb(255 255 255 / 0.3);
     color: var(--color-fog);
-    background: color-mix(in oklab, var(--accent) 8%, transparent);
+    background: rgb(255 255 255 / 0.04);
     font-weight: 600;
     transition:
-      background 160ms,
-      border-color 160ms,
-      transform 160ms var(--ease-snap);
+      background 150ms,
+      border-color 150ms;
   }
   .btn-ghost:hover {
-    background: color-mix(in oklab, var(--accent) 18%, transparent);
+    background: rgb(255 255 255 / 0.1);
     border-color: var(--accent);
   }
 
@@ -227,7 +220,7 @@ body {
     background-size: 100% 2px;
   }
 
-  /* Visually hidden but available to screen readers. */
+  /* Visually hidden until focused (skip link). */
   .sr-only-focusable:not(:focus):not(:focus-visible) {
     position: absolute;
     width: 1px;
@@ -314,198 +307,124 @@ html[data-intro-done] .intro-splash {
   }
 }
 
-/* ───────────────────────── Menu grid ───────────────────────── */
+/* ───────────────────────── Menu grid (FIFA 21 layout) ───────────────────────── */
 .menu-grid {
   display: grid;
-  gap: 0.875rem;
+  gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "about about" "projects projects" "fun fun" "contact contact" "github linkedin";
+  grid-template-rows: 15rem repeat(4, 11.5rem);
+  grid-template-areas:
+    "about about"
+    "projects fun"
+    "contact contact"
+    "practice email"
+    "github linkedin";
 }
 @media (min-width: 640px) {
   .menu-grid {
-    gap: 1rem;
-    grid-template-areas: "about projects" "fun contact" "github linkedin";
+    gap: 0.625rem;
+    grid-template-rows: repeat(4, 14rem);
+    grid-template-areas:
+      "about projects"
+      "fun contact"
+      "practice email"
+      "github linkedin";
   }
 }
 @media (min-width: 1024px) {
   .menu-grid {
-    grid-template-columns: 1.3fr 1fr 1fr 0.62fr 0.62fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1.65fr 1fr;
     grid-template-areas:
-      "about projects fun contact contact"
-      "about projects fun github linkedin";
+      "about projects fun contact"
+      "github linkedin practice email";
   }
 }
 
 /* ───────────────────────── Menu tiles ───────────────────────── */
 .menu-tile {
-  --tile-glow: color-mix(in oklab, var(--accent) 55%, transparent);
+  background: linear-gradient(160deg, rgb(46 37 128 / 0.9) 0%, rgb(36 28 106 / 0.92) 100%);
+  border: 1px solid rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(6px);
   transition:
-    transform 260ms var(--ease-snap),
-    box-shadow 260ms var(--ease-snap),
-    border-color 200ms;
-  transform: translateZ(0);
+    background 160ms,
+    border-color 160ms,
+    transform 220ms var(--ease-snap);
+}
+.menu-tile:hover {
+  border-color: rgb(255 255 255 / 0.4);
 }
 .menu-tile[data-selected="true"] {
-  transform: scale(1.035);
   z-index: 2;
-  border-color: var(--accent);
-  box-shadow:
-    0 0 0 2px var(--accent),
-    0 0 40px -6px var(--tile-glow),
-    0 30px 80px -30px var(--tile-glow);
-}
-.menu-tile .tile-underline {
-  transform: scaleX(0.18);
-  transform-origin: left;
-  transition: transform 380ms var(--ease-snap);
-}
-.menu-tile[data-selected="true"] .tile-underline {
-  transform: scaleX(1);
+  background: linear-gradient(160deg, #a35bff 0%, #7a3cf0 100%);
+  border-color: rgb(255 255 255 / 0.9);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.9);
+  transform: scale(1.015);
 }
 .menu-tile .tile-art {
-  transition:
-    transform 500ms var(--ease-snap),
-    opacity 300ms;
-  opacity: 0.85;
+  transition: transform 400ms var(--ease-snap);
 }
 .menu-tile[data-selected="true"] .tile-art {
-  transform: scale(1.08) rotate(-3deg);
-  opacity: 1;
+  transform: scale(1.04);
 }
 .menu-tile .tile-shine {
-  background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 0.16) 50%, transparent 65%);
+  background: linear-gradient(110deg, transparent 40%, rgb(255 255 255 / 0.14) 50%, transparent 60%);
   transform: translateX(-120%);
 }
 .menu-tile[data-selected="true"] .tile-shine {
-  animation: shine 900ms var(--ease-snap) 1;
+  animation: shine 700ms ease-out 1;
 }
 @keyframes shine {
   to {
     transform: translateX(120%);
   }
 }
-.menu-tile .tile-cta {
-  opacity: 0;
-  transform: translateX(-6px);
-  transition:
-    opacity 200ms,
-    transform 250ms var(--ease-snap);
-}
-.menu-tile[data-selected="true"] .tile-cta {
-  opacity: 1;
-  transform: none;
-}
 
-/* ───────────────────────── Stadium background (menu) ───────────────────────── */
-.stadium-floor {
-  position: absolute;
-  left: -50%;
-  right: -50%;
-  bottom: -10%;
-  height: 75%;
-  transform: perspective(700px) rotateX(62deg);
-  transform-origin: 50% 100%;
-  overflow: hidden;
-  mask-image: linear-gradient(to top, black 30%, transparent 95%);
-}
-.stadium-floor-inner {
-  position: absolute;
-  inset: -100% 0 0 0;
-  background:
-    repeating-linear-gradient(90deg, rgb(61 255 138 / 0.05) 0 80px, rgb(61 255 138 / 0.09) 80px 160px),
-    linear-gradient(rgb(255 255 255 / 0.1), rgb(255 255 255 / 0.1)) 50% 0 / 2px 100% no-repeat,
-    repeating-linear-gradient(0deg, transparent 0 238px, rgb(255 255 255 / 0.1) 238px 240px);
-  animation: pan-field 22s linear infinite;
+/* Slow drift on the menu background art. */
+.art-drift {
+  animation: art-drift 40s ease-in-out infinite alternate;
   will-change: transform;
 }
-@keyframes pan-field {
+@keyframes art-drift {
   from {
-    transform: translate3d(0, 0, 0);
+    transform: scale(1.04) translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(0, 50%, 0);
-  }
-}
-.floodlight {
-  position: absolute;
-  width: 60vmax;
-  height: 60vmax;
-  border-radius: 9999px;
-  background: radial-gradient(circle, rgb(190 210 255 / 0.2), transparent 60%);
-  animation: flicker 7s ease-in-out infinite;
-  will-change: opacity;
-}
-@keyframes flicker {
-  0%,
-  100% {
-    opacity: 0.75;
-  }
-  45% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.6;
-  }
-  55% {
-    opacity: 0.95;
-  }
-}
-.particle {
-  position: absolute;
-  bottom: -10px;
-  width: var(--s, 3px);
-  height: var(--s, 3px);
-  border-radius: 9999px;
-  background: rgb(220 230 255 / 0.7);
-  box-shadow: 0 0 8px rgb(180 200 255 / 0.8);
-  animation: float-up var(--d, 14s) linear infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: 0;
-  will-change: transform, opacity;
-}
-@keyframes float-up {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  10% {
-    opacity: var(--o, 0.6);
-  }
-  90% {
-    opacity: var(--o, 0.6);
-  }
-  100% {
-    transform: translate3d(var(--dx, 20px), -105vh, 0);
-    opacity: 0;
+    transform: scale(1.08) translate3d(-1.5%, 1%, 0);
   }
 }
 
 /* ───────────────────────── Section backgrounds ───────────────────────── */
+.scene-base {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 115%, rgb(124 92 255 / 0.35), transparent 70%),
+    linear-gradient(180deg, #2a1f76 0%, #1b1457 45%, #130d3b 100%);
+}
+.scene-pitch,
+.scene-court,
+.scene-pool,
+.scene-press {
+  position: absolute;
+  inset: 0;
+  opacity: 0.9;
+}
 .scene-pitch {
   background:
-    radial-gradient(ellipse at 50% -10%, rgb(61 255 138 / 0.18), transparent 55%),
-    repeating-linear-gradient(90deg, rgb(61 255 138 / 0.035) 0 90px, rgb(61 255 138 / 0.065) 90px 180px), var(--color-ink-950);
+    radial-gradient(ellipse at 85% -10%, rgb(61 255 138 / 0.14), transparent 50%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.015) 0 90px, rgb(255 255 255 / 0.035) 90px 180px);
 }
 .scene-court {
   background:
-    radial-gradient(ellipse at 50% -10%, rgb(255 138 31 / 0.2), transparent 55%),
-    repeating-linear-gradient(
-      90deg,
-      rgb(255 160 80 / 0.035) 0 46px,
-      rgb(255 160 80 / 0.06) 46px 48px,
-      rgb(255 160 80 / 0.025) 48px 94px,
-      rgb(255 160 80 / 0.05) 94px 96px
-    ),
-    var(--color-ink-950);
+    radial-gradient(ellipse at 85% -10%, rgb(255 138 31 / 0.16), transparent 50%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 0.015) 0 46px, rgb(255 255 255 / 0.035) 46px 48px);
 }
 .scene-pool {
   background:
-    radial-gradient(ellipse at 50% -10%, rgb(46 230 255 / 0.22), transparent 55%),
-    linear-gradient(180deg, #031a2e 0%, #04121f 45%, var(--color-ink-950) 100%);
+    radial-gradient(ellipse at 85% -10%, rgb(46 230 255 / 0.16), transparent 50%),
+    linear-gradient(180deg, rgb(46 230 255 / 0.06), transparent 60%);
 }
 .scene-press {
-  background: radial-gradient(ellipse at 50% -10%, rgb(255 210 63 / 0.16), transparent 55%), var(--color-ink-950);
+  background: radial-gradient(ellipse at 85% -10%, rgb(255 210 63 / 0.12), transparent 50%);
 }
 
 /* Water caustics: two tiled light networks drifting in opposite directions. */
@@ -724,17 +643,12 @@ html:has(dialog[open]) {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .particle,
+  .art-drift,
   .caustics,
-  .stadium-floor-inner,
-  .floodlight,
   .ripple-ring,
   .keeper-sway,
   .pulse-ring {
     animation: none !important;
-  }
-  .particle {
-    display: none;
   }
   .menu-tile[data-selected="true"] {
     transform: none;

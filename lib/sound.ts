@@ -23,8 +23,11 @@ function getContext(): AudioContext | null {
   return ctx;
 }
 
-function tone(c: AudioContext, opts: { type?: Wave; from: number; to?: number; dur: number; gain?: number; delay?: number }) {
-  const { type = "sine", from, to = from, dur, gain = 0.15, delay = 0 } = opts;
+function tone(
+  c: AudioContext,
+  opts: { type?: Wave; from: number; to?: number; dur: number; gain?: number; delay?: number; attack?: number },
+) {
+  const { type = "sine", from, to = from, dur, gain = 0.15, delay = 0, attack = 0.012 } = opts;
   const t0 = c.currentTime + delay;
   const osc = c.createOscillator();
   const g = c.createGain();
@@ -32,7 +35,7 @@ function tone(c: AudioContext, opts: { type?: Wave; from: number; to?: number; d
   osc.frequency.setValueAtTime(from, t0);
   if (to !== from) osc.frequency.exponentialRampToValueAtTime(to, t0 + dur);
   g.gain.setValueAtTime(0.0001, t0);
-  g.gain.exponentialRampToValueAtTime(gain, t0 + 0.012);
+  g.gain.exponentialRampToValueAtTime(gain, t0 + attack);
   g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
   osc.connect(g).connect(master!);
   osc.start(t0);
@@ -80,10 +83,15 @@ const recipes = {
   /** Menu focus change — short airy whoosh. */
   move: (c: AudioContext) => noise(c, { dur: 0.14, gain: 0.09, from: 700, to: 3200, q: 0.9 }),
   /** Confirm / select — two-step blip. */
+  /** Confirm / click: a crisp shooter-style "hit marker" tick (original synth, not a sample). */
   select: (c: AudioContext) => {
-    tone(c, { type: "square", from: 660, dur: 0.06, gain: 0.05 });
-    tone(c, { type: "square", from: 990, dur: 0.1, gain: 0.05, delay: 0.06 });
-    noise(c, { dur: 0.22, gain: 0.06, from: 1200, to: 5000, q: 0.7, delay: 0.02 });
+    // Sharp transient: a very short burst of bright, high-passed noise.
+    noise(c, { dur: 0.035, gain: 0.32, filter: "highpass", from: 3800, q: 0.8, attack: 0.001 });
+    // Metallic body: two inharmonic pings that ring for a few dozen ms.
+    tone(c, { type: "triangle", from: 3150, to: 2900, dur: 0.07, gain: 0.14, attack: 0.001 });
+    tone(c, { type: "square", from: 4720, to: 4400, dur: 0.045, gain: 0.035, attack: 0.001 });
+    // A tiny low "thud" so it lands with some weight.
+    tone(c, { type: "sine", from: 900, to: 400, dur: 0.03, gain: 0.08, attack: 0.001 });
   },
   back: (c: AudioContext) => {
     tone(c, { type: "square", from: 740, dur: 0.06, gain: 0.045 });

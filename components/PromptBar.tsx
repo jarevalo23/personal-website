@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { profile } from "@/data/profile";
 import { site } from "@/data/site";
+import { NowPlaying } from "./NowPlaying";
 import { useScreenTransition } from "./providers/TransitionProvider";
 
 /**
@@ -32,7 +33,10 @@ export function PromptBar() {
             Back<span className="sr-only"> to main menu</span>
           </button>
         )}
-        <p className="ml-auto flex items-center gap-2 font-display text-xl tracking-wide text-fog/90" aria-hidden="true">
+        <div className="flex min-w-0 flex-1 justify-center">
+          <NowPlaying />
+        </div>
+        <p className="hidden items-center gap-2 font-display text-xl tracking-wide text-fog/90 sm:flex" aria-hidden="true">
           <span className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-fog/80 text-[10px] leading-none">
             {profile.firstName[0]}
             {profile.lastName[0]}

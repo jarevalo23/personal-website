@@ -632,6 +632,22 @@ html:has(dialog[open]) {
   }
 }
 
+/* Now Playing equalizer bars. */
+.eq-bar {
+  animation: eq 0.9s ease-in-out infinite alternate;
+}
+@keyframes eq {
+  0% {
+    height: 20%;
+  }
+  50% {
+    height: 100%;
+  }
+  100% {
+    height: 45%;
+  }
+}
+
 /* ───────────────────────── Reduced motion ───────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -644,6 +660,7 @@ html:has(dialog[open]) {
     scroll-behavior: auto !important;
   }
   .art-drift,
+  .eq-bar,
   .caustics,
   .ripple-ring,
   .keeper-sway,

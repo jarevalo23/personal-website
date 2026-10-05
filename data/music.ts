@@ -21,7 +21,10 @@ export type Track = {
 
 export const music = {
   tracks: [
-    // { url: "https://soundcloud.com/artist/track-name", label: "Artist — Track" },
+    {
+      url: "https://soundcloud.com/user-507758071-745656517/sets/best-fifa-songs-14-23-fifa-23",
+      label: "Best FIFA Songs 14–23",
+    },
   ] as Track[],
   /** 0–100 */
   volume: 50,

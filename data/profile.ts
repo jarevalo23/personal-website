@@ -5,7 +5,7 @@
  *  scouting report (bio) and the fun facts unlocked in the penalty shootout.
  *
  *  Placeholders still to fill in — search this file for:
- *    [EMAIL]   [LINKEDIN_URL]   [PHOTO]   [BIO]   [NATION]
+ *    [PHOTO]   [NATION]   [RATINGS]   [FUN_FACTS]
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -23,19 +23,18 @@ export const profile = {
   lastName: "Arevalo",
   /** Big number on the intro splash and player card. */
   jerseyNumber: 23,
-  tagline: "CS @ Stanford · Machine Learning & Sports Analytics",
+  tagline: "CS @ Stanford · Software Engineer · Machine Learning",
 
-  // [EMAIL] — public address for the copy-to-clipboard button and mailto fallback.
-  email: "you@example.com",
+  /** Public address for the copy-to-clipboard button and mailto fallback. */
+  email: "jareval0@stanford.edu",
 
   links: {
     github: "https://github.com/jarevalo23",
-    // [LINKEDIN_URL] — full URL of your LinkedIn profile.
-    linkedin: "https://www.linkedin.com/in/your-handle",
+    linkedin: "https://www.linkedin.com/in/josue-arevalo-a664a42b1/",
   },
 
   /** Shown in the press room (contact page). */
-  availability: "Open to ML / data science internships and fun side projects.",
+  availability: "Open to software engineering and ML roles. B.S. in Computer Science, June 2027.",
   responseTime: "Usually within 48 hours",
   location: "Stanford, CA",
 
@@ -50,7 +49,7 @@ export const profile = {
     /** Position code under the rating. */
     position: "ST",
     /** Longer role line on the intro splash. */
-    role: "ML Engineer",
+    role: "Software Engineer",
     // [NATION] — country name + flag image in /public/images.
     nation: { name: "Nation", flag: "/images/flag-placeholder.svg" },
     club: "Stanford",
@@ -58,43 +57,59 @@ export const profile = {
     finish: "gold" as "gold" | "neon" | "icon",
   },
 
-  /** Six stats show on the card face; all of them show as bars. */
+  /**
+   * Six stats show on the card face; all of them show as bars.
+   * [RATINGS] Skills come from your resume; the numbers are just for fun — tune them.
+   */
   stats: [
     { short: "PYT", label: "Python", value: 94 },
-    { short: "ML", label: "Machine Learning", value: 89 },
-    { short: "PRB", label: "Problem Solving", value: 92 },
-    { short: "DAT", label: "Data Viz", value: 86 },
-    { short: "TMW", label: "Teamwork", value: 90 },
+    { short: "TS", label: "TypeScript / Next.js", value: 89 },
+    { short: "LLM", label: "LLM apps & RAG", value: 92 },
+    { short: "ML", label: "Machine Learning (PyTorch)", value: 88 },
+    { short: "CV", label: "Computer Vision", value: 86 },
+    { short: "SQL", label: "SQL / PostGIS", value: 85 },
+    { short: "ESP", label: "Spanish", value: 90 },
     { short: "COF", label: "Coffee", value: 97 },
-    { short: "SQL", label: "SQL", value: 84 },
-    { short: "SPT", label: "Sports IQ", value: 95 },
   ] satisfies Stat[],
 
-  /** "Scouting report" — your bio, written like a scout's notes. [BIO] */
+  /** "Career history" in the scouting report — like a FIFA transfer history. */
+  career: [
+    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun 2026 – Present", place: "Remote" },
+    { club: "The Aerospace Corporation", role: "System Engineer Intern III", dates: "Jun – Aug 2025", place: "El Segundo, CA" },
+    { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
+    {
+      club: "Stanford University",
+      role: "B.S. Computer Science (ML) · Psychology minor",
+      dates: "Expected Jun 2027",
+      place: "Stanford, CA",
+    },
+  ],
+
+  /** "Scouting report" — your bio, written like a scout's notes (from your resume). */
   scouting: {
-    headline: "Data-driven forward who turns messy real-world questions into models.",
+    headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
-      "A computer science student at Stanford pursuing a coterminal master's with a focus on machine learning. Fascinated by what happens when data meets the games we love — spends most training sessions building models that try to understand and predict the patterns hidden in sports.",
-      "Equally comfortable training a neural network or arguing about win probability. Driven by curiosity and the joy of turning messy real-world questions into things a computer can reason about.",
+      "Computer Science student at Stanford (B.S., machine learning focus, minor in Psychology), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
+      "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [
       { label: "Preferred foot", value: "Python" },
-      { label: "Weak foot", value: "★★★★☆ (CSS)" },
-      { label: "Work rate", value: "High / High" },
-      { label: "Club", value: "Stanford CS" },
-      { label: "Specialty", value: "Sports analytics" },
+      { label: "Weak foot", value: "★★★★☆ (TypeScript)" },
+      { label: "Current club", value: "ShipAdvisor" },
+      { label: "Academy", value: "Stanford CS" },
+      { label: "Languages", value: "English · Spanish" },
     ],
     strengths: [
-      "Reads the game early — scopes problems before writing code",
-      "Clinical finisher: ships end-to-end, from notebook to deployed app",
-      "Links up well with teammates; clear written communication",
+      "LLM systems that hold up: schema-validated extraction, cited sources, human review",
+      "End-to-end delivery, from PostGIS pipelines to Next.js front ends",
+      "Computer vision and ML research with PyTorch, OpenCV and YOLOv8",
     ],
     developing: ["Occasionally over-engineers the build-up play", "Will debate any offside call (and any p-value)"],
-    playsLike: "A pressing forward with a data scientist's touch",
+    playsLike: "A box-to-box engineer with a striker's finish",
     verdict: "Sign immediately. High ceiling, low maintenance, runs on coffee.",
   },
 
-  /** Revealed one at a time when you score in the penalty shootout. */
+  /** Revealed one at a time when you score in the penalty shootout. [FUN_FACTS] Make these true! */
   funFacts: [
     "I've built more sports prediction models than I'd like to admit — the bracket still always loses.",
     "Favorite pre-game ritual: a cold brew and a fresh Jupyter notebook.",

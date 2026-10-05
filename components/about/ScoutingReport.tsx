@@ -64,6 +64,20 @@ export function ScoutingReport() {
             ))}
           </dl>
           <div>
+            <h3 className="font-display text-2xl text-accent">Career history</h3>
+            <ol className="mt-2 space-y-2">
+              {profile.career.map((c) => (
+                <li key={`${c.club}-${c.role}`} className="border-l-2 border-accent/60 pl-3 text-sm">
+                  <p className="font-semibold">{c.club}</p>
+                  <p className="text-fog/85">{c.role}</p>
+                  <p className="text-xs text-mist">
+                    {c.dates} · {c.place}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+          <div>
             <h3 className="text-xs font-bold uppercase tracking-wider text-mist">Plays like</h3>
             <p className="mt-1 font-display text-2xl">{scouting.playsLike}</p>
           </div>

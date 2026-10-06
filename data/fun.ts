@@ -15,22 +15,23 @@ export type FunItem = {
   tags?: string[];
   link?: { label: string; href: string };
   /**
-   * Optional YouTube video shown in the lane (public or unlisted both work).
-   * Use the ID from the link: youtube.com/watch?v=THIS_PART or youtu.be/THIS_PART
+   * Optional click-to-play video shown in the lane. Either:
+   *  - a video file in /public/videos:  { src: "/videos/clip.mp4", title: "...", poster?: "/videos/clip.jpg" }
+   *  - a YouTube video (public or unlisted): { youtubeId: "ID from youtu.be/ID", title: "..." }
    */
-  video?: { youtubeId: string; title: string };
+  video?: { src: string; title: string; poster?: string } | { youtubeId: string; title: string };
 };
 
 export const funItems: FunItem[] = [
   {
     category: "Music",
-    title: "Bassist in a campus band",
-    description: "I play bass in a band on campus. I started playing at church when I was 11.",
+    title: "Bassist in Bucketlist",
+    description: "I play bass in Bucketlist, a band on campus. I started playing at church when I was 11.",
     emoji: "🎸",
-    tags: ["Bass", "Since age 11"],
-    link: { label: "Follow the band on Instagram", href: "https://www.instagram.com/therealbucketlist/" },
-    // [BAND_VIDEO] Add an unlisted YouTube video of the band:
-    // video: { youtubeId: "VIDEO_ID", title: "The band live" },
+    tags: ["Bucketlist", "Bass", "Since age 11"],
+    link: { label: "Follow Bucketlist on Instagram", href: "https://www.instagram.com/therealbucketlist/" },
+    // [BAND_VIDEO] Drop the clip at public/videos/bucketlist.mp4, then uncomment:
+    // video: { src: "/videos/bucketlist.mp4", title: "Bucketlist live" },
   },
   {
     category: "Live music",

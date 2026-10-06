@@ -111,7 +111,7 @@ export const profile = {
 
   /** Revealed one at a time when you score in the penalty shootout. */
   funFacts: [
-    "I play bass in a band on campus.",
+    "I play bass in Bucketlist, a band on campus.",
     "I picked up the bass at church when I was 11, and I've been holding down the low end ever since.",
     "Real Madrid is my club. ¡Hala Madrid!",
     "Madrid and the Lakers: the two teams I would die for.",

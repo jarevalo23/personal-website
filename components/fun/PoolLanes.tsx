@@ -1,5 +1,6 @@
 import { funItems } from "@/data/fun";
 import { LiteYouTube } from "./LiteYouTube";
+import { VideoClip } from "./VideoClip";
 
 /** Lane rope: alternating floats like a real competition pool. */
 function LaneRope() {
@@ -81,7 +82,11 @@ export function PoolLanes() {
               {item.video && (
                 <div className="px-3 pb-4 sm:pl-[7.5rem] sm:pr-4">
                   <div className="max-w-xl">
-                    <LiteYouTube youtubeId={item.video.youtubeId} title={item.video.title} />
+                    {"src" in item.video ? (
+                      <VideoClip src={item.video.src} title={item.video.title} poster={item.video.poster} />
+                    ) : (
+                      <LiteYouTube youtubeId={item.video.youtubeId} title={item.video.title} />
+                    )}
                   </div>
                 </div>
               )}

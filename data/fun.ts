@@ -1,8 +1,7 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────────
  *  FUN STUFF — each item gets its own pool lane (top to bottom, lane 1 first).
- *  All entries below are PLACEHOLDERS: swap in your own hobbies, playlists,
- *  favorite things and random facts. Add or remove lanes freely.
+ *  Hobbies, favorite teams and random facts. Add or remove lanes freely.
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -19,43 +18,39 @@ export type FunItem = {
 
 export const funItems: FunItem[] = [
   {
-    category: "Hobby",
-    title: "Pickup soccer on weekends",
-    description: "Placeholder — where you play, what position, and your signature move.",
+    category: "Music",
+    title: "Bassist in a campus band",
+    description: "I play bass in a band on campus. I started playing at church when I was 11.",
+    emoji: "🎸",
+    tags: ["Bass", "Since age 11"],
+  },
+  {
+    category: "Fútbol",
+    title: "Real Madrid till I die",
+    description: "Madrid is my club, no debate. ¡Hala Madrid!",
     emoji: "⚽",
-    tags: ["Sundays", "Left wing"],
+    tags: ["Hala Madrid"],
+  },
+  {
+    category: "Hoops",
+    title: "Lakers forever",
+    description:
+      "LA born and raised, so it was always going to be the Lakers. Madrid and the Lakers are the two teams I'd die for.",
+    emoji: "🏀",
+    tags: ["Purple & Gold"],
+  },
+  {
+    category: "Roots",
+    title: "Salvadoran roots, LA raised",
+    description: "Born and raised in Los Angeles, with family roots in El Salvador. I speak English and Spanish.",
+    emoji: "🌎",
+    tags: ["Los Angeles", "El Salvador"],
   },
   {
     category: "On repeat",
-    title: "Game-day playlist",
-    description: "Placeholder — the songs that get you locked in before a big deadline.",
+    title: "My playlist",
+    description: "My personal playlist, the same one playing on the radio at the bottom of the screen.",
     emoji: "🎧",
-    link: { label: "Listen on Spotify", href: "https://open.spotify.com" },
-  },
-  {
-    category: "Training",
-    title: "Lap swimming",
-    description: "Placeholder — favorite stroke, weekly distance, best 50m time.",
-    emoji: "🏊",
-    tags: ["Freestyle", "Early mornings"],
-  },
-  {
-    category: "Fandom",
-    title: "Teams I'll defend forever",
-    description: "Placeholder — your clubs and franchises, and your most painful sports memory.",
-    emoji: "🏟️",
-    tags: ["Team one", "Team two"],
-  },
-  {
-    category: "Reading",
-    title: "Currently reading",
-    description: "Placeholder — a book, paper or newsletter you'd recommend to anyone.",
-    emoji: "📚",
-  },
-  {
-    category: "Random fact",
-    title: "Something nobody guesses",
-    description: "Placeholder — a surprising fact about you that starts good conversations.",
-    emoji: "🎲",
+    link: { label: "Open in Spotify", href: "https://open.spotify.com/playlist/1y9yDEFTKBimrRdmIOjJlz" },
   },
 ];

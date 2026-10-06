@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">
-  <!-- Placeholder flag: replace with your nation's flag (see data/profile.ts) -->
-  <rect width="30" height="20" rx="2" fill="#1d2a52"/>
-  <rect y="7" width="30" height="6" fill="#3dff8a"/>
-  <circle cx="15" cy="10" r="4.5" fill="#eef2ff"/>
-</svg>

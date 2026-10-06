@@ -5,7 +5,7 @@
  *  scouting report (bio) and the fun facts unlocked in the penalty shootout.
  *
  *  Placeholders still to fill in — search this file for:
- *    [PHOTO]   [NATION]   [RATINGS]   [FUN_FACTS]
+ *    [PHOTO]   [RATINGS]
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -36,7 +36,7 @@ export const profile = {
   /** Shown in the press room (contact page). */
   availability: "Open to software engineering and ML roles. B.S. in Computer Science, June 2027.",
   responseTime: "Usually within 48 hours",
-  location: "Stanford, CA",
+  location: "Los Angeles, CA",
 
   // [PHOTO] — put your photo in /public/images (e.g. /public/images/profile.jpg)
   // and point to it here. A roughly square, transparent-background PNG looks most
@@ -50,8 +50,7 @@ export const profile = {
     position: "ST",
     /** Longer role line on the intro splash. */
     role: "Software Engineer",
-    // [NATION] — country name + flag image in /public/images.
-    nation: { name: "Nation", flag: "/images/flag-placeholder.svg" },
+    nation: { name: "El Salvador", flag: "/images/flag-el-salvador.svg" },
     club: "Stanford",
     /** Card finish: "gold" | "neon" | "icon". */
     finish: "gold" as "gold" | "neon" | "icon",
@@ -89,7 +88,7 @@ export const profile = {
   scouting: {
     headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
-      "Computer Science student at Stanford (B.S., machine learning focus, minor in Psychology), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
+      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., machine learning focus, minor in Psychology), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
       "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [
@@ -98,6 +97,9 @@ export const profile = {
       { label: "Current club", value: "ShipAdvisor" },
       { label: "Academy", value: "Stanford CS" },
       { label: "Languages", value: "English · Spanish" },
+      { label: "Hometown", value: "Los Angeles, CA" },
+      { label: "Heritage", value: "El Salvador" },
+      { label: "Clubs", value: "Real Madrid · Lakers" },
     ],
     strengths: [
       "LLM systems that hold up: schema-validated extraction, cited sources, human review",
@@ -109,14 +111,14 @@ export const profile = {
     verdict: "Sign immediately. High ceiling, low maintenance, runs on coffee.",
   },
 
-  /** Revealed one at a time when you score in the penalty shootout. [FUN_FACTS] Make these true! */
+  /** Revealed one at a time when you score in the penalty shootout. */
   funFacts: [
-    "I've built more sports prediction models than I'd like to admit — the bracket still always loses.",
-    "Favorite pre-game ritual: a cold brew and a fresh Jupyter notebook.",
-    "I swim laps to debug — the best ideas show up around lap 20.",
-    "I can name every World Cup winner since 1930 (try me).",
-    "My first program was a script to track pickup basketball stats.",
-    "Coffee order: oat-milk cortado. Non-negotiable.",
+    "I play bass in a band on campus.",
+    "I picked up the bass at church when I was 11, and I've been holding down the low end ever since.",
+    "Real Madrid is my club. ¡Hala Madrid!",
+    "Madrid and the Lakers: the two teams I would die for.",
+    "Born and raised in LA, with roots in El Salvador.",
+    "I speak English and Spanish.",
   ],
 };
 

@@ -52,17 +52,15 @@ All personal content lives in **`/data`**:
 Search for the bracketed markers:
 
 ```bash
-grep -rn "\[DOMAIN_TO_BE_PROVIDED\]\|\[PHOTO\]\|\[NATION\]\|\[RATINGS\]\|\[FUN_FACTS\]\|Placeholder" data
+grep -rn "\[DOMAIN_TO_BE_PROVIDED\]\|\[PHOTO\]\|\[RATINGS\]\|Placeholder" data
 ```
 
 - **`[PHOTO]`**: drop your photo into `public/images/` (for example `profile.jpg`) and set `profile.photo = "/images/profile.jpg"`. A roughly square cut-out PNG looks most like a real FUT card.
-- **`[NATION]`**: `profile.card.nation`, with a flag image in `public/images/`
 - **`[RATINGS]`**: the card ratings and stat numbers in `profile.stats` are made up for fun; tune them.
-- **`[FUN_FACTS]`**: `profile.funFacts` are placeholders; make them true.
 - **`[SPOTIFY_URL]`**: the Spotify playlist in `data/music.ts`. It must be public (Spotify → ⋯ → Share → Copy link). Edit the playlist in Spotify and the site picks up the changes. Leave the URL empty to hide the bar.
 - **`[DOMAIN_TO_BE_PROVIDED]`**: `site.domain` in `data/site.ts`. See [Custom domain](#custom-domain).
 - **Projects**: filled in from the resume. Add screenshots to `public/images/projects/` and list them in each project's `screenshots`.
-- **Fun items**: every lane in `data/fun.ts` is a placeholder.
+- **Fun items**: `data/fun.ts` — add more lanes any time.
 
 ### Adding a project
 

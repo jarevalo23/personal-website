@@ -14,6 +14,11 @@ export type FunItem = {
   emoji: string;
   tags?: string[];
   link?: { label: string; href: string };
+  /**
+   * Optional YouTube video shown in the lane (public or unlisted both work).
+   * Use the ID from the link: youtube.com/watch?v=THIS_PART or youtu.be/THIS_PART
+   */
+  video?: { youtubeId: string; title: string };
 };
 
 export const funItems: FunItem[] = [
@@ -23,6 +28,17 @@ export const funItems: FunItem[] = [
     description: "I play bass in a band on campus. I started playing at church when I was 11.",
     emoji: "🎸",
     tags: ["Bass", "Since age 11"],
+    link: { label: "Follow the band on Instagram", href: "https://www.instagram.com/therealbucketlist/" },
+    // [BAND_VIDEO] Add an unlisted YouTube video of the band:
+    // video: { youtubeId: "VIDEO_ID", title: "The band live" },
+  },
+  {
+    category: "Live music",
+    title: "Concert regular",
+    description:
+      "I love going to concerts. Some of my favorite shows have been Coldplay, Radiohead, Mac DeMarco and Malcolm Todd.",
+    emoji: "🎤",
+    tags: ["Coldplay", "Radiohead", "Mac DeMarco", "Malcolm Todd"],
   },
   {
     category: "Fútbol",
@@ -32,12 +48,26 @@ export const funItems: FunItem[] = [
     tags: ["Hala Madrid"],
   },
   {
+    category: "Away days",
+    title: "Soccer games in 5 countries",
+    description: "I've been to soccer games in five different countries.",
+    emoji: "🏟️",
+    tags: ["5 countries"],
+  },
+  {
     category: "Hoops",
     title: "Lakers forever",
     description:
       "LA born and raised, so it was always going to be the Lakers. Madrid and the Lakers are the two teams I'd die for.",
     emoji: "🏀",
     tags: ["Purple & Gold"],
+  },
+  {
+    category: "Multi-sport",
+    title: "Four sports in high school",
+    description: "I played four sports in high school.",
+    emoji: "🏅",
+    tags: ["4 sports"],
   },
   {
     category: "Roots",

@@ -5,7 +5,7 @@
  *  scouting report (bio) and the fun facts unlocked in the penalty shootout.
  *
  *  Placeholders still to fill in — search this file for:
- *    [PHOTO]   [RATINGS]
+ *    [RATINGS]
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -38,10 +38,8 @@ export const profile = {
   responseTime: "Usually within 48 hours",
   location: "Los Angeles, CA",
 
-  // [PHOTO] — put your photo in /public/images (e.g. /public/images/profile.jpg)
-  // and point to it here. A roughly square, transparent-background PNG looks most
-  // like a real FUT card, but any JPG works.
-  photo: "/images/player-placeholder.svg",
+  /** Player photo (background removed) for the card and the About tile. */
+  photo: "/images/profile.png",
 
   card: {
     /** Overall rating (big number, top-left of the card). */
@@ -68,7 +66,7 @@ export const profile = {
     { short: "CV", label: "Computer Vision", value: 86 },
     { short: "SQL", label: "SQL / PostGIS", value: 85 },
     { short: "ESP", label: "Spanish", value: 90 },
-    { short: "COF", label: "Coffee", value: 97 },
+    { short: "BAS", label: "Bass guitar", value: 87 },
   ] satisfies Stat[],
 
   /** "Career history" in the scouting report — like a FIFA transfer history. */
@@ -108,7 +106,7 @@ export const profile = {
     ],
     developing: ["Occasionally over-engineers the build-up play", "Will debate any offside call (and any p-value)"],
     playsLike: "A box-to-box engineer with a striker's finish",
-    verdict: "Sign immediately. High ceiling, low maintenance, runs on coffee.",
+    verdict: "Sign immediately. High ceiling, low maintenance, no coffee required.",
   },
 
   /** Revealed one at a time when you score in the penalty shootout. */
@@ -117,6 +115,10 @@ export const profile = {
     "I picked up the bass at church when I was 11, and I've been holding down the low end ever since.",
     "Real Madrid is my club. ¡Hala Madrid!",
     "Madrid and the Lakers: the two teams I would die for.",
+    "I've been to soccer games in 5 different countries.",
+    "Some of my favorite concerts: Coldplay, Radiohead, Mac DeMarco and Malcolm Todd.",
+    "I don't like coffee. The flavor is too strong for me.",
+    "I played 4 sports in high school.",
     "Born and raised in LA, with roots in El Salvador.",
     "I speak English and Spanish.",
   ],

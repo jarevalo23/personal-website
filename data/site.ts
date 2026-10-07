@@ -9,9 +9,8 @@ import { fullName, profile } from "./profile";
 export type AccentKey = "menu" | "soccer" | "basketball" | "swim" | "contact" | "github" | "linkedin";
 
 export const site = {
-  // [DOMAIN_TO_BE_PROVIDED] — your custom domain without protocol, e.g. "example.com".
-  // Leave empty until the domain is connected; Vercel's production URL is used meanwhile.
-  domain: "",
+  // Custom domain without protocol. Used for canonical URLs, Open Graph tags and the sitemap.
+  domain: "josuearevalo.com",
   title: `${fullName} — Player Profile`,
   description: `${fullName}: ${profile.tagline}. A personal site you play like a sports video game — pick a mode from the main menu.`,
   /** Little chip next to "Main Menu". */

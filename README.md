@@ -58,7 +58,7 @@ grep -rn "\[DOMAIN_TO_BE_PROVIDED\]\|\[PHOTO\]\|\[RATINGS\]\|Placeholder" data
 - **`[PHOTO]`**: drop your photo into `public/images/` (for example `profile.jpg`) and set `profile.photo = "/images/profile.jpg"`. A roughly square cut-out PNG looks most like a real FUT card.
 - **`[RATINGS]`**: the card ratings and stat numbers in `profile.stats` are made up for fun; tune them.
 - **`[SPOTIFY_URL]`**: the Spotify playlist in `data/music.ts`. It must be public (Spotify → ⋯ → Share → Copy link). Edit the playlist in Spotify and the site picks up the changes. Leave the URL empty to hide the bar.
-- **`[DOMAIN_TO_BE_PROVIDED]`**: `site.domain` in `data/site.ts`. See [Custom domain](#custom-domain).
+- **Domain**: `site.domain` in `data/site.ts` (set to `josuearevalo.com`). See [Custom domain](#custom-domain).
 - **Projects**: filled in from the resume. Add screenshots to `public/images/projects/` and list them in each project's `screenshots`.
 - **Fun items**: `data/fun.ts` — add more lanes any time.
 

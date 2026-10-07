@@ -10,7 +10,7 @@ export type AccentKey = "menu" | "soccer" | "basketball" | "swim" | "contact" | 
 
 export const site = {
   // Custom domain without protocol. Used for canonical URLs, Open Graph tags and the sitemap.
-  domain: "josuearevalo.com",
+  domain: "www.josuearevalo.com",
   title: `${fullName} — Player Profile`,
   description: `${fullName}: ${profile.tagline}. A personal site you play like a sports video game — pick a mode from the main menu.`,
   /** Little chip next to "Main Menu". */

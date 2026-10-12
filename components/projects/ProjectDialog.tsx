@@ -87,21 +87,21 @@ export function ProjectDialog({ project, onClose, onPrev, onNext, position }: Pr
             </div>
 
             {project.screenshots.length > 0 && (
-              <div className="space-y-3">
-                {project.screenshots.map((shot) => (
-                  <div
-                    key={shot.src}
-                    className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/10 bg-ink-800"
-                  >
+              <div className="space-y-4">
+                {project.screenshots.map((shot, i) => (
+                  <figure key={shot.src}>
                     <Image
                       src={shot.src}
                       alt={shot.alt}
-                      fill
+                      width={shot.width}
+                      height={shot.height}
                       sizes="(min-width: 640px) 600px, 100vw"
+                      loading={i === 0 ? "eager" : "lazy"}
                       unoptimized={shot.src.endsWith(".svg")}
-                      className="object-cover"
+                      className="h-auto w-full rounded-xl border border-white/10 bg-ink-800"
                     />
-                  </div>
+                    {shot.caption && <figcaption className="mt-1.5 text-xs text-mist">{shot.caption}</figcaption>}
+                  </figure>
                 ))}
               </div>
             )}

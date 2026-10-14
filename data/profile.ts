@@ -76,7 +76,7 @@ export const profile = {
     { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
     {
       club: "Stanford University",
-      role: "B.S. Computer Science (ML) · Psychology minor",
+      role: "B.S. Computer Science (ML)",
       dates: "Expected Jun 2027",
       place: "Stanford, CA",
     },
@@ -86,7 +86,7 @@ export const profile = {
   scouting: {
     headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
-      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., machine learning focus, minor in Psychology), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
+      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., machine learning focus), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
       "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [

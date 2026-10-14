@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, m } from "framer-motion";
+import Image from "next/image";
 import { useState } from "react";
 import { useSound } from "@/components/providers/SoundProvider";
 import { projects, type Project } from "@/data/projects";
@@ -124,6 +125,11 @@ export function ProjectsBoard() {
                       aria-hidden="true"
                     >
                       <div className="panel panel-accent p-3.5 text-left">
+                        {p.screenshots[0] && (
+                          <div className="relative -mx-3.5 -mt-3.5 mb-3 aspect-[16/9] overflow-hidden border-b border-white/10 bg-ink-800">
+                            <Image src={p.screenshots[0].src} alt="" fill sizes="256px" className="object-cover object-top" />
+                          </div>
+                        )}
                         <p className="text-xs font-bold uppercase tracking-wider text-accent">
                           #{p.jersey} · {p.role}
                         </p>
@@ -192,6 +198,11 @@ export function ProjectsBoard() {
                       ))}
                     </span>
                   </span>
+                  {p.screenshots[0] && (
+                    <span className="relative hidden w-32 shrink-0 self-center overflow-hidden rounded-lg border border-white/10 bg-ink-800 sm:block aspect-[16/10]">
+                      <Image src={p.screenshots[0].src} alt="" fill sizes="128px" className="object-cover object-top" />
+                    </span>
+                  )}
                 </button>
               </li>
             );

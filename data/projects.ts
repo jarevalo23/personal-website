@@ -8,10 +8,23 @@
  *  Handy spots: paint ≈ {x:50,y:22} · elbows ≈ {x:35|65,y:38} · corners ≈ {x:8|92,y:10}
  *  · wings ≈ {x:16|84,y:45} · top of the key ≈ {x:50,y:62}
  *
- *  Screenshots live in /public/images/projects. Any size works; 16:10 looks best.
- *  Projects without screenshots simply skip the image. Content is from the resume.
+ *  Screenshots live in /public/images/projects. Any size works; give the real pixel
+ *  `width`/`height` so the image keeps its shape. The first one doubles as the
+ *  roster thumbnail and hover preview. Projects without screenshots skip the image.
+ *  School and personal projects only (work lives in the career history on About).
+ *  Content is from the project repos on GitHub.
  * ─────────────────────────────────────────────────────────────────────────────
  */
+
+export type Screenshot = {
+  src: string;
+  alt: string;
+  /** Intrinsic pixel size, used to keep the aspect ratio. */
+  width: number;
+  height: number;
+  /** Optional line shown under the image in the detail panel. */
+  caption?: string;
+};
 
 export type Project = {
   /** Unique, URL-safe id. */
@@ -31,7 +44,7 @@ export type Project = {
   highlights?: string[];
   tech: string[];
   links: { github?: string; demo?: string };
-  screenshots: { src: string; alt: string }[];
+  screenshots: Screenshot[];
   court: { x: number; y: number };
 };
 
@@ -40,108 +53,100 @@ export const projects: Project[] = [
     slug: "nba-player-tracking",
     title: "NBA Broadcast Player Tracking",
     jersey: 1,
-    role: "Point Guard",
+    role: "Point Guard · Stanford CS131",
     year: "2026",
     status: "Shipped",
     summary: "Turns NBA broadcast footage into top-down player tracks and offensive-spacing maps.",
     description: [
-      "Co-developed a computer-vision pipeline that converts NBA broadcast video into top-down player tracks, using YOLOv8 detection, multi-object tracking and camera-to-court coordinate mapping.",
-      "Implemented offensive convex-hull analysis with NumPy, SciPy and OpenCV: it measures the area enclosed by the tracked offensive players and overlays that polygon on the court view to visualize spacing.",
+      "Co-developed a computer-vision pipeline for Stanford's CS131 that converts NBA broadcast video into a top-down court map: YOLOv8 player and ball detection, multi-object tracking with team labels, and a homography from camera pixels to court feet. A trained court-landmark model finds the paint corners automatically, with a click-to-calibrate fallback.",
+      "Implemented offensive convex-hull analysis with NumPy, SciPy and OpenCV: it measures the area enclosed by the tracked offensive players and overlays that polygon on the court view to visualize spacing, alongside nearest-defender distances, double-team detection, player speed and pass events.",
     ],
-    highlights: ["Broadcast video → top-down court coordinates", "Convex-hull offensive spacing, drawn on the court"],
+    highlights: [
+      "Broadcast video → top-down court coordinates",
+      "Convex-hull offensive spacing, drawn on the court",
+      "Nearest-defender lines: open, contested or tight",
+    ],
     tech: ["Python", "OpenCV", "YOLOv8", "NumPy", "SciPy"],
     links: { github: "https://github.com/jarevalo23/CS131-Final-Project" },
-    screenshots: [],
+    screenshots: [
+      {
+        src: "/images/projects/nba-tracking-overlay.jpg",
+        alt: "Knicks vs Hawks broadcast frame with tracked player boxes and IDs, next to a top-down court showing the offensive convex hull and nearest-defender lines",
+        width: 1600,
+        height: 585,
+        caption: "Broadcast view with tracked players (left) and the top-down spacing hull (right).",
+      },
+      {
+        src: "/images/projects/nba-tracking-calibration.jpg",
+        alt: "Knicks vs 76ers broadcast frame with the court projected onto it and four numbered calibration landmarks",
+        width: 1280,
+        height: 720,
+        caption: "Court calibration: four landmarks map camera pixels to court feet.",
+      },
+    ],
     court: { x: 50, y: 22 },
-  },
-  {
-    slug: "port-compliance-ai",
-    title: "Port-Compliance AI Workflow",
-    jersey: 7,
-    role: "Starter · ShipAdvisor",
-    year: "2026",
-    status: "In progress",
-    summary: "An AI agent that finds regulatory documents and proposes updates to a port-compliance dashboard.",
-    description: [
-      "Built at ShipAdvisor: an automated AI workflow in TypeScript on the Anthropic API that discovers regulatory documents and proposes updates to the company's port-compliance dashboard.",
-      "Every extracted value is validated against a 234-field schema, and source quotations are checked before anything reaches human review.",
-    ],
-    highlights: ["Validated against a 234-field schema", "Source quotations checked before human review"],
-    tech: ["TypeScript", "Anthropic API", "Next.js", "Supabase"],
-    links: {},
-    screenshots: [],
-    court: { x: 84, y: 45 },
-  },
-  {
-    slug: "waterway-mapping",
-    title: "Vessel Waterway Mapping",
-    jersey: 23,
-    role: "Sixth Man · ShipAdvisor",
-    year: "2026",
-    status: "In progress",
-    summary: "A PostGIS pipeline that works out which state and waterway a vessel is in.",
-    description: [
-      "Built at ShipAdvisor: a PostGIS pipeline that combines federal boundary and waterway datasets into 177,623 mapped polygons to identify a vessel's state and waterway.",
-      "Positions near a boundary are flagged as uncertain instead of silently guessed.",
-    ],
-    highlights: ["177,623 mapped polygons", "Uncertainty flagged near boundaries"],
-    tech: ["PostGIS", "PostgreSQL", "Supabase", "TypeScript"],
-    links: {},
-    screenshots: [],
-    court: { x: 18, y: 62 },
-  },
-  {
-    slug: "offline-inspections",
-    title: "Offline Inspection Module",
-    jersey: 11,
-    role: "Role Player · ShipAdvisor",
-    year: "2026",
-    status: "In progress",
-    summary: "Offline-first checklists and photo capture for vessel inspections, with printable reports.",
-    description: [
-      "Built at ShipAdvisor: a Next.js inspection module using Supabase and IndexedDB for offline checklists and photo capture.",
-      "Synchronization preserves newer local edits, and finished inspections export as printable reports.",
-    ],
-    highlights: ["Works offline (IndexedDB)", "Sync keeps newer local edits", "Printable inspection reports"],
-    tech: ["Next.js", "TypeScript", "Supabase", "IndexedDB"],
-    links: {},
-    screenshots: [],
-    court: { x: 8, y: 10 },
-  },
-  {
-    slug: "aerospace-rag",
-    title: "RAG Research Assistant",
-    jersey: 25,
-    role: "Veteran · Aerospace Corp",
-    year: "2025",
-    status: "Shipped",
-    summary: "An LLM pipeline that synthesizes 30+ technical sources into cited reports for analysts.",
-    description: [
-      "Built at The Aerospace Corporation: a Python retrieval-augmented generation pipeline that uses LLMs to synthesize 30+ technical sources into cited Excel reports for analysts.",
-      "Also implemented semantic search across 100+ microelectronics documents with Weaviate, so engineers can retrieve information across multiple document formats.",
-    ],
-    highlights: ["30+ sources → cited Excel reports", "Semantic search over 100+ documents"],
-    tech: ["Python", "LangChain", "Weaviate", "ChromaDB", "OpenAI API"],
-    links: {},
-    screenshots: [],
-    court: { x: 65, y: 38 },
   },
   {
     slug: "adaptive-retrieval",
     title: "Adaptive Retrieval for LMs",
     jersey: 33,
-    role: "Research · Stanford",
+    role: "Research · Stanford CS197",
     year: "2026",
     status: "Shipped",
     summary: "Research on learning how many passages to retrieve for Spectral Koopman Attention.",
     description: [
       "A three-person study of adaptive retrieval for Spectral Koopman Attention, investigating how to select document context for a system built around Koopman operators.",
       "The team trained a PyTorch network to predict λ from query embeddings, adapting how many document passages are retrieved, and evaluated learned versus fixed λ on 61 validation queries.",
+      "After a first version lost to a constant baseline, the team rebuilt the data from scratch: hand-written queries over real SEC 10-K filings instead of synthetic text, and a ranking loss over a sweep of λ values instead of a single best label.",
     ],
-    highlights: ["Learned λ from query embeddings", "Evaluated on 61 validation queries"],
+    highlights: ["Learned λ from query embeddings", "Evaluated on 61 validation queries", "Rebuilt on real 10-K filings"],
     tech: ["PyTorch", "NumPy"],
     links: {},
     screenshots: [],
-    court: { x: 92, y: 10 },
+    court: { x: 84, y: 45 },
+  },
+  {
+    slug: "value-finder",
+    title: "ValueEdge Betting Dashboard",
+    jersey: 3,
+    role: "Shooter · Personal",
+    year: "2026",
+    status: "In progress",
+    summary: "An NBA-playoffs dashboard that flags +EV bets and player-prop edges against devigged market odds.",
+    description: [
+      "A full-stack value-betting app: a FastAPI backend pulls odds from The Odds API, devigs the sharpest books to estimate a fair price, and flags moneyline, spread and total offers the market has mispriced.",
+      "A transparent player-prop model blends recent and baseline hit rates with matchup, pace and injury adjustments, and refuses to recommend a bet on a tiny sample. Every pick is logged to a predictions journal and graded, so a calibration page shows whether the model has actually earned trust.",
+      "One monorepo ships two builds: a public demo that runs on fixtures and spends zero API credits, and a passcode-gated build for friends with live odds.",
+    ],
+    highlights: [
+      "Devigged fair odds from 5 books",
+      "Sample-size floor: no bets on thin data",
+      "Predictions journal + calibration tracking",
+    ],
+    tech: ["Next.js", "TypeScript", "FastAPI", "Python", "Supabase"],
+    links: { github: "https://github.com/jarevalo23/sports-value-finder-" },
+    screenshots: [
+      {
+        src: "/images/projects/value-finder-props.jpg",
+        alt: "Player Prop Edges page listing NBA player props with model probability, fair odds, edge and expected value for each",
+        width: 1440,
+        height: 900,
+        caption: "Player-prop edges with the model's reasoning on every card (demo data).",
+      },
+      {
+        src: "/images/projects/value-finder-dashboard.jpg",
+        alt: "Value Opportunities dashboard with opportunity counts, average and best edge, and edge-distribution charts",
+        width: 1440,
+        height: 900,
+        caption: "The value-bet dashboard (demo data).",
+      },
+      {
+        src: "/images/projects/value-finder-landing.jpg",
+        alt: "ValueEdge landing page reading 'Find the edge. Beat the closing line.'",
+        width: 1440,
+        height: 900,
+      },
+    ],
+    court: { x: 16, y: 45 },
   },
 ];

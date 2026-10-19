@@ -34,7 +34,7 @@ export const profile = {
   },
 
   /** Shown in the press room (contact page). */
-  availability: "Open to software engineering and ML roles. B.S. in Computer Science, June 2027.",
+  availability: "Open to AI engineering, software engineering and ML roles. B.S. in Computer Science, June 2027.",
   responseTime: "Usually within 48 hours",
   location: "Los Angeles, CA",
 
@@ -71,7 +71,7 @@ export const profile = {
 
   /** "Career history" in the scouting report — like a FIFA transfer history. */
   career: [
-    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun 2026 – Present", place: "Remote" },
+    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun – Oct 2026", place: "Remote" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern III", dates: "Jun – Aug 2025", place: "El Segundo, CA" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
     {
@@ -86,13 +86,13 @@ export const profile = {
   scouting: {
     headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
-      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
+      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Most recently a software engineer at ShipAdvisor, where I built AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
       "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [
       { label: "Preferred foot", value: "Python" },
       { label: "Weak foot", value: "★★★★☆ (TypeScript)" },
-      { label: "Current club", value: "ShipAdvisor" },
+      { label: "Last club", value: "ShipAdvisor" },
       { label: "Academy", value: "Stanford CS" },
       { label: "Languages", value: "English · Spanish" },
       { label: "Hometown", value: "Los Angeles, CA" },

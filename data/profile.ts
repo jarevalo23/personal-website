@@ -74,6 +74,7 @@ export const profile = {
     { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun – Oct 2026", place: "Remote" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern III", dates: "Jun – Aug 2025", place: "El Segundo, CA" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
+    { club: "The Aerospace Corporation", role: "System Engineer Intern I", dates: "Jun – Aug 2023", place: "El Segundo, CA" },
     {
       club: "Stanford University",
       role: "B.S. Computer Science · AI concentration",
@@ -87,7 +88,7 @@ export const profile = {
     headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
       "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Most recently a software engineer at ShipAdvisor, where I built AI-powered workflows and geospatial data pipelines with TypeScript, Next.js, Supabase and PostGIS.",
-      "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
+      "Spent three summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [
       { label: "Preferred foot", value: "Python" },

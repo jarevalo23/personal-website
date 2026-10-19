@@ -86,7 +86,7 @@ export const profile = {
   scouting: {
     headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
     summary: [
-      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Most recently a software engineer at ShipAdvisor, where I built AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
+      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Most recently a software engineer at ShipAdvisor, where I built AI-powered workflows and geospatial data pipelines with TypeScript, Next.js, Supabase and PostGIS.",
       "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
     ],
     attributes: [

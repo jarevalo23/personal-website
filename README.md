@@ -92,7 +92,7 @@ The form posts to `app/api/contact/route.ts`, which validates the input and bloc
    ```
    RESEND_API_KEY=re_...
    CONTACT_TO_EMAIL=you@yourdomain.com          # where messages arrive
-   CONTACT_FROM_EMAIL=Press Room <hello@yourdomain.com>   # optional
+   CONTACT_FROM_EMAIL=Website <hello@yourdomain.com>   # optional
    ```
    Without `CONTACT_FROM_EMAIL`, mail is sent from `onboarding@resend.dev`. That sender can only deliver to the address you signed up to Resend with. After you connect your domain, verify it in Resend and use an address on it.
 

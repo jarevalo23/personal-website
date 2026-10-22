@@ -41,10 +41,10 @@ export async function POST(request: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: process.env.CONTACT_FROM_EMAIL || "Press Room <onboarding@resend.dev>",
+          from: process.env.CONTACT_FROM_EMAIL || "Website <onboarding@resend.dev>",
           to: [process.env.CONTACT_TO_EMAIL],
           reply_to: email,
-          subject: `Press room: new message from ${name}`,
+          subject: `FROM WEBSITE: ${name}`,
           text: `From: ${name} <${email}>\n\n${message}`,
         }),
       });
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
       const res = await fetch(`https://formspree.io/f/${process.env.FORMSPREE_FORM_ID}`, {
         method: "POST",
         headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message, _replyto: email, _subject: `Press room: ${name}` }),
+        body: JSON.stringify({ name, email, message, _replyto: email, _subject: `FROM WEBSITE: ${name}` }),
       });
       if (!res.ok) throw new Error(`Formspree responded ${res.status}`);
       return Response.json({ ok: true });

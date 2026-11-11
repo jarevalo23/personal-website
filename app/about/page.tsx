@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PenaltyGame } from "@/components/about/PenaltyGame";
+import { PhotoAlbums } from "@/components/about/PhotoAlbums";
 import { PlayerCard } from "@/components/about/PlayerCard";
 import { ScoutingReport } from "@/components/about/ScoutingReport";
 import { StatBars } from "@/components/about/StatBars";
@@ -25,6 +26,7 @@ export default function AboutPage() {
           <ScoutingReport />
         </div>
       </div>
+      <PhotoAlbums />
     </ScreenShell>
   );
 }

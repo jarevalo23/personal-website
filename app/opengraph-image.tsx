@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 import { fullName, profile } from "@/data/profile";
 import { sections } from "@/data/site";
 
-export const alt = `${fullName} — Player Profile`;
+export const alt = `${fullName}, player profile`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

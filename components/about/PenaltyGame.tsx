@@ -436,7 +436,7 @@ export function PenaltyGame() {
         <p id="penalty-help" className="text-xs text-mist">
           <span className="font-semibold text-fog">Aim:</span> mouse, drag or arrow keys ·{" "}
           <span className="font-semibold text-fog">Shoot:</span> click, tap, Space or Enter · Tip: the keeper can&apos;t reach the
-          top corners — but aim too tight and it&apos;s off the post.
+          top corners. Aim too tight and it&apos;s off the post.
         </p>
         <div className="rounded-xl border border-accent/25 bg-accent/[0.06] p-4" aria-live="polite">
           {factIndex === null ? (
@@ -454,7 +454,7 @@ export function PenaltyGame() {
         </div>
         <details className="group text-sm">
           <summary className="cursor-pointer select-none font-semibold text-mist hover:text-fog">
-            Skip the shootout — show all fun facts
+            Skip the shootout and show all the fun facts
           </summary>
           <ul className="mt-3 list-disc space-y-1.5 pl-5 text-mist marker:text-accent">
             {facts.map((f) => (

@@ -23,7 +23,7 @@ export const profile = {
   lastName: "Arevalo",
   /** Big number on the intro splash and player card. */
   jerseyNumber: 23,
-  tagline: "CS @ Stanford · Software Engineer · Machine Learning",
+  tagline: "CS student at Stanford, class of 2027",
 
   /** Public address for the copy-to-clipboard button and mailto fallback. */
   email: "jareval0@stanford.edu",
@@ -34,7 +34,7 @@ export const profile = {
   },
 
   /** Shown in the press room (contact page). */
-  availability: "Open to software engineering and ML roles. B.S. in Computer Science, June 2027.",
+  availability: "Looking for software engineering and machine learning roles. I finish my B.S. in June 2027.",
   responseTime: "Usually within 48 hours",
   location: "Los Angeles, CA",
 
@@ -84,10 +84,12 @@ export const profile = {
 
   /** "Scouting report" — your bio, written like a scout's notes (from your resume). */
   scouting: {
-    headline: "Full-stack engineer with a machine learning engine — ships AI tools people actually use.",
+    headline: "A little about me",
     summary: [
-      "Born and raised in Los Angeles with Salvadoran roots. Computer Science student at Stanford (B.S., Artificial Intelligence concentration), graduating June 2027. Currently a software engineer at ShipAdvisor, building AI workflows, offline-first inspection tools and geospatial pipelines with TypeScript, Next.js, Supabase and PostGIS.",
-      "Spent two summers at The Aerospace Corporation building retrieval-augmented generation pipelines, semantic search and engineering automation in Python. Off the clock: computer vision for basketball broadcasts and research on adaptive retrieval for language models.",
+      "I was born and raised in Los Angeles. My family is from El Salvador. I study computer science at Stanford, in the artificial intelligence concentration. I graduate with my B.S. in June 2027.",
+      "I'm a software engineer at ShipAdvisor. I build AI workflows, offline-first inspection tools, and geospatial pipelines. Day to day that's TypeScript, Next.js, Supabase, and PostGIS.",
+      "I spent two summers at The Aerospace Corporation. I built retrieval-augmented generation pipelines, semantic search, and engineering automation in Python.",
+      "I've also done side work on computer vision for basketball broadcasts, and research on adaptive retrieval for language models.",
     ],
     attributes: [
       { label: "Preferred foot", value: "Python" },
@@ -100,17 +102,17 @@ export const profile = {
       { label: "Clubs", value: "Real Madrid · Lakers" },
     ],
     strengths: [
-      "Building AI and LLM applications that are reliable: validated outputs, cited sources, a human in the loop",
-      "Full-stack development, from databases and data pipelines to polished front ends",
-      "Machine learning and computer vision, from research experiments to working tools",
+      "AI and LLM apps where the output gets checked, the source is cited, and a person can step in",
+      "Full-stack work, from the database and the data pipeline to the front end",
+      "Machine learning and computer vision, from a research experiment to a tool that runs",
     ],
     developing: [
-      "Shipping in smaller steps instead of perfecting everything up front",
-      "Systems design and infrastructure at larger scale",
-      "The deeper theory behind the models I use",
+      "Shipping a smaller version before I try to perfect the whole thing",
+      "Systems design and infrastructure once the project gets bigger",
+      "The theory behind the models I use",
     ],
-    playsLike: "A box-to-box engineer with a striker's finish",
-    verdict: "Sign immediately. High ceiling, low maintenance, no coffee required.",
+    playsLike: "Most of this is Python or TypeScript, depending on the project.",
+    verdict: "Happy to talk about any of this. I don't drink coffee.",
   },
 
   /** Revealed one at a time when you score in the penalty shootout. */

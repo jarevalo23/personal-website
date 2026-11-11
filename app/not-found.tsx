@@ -14,7 +14,7 @@ export default function NotFound() {
         <p className="text-xs font-bold uppercase tracking-wider text-accent">VAR check complete · 404</p>
         <h1 className="font-display mt-3 text-8xl text-accent">Offside!</h1>
         <p className="mt-3 text-mist">
-          That page was flagged — it doesn&apos;t exist, or it moved. Head back to the main menu and pick a mode.
+          That page isn&apos;t here. It never existed, or it moved. Head back to the main menu and pick a mode.
         </p>
         <GameLink href="/" transitionLabel="Main Menu" transitionAccent="menu" className="btn-game mt-6">
           Back to main menu

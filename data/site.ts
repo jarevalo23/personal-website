@@ -11,8 +11,8 @@ export type AccentKey = "menu" | "soccer" | "basketball" | "swim" | "contact" | 
 export const site = {
   // Custom domain without protocol. Used for canonical URLs, Open Graph tags and the sitemap.
   domain: "josuearevalo.com",
-  title: `${fullName} — Player Profile`,
-  description: `${fullName}: ${profile.tagline}. A personal site you play like a sports video game — pick a mode from the main menu.`,
+  title: `${fullName} · Player Profile`,
+  description: `${fullName}: ${profile.tagline}. A personal site you play like a sports video game. Pick a mode from the main menu.`,
   /** Little chip next to "Main Menu". */
   seasonLabel: "Season 26",
 };
@@ -25,8 +25,8 @@ export const sections = {
     tag: "Player Profile",
     sport: "Soccer",
     accent: "soccer",
-    subtitle: "Ratings, scouting report & a penalty shootout",
-    description: `Player card, stats and scouting report for ${fullName} — plus a penalty-kick mini-game.`,
+    subtitle: "The player card, a short bio, some photos, and a penalty shootout",
+    description: `Player card, bio, and photos for ${fullName}, plus a penalty-kick mini-game.`,
   },
   projects: {
     href: "/projects",
@@ -34,7 +34,7 @@ export const sections = {
     tag: "Shot Chart",
     sport: "Basketball",
     accent: "basketball",
-    subtitle: "Every project on the court — and a free-throw challenge",
+    subtitle: "Every project on the court, and a free-throw challenge",
     description: `Projects by ${fullName}, laid out on a basketball shot chart.`,
   },
   fun: {
@@ -44,7 +44,7 @@ export const sections = {
     sport: "Swimming",
     accent: "swim",
     subtitle: "Hobbies, playlists, random facts & a 50m dash",
-    description: `Hobbies, favorite things and random facts about ${fullName} — plus a swim-start reaction game.`,
+    description: `Hobbies, favorite things, and random facts about ${fullName}, plus a swim-start reaction game.`,
   },
   contact: {
     href: "/contact",

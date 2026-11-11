@@ -4,7 +4,7 @@ My personal site, built to feel like the main menu of a sports video game. The l
 
 | Mode | Sport | What's inside | Mini-game |
 | --- | --- | --- | --- |
-| **About Me** | ⚽ Soccer | FUT-style player card, attribute bars, scouting-report bio | Penalty shootout. Each goal unlocks a fun fact. |
+| **About Me** | ⚽ Soccer | FUT-style player card, attribute bars, scouting-report bio, emoji photo albums | Penalty shootout. Each goal unlocks a fun fact. |
 | **Projects** | 🏀 Basketball | Projects as hotspots on a shot chart, plus a roster and a detail drawer | Free-throw challenge against a 24-second shot clock |
 | **Fun Stuff** | 🏊 Swimming | Hobbies and favorite things laid out in pool lanes | 50m reaction start against 3 AI lanes, with a false-start penalty |
 | **Contact** | 🎙️ Post-match | Press-room contact form, copy-to-clipboard email | — |
@@ -45,6 +45,7 @@ All personal content lives in **`/data`**:
 | `data/site.ts` | **Domain**, SEO title/description, the text on every main-menu tile and screen header |
 | `data/projects.ts` | Projects: title, description, tech stack, links, screenshots, and position on the court |
 | `data/fun.ts` | Pool-lane items: hobbies, playlists, favorite teams, random facts… |
+| `data/albums.ts` | About Me photo albums: each emoji, its label, and the photos it opens |
 | `data/music.ts` | The "Now Playing" radio: your Spotify playlist link, label and station name |
 
 ### Placeholders to fill in
@@ -64,7 +65,47 @@ grep -rn "\[DOMAIN_TO_BE_PROVIDED\]\|\[PHOTO\]\|\[RATINGS\]\|Placeholder" data
 
 ### Adding a project
 
-Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its hotspot on the half court in percent. `x` runs from the left to the right sideline. `y` runs from the baseline (under the hoop) to half court. The comment at the top of the file lists good spots (paint, elbows, corners, wings, top of the key).
+Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its hotspot on the half court in percent. `x` runs from the left to the right sideline. `y` runs from the baseline (under the hoop) to half court. The comment at the top of the file lists good spots (paint, elbows, corners, wings, top of the key). Leave `links` empty if there is no public repo. Leave `year` off if you don't want a season on the card.
+
+### Adding an emoji photo album
+
+The emoji buttons on About Me open photo albums. Everything they show comes from `data/albums.ts`. Image files live in `public/images/albums/`. The page uses `next/image`, so you don't set a width or height, and you don't edit a component.
+
+The Bass, Soccer, and Shows albums ship with labeled placeholder images. Replace those files, or point `src` at new ones, and delete a placeholder once nothing references it.
+
+**Add photos to an emoji you already have**
+
+1. Put the picture in `public/images/albums/`. JPG, PNG, and WebP all work.
+2. Open `data/albums.ts` and add an object to that album's `photos` list:
+
+```ts
+{
+  src: "/images/albums/bass-show.jpg",
+  alt: "Josue playing bass with Bucketlist",
+  caption: "Optional line under the photo",
+}
+```
+
+`src` is the public path. `alt` is required. It's the sentence a screen reader reads, so say what's in the picture. `caption` is optional.
+
+**Add a new emoji**
+
+Copy one object in `photoAlbums` and edit it:
+
+```ts
+{
+  emoji: "🏀",
+  label: "Lakers",
+  photos: [
+    {
+      src: "/images/albums/lakers-1.jpg",
+      alt: "A Lakers game",
+    },
+  ],
+}
+```
+
+Use one emoji per album, and don't repeat an emoji. `label` is the name under the button and the title of the viewer. An album with an empty `photos` list shows up as "No photos yet" and can't be opened.
 
 ---
 
@@ -76,7 +117,7 @@ Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its 
 - **Music:** the bottom bar has a "Now Playing" radio using Spotify's official player. It never autoplays, and nothing loads from Spotify until a visitor presses play. Visitors logged into Spotify hear full songs; everyone else hears 30-second previews. **M** toggles play/pause, music keeps playing across screens, and songs are skipped with the Spotify player's own controls.
 - **Sound:** synthesized with the Web Audio API, so there are no audio files. It is **off by default**. The Sound toggle in the top bar turns it on, and the choice is remembered.
 - **Intro splash:** the "player loading" card plays once per browser session on the home page. Click, tap, or press any key to skip.
-- **Mini-games are optional.** Everything they reveal is also reachable without playing. For example, "Skip the shootout — show all fun facts" lists every fact.
+- **Mini-games are optional.** Everything they reveal is also reachable without playing. For example, "Skip the shootout and show all the fun facts" lists every fact.
 - **Reduced motion:** with `prefers-reduced-motion`, the intro and screen wipes are skipped, ambient animation stops, and the games resolve instantly.
 
 ---
@@ -168,7 +209,7 @@ app/
   icon.svg, apple-icon.tsx, manifest.ts, robots.ts, sitemap.ts, not-found.tsx
 components/
   menu/                 MainMenu (spatial keyboard nav), MenuTile, IntroSplash, StadiumBackground
-  about/                PlayerCard, StatBars, PenaltyGame, ScoutingReport
+  about/                PlayerCard, StatBars, PenaltyGame, ScoutingReport, PhotoAlbums
   projects/             ProjectsBoard (court + roster), ProjectDialog, FreeThrowGame
   fun/                  PoolLanes, SwimRace
   contact/              ContactForm, CopyEmail
@@ -176,7 +217,7 @@ components/
   Hud.tsx, ScreenShell.tsx, GameLink.tsx, icons.tsx
 data/                   ← all editable content
 lib/                    sound synth, confetti, spatial navigation, validation, helpers
-public/images/          photo, flag and project screenshots
+public/images/          photo, flag, project screenshots, album photos (`albums/`)
 assets/fonts/           Bebas Neue (OFL), used to render the OG image
 ```
 

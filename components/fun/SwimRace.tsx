@@ -212,7 +212,7 @@ export function SwimRace() {
         <div>
           <p className="text-xs font-bold uppercase tracking-wider text-accent">Mini-game · optional</p>
           <h2 id="race-title" className="font-display text-4xl">
-            50m Free — Reaction Start
+            50m Free · Reaction Start
           </h2>
         </div>
         <div className="rounded-lg bg-ink-950/80 px-3 py-1.5 text-center">
@@ -302,9 +302,9 @@ export function SwimRace() {
                 <span>
                   Reaction <strong className="text-accent">{fmt(you.reaction ?? 0)}s</strong>
                   {(you.reaction ?? 1) < 0.2
-                    ? " — lightning!"
+                    ? ". Lightning."
                     : (you.reaction ?? 0) >= LATE_LIMIT
-                      ? " — asleep on the blocks"
+                      ? ". Asleep on the blocks."
                       : ""}
                 </span>
               ))}

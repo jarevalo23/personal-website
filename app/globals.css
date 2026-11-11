@@ -577,6 +577,22 @@ html:has(dialog[open]) {
 .project-dialog[open]::backdrop {
   animation: fade-in 250ms ease-out;
 }
+
+/* Photo viewer on About. Native dialog, centered over a dim page. */
+.album-dialog {
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+.album-dialog::backdrop {
+  background: rgb(6 4 18 / 0.94);
+}
+.album-dialog[open] .dialog-content {
+  animation: fade-in 250ms ease-out;
+}
+.album-dialog[open]::backdrop {
+  animation: fade-in 250ms ease-out;
+}
 @keyframes drawer-in {
   from {
     transform: translate3d(48px, 0, 0);

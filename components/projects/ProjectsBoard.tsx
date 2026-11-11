@@ -105,7 +105,7 @@ export function ProjectsBoard() {
                   onMouseLeave={() => preview(null)}
                   onFocus={() => preview(p.slug)}
                   onBlur={() => preview(null)}
-                  aria-label={`#${p.jersey} ${p.title} — ${p.summary}`}
+                  aria-label={`#${p.jersey} ${p.title}. ${p.summary}`}
                   aria-haspopup="dialog"
                   className={`relative flex h-11 w-11 items-center justify-center rounded-full border-2 font-display text-xl transition-transform duration-200 sm:h-12 sm:w-12 ${
                     active ? "scale-115 border-fog bg-accent text-accent-ink" : "border-accent bg-ink-950/85 text-accent"
@@ -181,7 +181,7 @@ export function ProjectsBoard() {
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex flex-wrap items-center gap-x-2 text-xs font-bold uppercase tracking-wider text-mist">
-                      {p.role} · {p.year}
+                      {[p.role, p.year].filter(Boolean).join(" · ")}
                       <span
                         className={`rounded px-1.5 py-0.5 ${p.status === "In progress" ? "bg-press/15 text-press" : "bg-accent/15 text-accent"}`}
                       >

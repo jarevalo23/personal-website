@@ -78,7 +78,7 @@ export function ProjectDialog({ project, onClose, onPrev, onNext, position }: Pr
               </span>
               <div>
                 <p className="text-xs font-bold uppercase tracking-wider text-accent">
-                  {project.role} · {project.year} · {project.status}
+                  {[project.role, project.year, project.status].filter(Boolean).join(" · ")}
                 </p>
                 <h2 id="project-title" className="font-display text-5xl leading-none">
                   {project.title}

@@ -70,9 +70,9 @@ Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its 
 
 ### Adding an emoji photo album
 
-The emoji buttons on About Me open photo albums. Everything they show comes from `data/albums.ts`. Image files live in `public/images/albums/`. The page uses `next/image`, so you don't set a width or height, and you don't edit a component.
+The emoji buttons on About Me open photo albums. Fun Stuff lanes open the same ones. Album buttons come from `data/albums.ts`. The study-abroad map comes from `data/studyAbroad.ts`. The page uses `next/image`, so you don't set a width or height, and you don't edit a component to add a photo.
 
-Bass and Shows still use labeled placeholder images. Sports uses two real match photos. Replace a placeholder, or point `src` at a new file, and delete a placeholder once nothing references it. Study-abroad cities and pins live in `data/studyAbroad.ts`. Photos for that map go in `public/images/study-abroad/`.
+Sports uses two match photos. Study-abroad cities and pins live in `data/studyAbroad.ts`. Photos for that map go in `public/images/study-abroad/`. On a Fun Stuff lane, set `gallery` to `"sports"` or `"study-abroad"` to open that same album or map.
 
 **Add photos to an emoji you already have**
 
@@ -81,8 +81,8 @@ Bass and Shows still use labeled placeholder images. Sports uses two real match 
 
 ```ts
 {
-  src: "/images/albums/bass-show.jpg",
-  alt: "Josue playing bass with Bucketlist",
+  src: "/images/albums/photo.jpg",
+  alt: "What the photo shows, in one sentence",
   caption: "Optional line under the photo",
 }
 ```

@@ -5,6 +5,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+export type FunGallery = "sports" | "study-abroad";
+
 export type FunItem = {
   /** Short category label on the starting block, e.g. "Hobby". */
   category: string;
@@ -20,15 +22,21 @@ export type FunItem = {
    *  - a YouTube video (public or unlisted): { youtubeId: "ID from youtu.be/ID", title: "..." }
    */
   video?: { src: string; title: string; poster?: string } | { youtubeId: string; title: string };
+  /**
+   * Opens a shared gallery. "sports" is the Sports album in data/albums.ts.
+   * "study-abroad" is the map in data/studyAbroad.ts.
+   */
+  gallery?: FunGallery;
 };
 
 export const funItems: FunItem[] = [
   {
     category: "Music",
-    title: "Bassist in Bucketlist",
-    description: "I play bass in Bucketlist, a band on campus. I started playing at church when I was 11.",
+    title: "Bassist",
+    description:
+      "I play bass in a few music groups on campus, including Bucketlist and Primera Generación, my grupo. I started playing at church when I was 11.",
     emoji: "🎸",
-    tags: ["Bucketlist", "Bass", "Since age 11"],
+    tags: ["Bucketlist", "Primera Generación", "Bass"],
     link: { label: "Follow Bucketlist on Instagram", href: "https://www.instagram.com/therealbucketlist/" },
     // [BAND_VIDEO] Drop the clip at public/videos/bucketlist.mp4, then uncomment:
     // video: { src: "/videos/bucketlist.mp4", title: "Bucketlist live" },
@@ -42,11 +50,22 @@ export const funItems: FunItem[] = [
     tags: ["Coldplay", "Radiohead", "Mac DeMarco", "Malcolm Todd"],
   },
   {
-    category: "Fútbol",
-    title: "Real Madrid till I die",
-    description: "Madrid is my club, no debate. ¡Hala Madrid!",
+    category: "Abroad",
+    title: "Study abroad",
+    description:
+      "I studied abroad in Europe. Click the map to see photos from Madrid, Munich, London, Barcelona, Portugal, and the Canary Islands.",
+    emoji: "🗺️",
+    tags: ["Madrid", "Munich", "London", "Barcelona", "Portugal", "Canary Islands"],
+    gallery: "study-abroad",
+  },
+  {
+    category: "Teams",
+    title: "Madrid, Lakers, Packers",
+    description:
+      "My favorite teams are Real Madrid, the Lakers, and the Packers. LA born and raised, so it was always going to be the Lakers. ¡Hala Madrid!",
     emoji: "⚽",
-    tags: ["Hala Madrid"],
+    tags: ["Hala Madrid", "Purple & Gold", "Packers"],
+    gallery: "sports",
   },
   {
     category: "Away days",
@@ -54,14 +73,6 @@ export const funItems: FunItem[] = [
     description: "I've been to soccer games in five different countries.",
     emoji: "🏟️",
     tags: ["5 countries"],
-  },
-  {
-    category: "Hoops",
-    title: "Lakers forever",
-    description:
-      "LA born and raised, so it was always going to be the Lakers. Madrid and the Lakers are the two teams I'd die for.",
-    emoji: "🏀",
-    tags: ["Purple & Gold"],
   },
   {
     category: "Multi-sport",

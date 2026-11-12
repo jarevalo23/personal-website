@@ -584,6 +584,11 @@ html:has(dialog[open]) {
   background: transparent;
   outline: none;
 }
+/* The dialogs use `flex` while open. That utility would otherwise beat the
+   browser's `display: none` and leave a closed dialog covering the page. */
+.album-dialog:not([open]) {
+  display: none;
+}
 .album-dialog::backdrop {
   background: rgb(6 4 18 / 0.94);
 }

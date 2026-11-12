@@ -22,12 +22,76 @@ function LaneRope() {
   );
 }
 
-const galleryLabel: Record<FunGallery, string> = {
-  sports: "Photos",
-  "study-abroad": "Map",
+const galleryButtonLabel: Record<FunGallery, string> = {
+  sports: "Open sports album",
+  "study-abroad": "Open study abroad map",
 };
 
-function LaneFace({ item, index }: { item: FunItem; index: number }) {
+function GalleryHint({ gallery }: { gallery: FunGallery }) {
+  return (
+    <span className="absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full border border-white/70 bg-ink-950 text-accent">
+      {gallery === "study-abroad" ? (
+        <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
+          <path d="M1.5 3.5 5.5 2l5 1.5 4-1.5v9l-4 1.5-5-1.5-4 1.5v-9z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+          <path d="M5.5 2v9M10.5 3.5v9" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 16 16" className="h-3 w-3" aria-hidden="true">
+          <path d="M2 5.5h2.2L5.5 4h5l1.3 1.5H14V13H2V5.5z" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+          <circle cx="8" cy="9" r="2" fill="none" stroke="currentColor" strokeWidth="1.4" />
+        </svg>
+      )}
+    </span>
+  );
+}
+
+function LaneCopy({ item }: { item: FunItem }) {
+  return (
+    <>
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-bold uppercase tracking-wider text-accent">{item.category}</p>
+        <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.title}</h3>
+        <p className="mt-1 text-sm text-mist">{item.description}</p>
+      </div>
+      {(item.tags?.length || item.link) && (
+        <div className="flex flex-wrap items-center gap-2 sm:max-w-[16rem] sm:justify-end">
+          {item.tags?.map((tag) => (
+            <span key={tag} className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold">
+              {tag}
+            </span>
+          ))}
+          {item.link && (
+            <a
+              href={item.link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-underline text-sm font-semibold text-accent"
+            >
+              {item.link.label} ↗<span className="sr-only"> (opens in a new tab)</span>
+            </a>
+          )}
+        </div>
+      )}
+    </>
+  );
+}
+
+const emojiClass =
+  "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border bg-ink-950/50 text-2xl";
+
+function LaneBody({
+  item,
+  index,
+  galleryOpen,
+  onOpen,
+}: {
+  item: FunItem;
+  index: number;
+  galleryOpen: boolean;
+  onOpen: (gallery: FunGallery) => void;
+}) {
+  const gallery = item.gallery;
+
   return (
     <>
       <div
@@ -39,39 +103,36 @@ function LaneFace({ item, index }: { item: FunItem; index: number }) {
         <span className="font-display text-4xl leading-none">{index + 1}</span>
       </div>
       <div className="relative flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
-        <span
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-pool/30 bg-ink-950/50 text-2xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
-          aria-hidden="true"
-        >
-          {item.emoji}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold uppercase tracking-wider text-accent">{item.category}</p>
-          <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.title}</h3>
-          <p className="mt-1 text-sm text-mist">{item.description}</p>
-        </div>
-        {(item.tags?.length || item.link || item.gallery) && (
-          <div className="flex flex-wrap items-center gap-2 sm:max-w-[16rem] sm:justify-end">
-            {item.tags?.map((tag) => (
-              <span key={tag} className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold">
-                {tag}
-              </span>
-            ))}
-            {item.gallery && (
-              <span className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold">
-                {galleryLabel[item.gallery]}
-              </span>
-            )}
-            {item.link && !item.gallery && (
-              <a
-                href={item.link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-underline text-sm font-semibold text-accent"
-              >
-                {item.link.label} ↗<span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            )}
+        {gallery ? (
+          <button
+            type="button"
+            aria-label={galleryButtonLabel[gallery]}
+            aria-haspopup="dialog"
+            aria-expanded={galleryOpen}
+            onClick={() => onOpen(gallery)}
+            className={`${emojiClass} cursor-pointer border-pool/70 hover:border-fog hover:bg-pool/25`}
+          >
+            <span aria-hidden="true">{item.emoji}</span>
+            <GalleryHint gallery={gallery} />
+          </button>
+        ) : (
+          <span className={`${emojiClass} border-pool/30 transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110`} aria-hidden="true">
+            {item.emoji}
+          </span>
+        )}
+        {gallery ? (
+          <button
+            type="button"
+            aria-haspopup="dialog"
+            aria-expanded={galleryOpen}
+            onClick={() => onOpen(gallery)}
+            className="flex min-w-0 flex-1 cursor-pointer flex-col gap-3 bg-transparent text-left text-fog [font-family:inherit] sm:flex-row sm:items-center"
+          >
+            <LaneCopy item={item} />
+          </button>
+        ) : (
+          <div className="flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+            <LaneCopy item={item} />
           </div>
         )}
       </div>
@@ -99,21 +160,14 @@ export function PoolLanes() {
         <ol>
           {funItems.map((item, i) => (
             <li key={item.title}>
-              {item.gallery ? (
-                <button
-                  type="button"
-                  aria-haspopup="dialog"
-                  aria-expanded={gallery === item.gallery}
-                  onClick={() => setGallery(item.gallery ?? null)}
-                  className={`${laneClass} w-full bg-transparent text-left text-fog [font-family:inherit]`}
-                >
-                  <LaneFace item={item} index={i} />
-                </button>
-              ) : (
-                <article className={laneClass}>
-                  <LaneFace item={item} index={i} />
-                </article>
-              )}
+              <article className={laneClass}>
+                <LaneBody
+                  item={item}
+                  index={i}
+                  galleryOpen={item.gallery !== undefined && gallery === item.gallery}
+                  onOpen={setGallery}
+                />
+              </article>
               {item.video && (
                 <div className="px-3 pb-4 sm:pl-[7.5rem] sm:pr-4">
                   <div className="max-w-xl">

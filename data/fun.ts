@@ -49,11 +49,20 @@ export const funItems: FunItem[] = [
     tags: ["Coldplay", "Radiohead", "Mac DeMarco", "Malcolm Todd"],
   },
   {
+    category: "Abroad",
+    title: "Study abroad",
+    description: "I studied abroad in Europe. Click the map to see photos from Madrid and Munich.",
+    emoji: "🗺️",
+    tags: ["Madrid", "Munich"],
+    gallery: "study-abroad",
+  },
+  {
     category: "Fútbol",
     title: "Real Madrid till I die",
     description: "Madrid is my club, no debate. ¡Hala Madrid!",
     emoji: "⚽",
     tags: ["Hala Madrid"],
+    gallery: "sports",
   },
   {
     category: "Away days",
@@ -61,21 +70,12 @@ export const funItems: FunItem[] = [
     description: "I've been to soccer games in five different countries.",
     emoji: "🏟️",
     tags: ["5 countries"],
-    gallery: "sports",
-  },
-  {
-    category: "Travel",
-    title: "Study abroad",
-    description: "I studied abroad. The photos are from Madrid and Munich.",
-    emoji: "🗺️",
-    tags: ["Madrid", "Munich"],
-    gallery: "study-abroad",
   },
   {
     category: "Hoops",
     title: "Lakers forever",
     description:
-      "LA born and raised, so it was always going to be the Lakers. Madrid and the Lakers are the two teams I'd die for.",
+      "LA born and raised, so it was always going to be the Lakers. My favorite teams are Madrid, the Lakers, and the Packers.",
     emoji: "🏀",
     tags: ["Purple & Gold"],
   },

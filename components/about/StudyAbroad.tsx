@@ -2,7 +2,15 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { CloseIcon } from "@/components/icons";
-import { europeBalloon, europeLabels, europeLandmarks, europeLands, europeView, europeWaves } from "@/data/europeMap";
+import {
+  europeBalloon,
+  europeCanaryInset,
+  europeLabels,
+  europeLandmarks,
+  europeLands,
+  europeView,
+  europeWaves,
+} from "@/data/europeMap";
 import { studyAbroadCities, type StudyCity } from "@/data/studyAbroad";
 import { PhotoViewer } from "./PhotoViewer";
 
@@ -80,6 +88,28 @@ function Landmark({ id }: { id: string }) {
       </g>
     );
   }
+  if (id === "sagrada") {
+    return (
+      <g fill="#e7d7c1" stroke="#3a2a22" strokeWidth="1.4" strokeLinejoin="round">
+        <path d="M-18 24 L-14 -4 L-8 24 Z" />
+        <path d="M-5 24 L0 -22 L5 24 Z" />
+        <path d="M8 24 L14 0 L20 24 Z" />
+        <circle cx="0" cy="-24" r="2.2" fill="#f0b429" />
+      </g>
+    );
+  }
+  if (id === "tram") {
+    return (
+      <g stroke="#3a2a22" strokeWidth="1.4" strokeLinejoin="round">
+        <path d="M-6 -8 L-2 -16 H6 L10 -8" fill="#e23b4a" />
+        <rect x="-12" y="-8" width="28" height="18" rx="2" fill="#f0b429" />
+        <rect x="-8" y="-4" width="6" height="5" fill="#d7f6ff" />
+        <rect x="2" y="-4" width="6" height="5" fill="#d7f6ff" />
+        <circle cx="-6" cy="12" r="2.4" fill="#3a2a22" />
+        <circle cx="8" cy="12" r="2.4" fill="#3a2a22" />
+      </g>
+    );
+  }
   if (id === "gate") {
     return (
       <g fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" strokeLinejoin="round">
@@ -123,7 +153,7 @@ function EuropeMap() {
       </g>
       <g>
         {europeLands.map((land) => (
-          <path key={land.name} d={land.d} fill={land.fill} />
+          <path key={land.name} d={land.d} fill={land.fill} fillRule="evenodd" />
         ))}
       </g>
       <g transform={`translate(${europeBalloon.x} ${europeBalloon.y}) scale(1.35)`}>
@@ -152,6 +182,32 @@ function EuropeMap() {
             {label.name.toUpperCase()}
           </text>
         ))}
+      </g>
+      <g transform={`translate(${europeCanaryInset.x} ${europeCanaryInset.y})`}>
+        <rect
+          width={europeCanaryInset.width}
+          height={europeCanaryInset.height}
+          fill="#79d0f5"
+          stroke="#16324a"
+          strokeWidth="3"
+        />
+        {europeCanaryInset.lands.map((land) => (
+          <path key={land.name} d={land.d} fill={land.fill} fillRule="evenodd" />
+        ))}
+        <text
+          x={europeCanaryInset.width / 2}
+          y={16}
+          fill="#fff"
+          stroke="#16324a"
+          strokeWidth="2.4"
+          paintOrder="stroke"
+          fontSize="11"
+          fontWeight="700"
+          textAnchor="middle"
+          fontFamily="var(--font-barlow), sans-serif"
+        >
+          CANARY ISLANDS
+        </text>
       </g>
     </svg>
   );
@@ -252,12 +308,16 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
                     }
                   }}
                   style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
-                  className="map-pin absolute flex min-h-11 items-center gap-1.5 px-2 py-1"
+                  className={`map-pin absolute flex items-center gap-1.5 px-2 py-1 ${
+                    item.id === "canaries" ? "min-h-0 px-1.5 py-0.5 text-[11px]" : "min-h-11"
+                  }`}
                   aria-label={`${item.city}, ${item.country}, ${item.photos.length} photos`}
                 >
                   <span className="map-pin-art flex items-center gap-1.5">
-                    {item.id === "madrid" ? <PalaceIcon /> : <TwinDomeIcon />}
-                    <span className="text-sm font-semibold leading-none">{item.city}</span>
+                    {item.id === "madrid" ? <PalaceIcon /> : item.id === "munich" ? <TwinDomeIcon /> : null}
+                    <span className={`font-semibold leading-none ${item.id === "canaries" ? "text-[11px]" : "text-sm"}`}>
+                      {item.city}
+                    </span>
                   </span>
                 </button>
               ))}
@@ -299,7 +359,7 @@ export function StudyAbroadAlbum() {
         </span>
         <span className="font-display text-2xl leading-none sm:text-3xl">Study abroad</span>
         <span className={`text-sm font-semibold ${mapOpen ? "text-accent-ink/80" : "text-mist"}`}>
-          {studyAbroadCities.length} cities
+          {studyAbroadCities.length} places
         </span>
       </button>
       <StudyAbroadMap open={mapOpen} onClose={() => setMapOpen(false)} />

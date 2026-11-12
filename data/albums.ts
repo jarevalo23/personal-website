@@ -33,7 +33,7 @@ export type PhotoAlbum = {
   photos: AlbumPhoto[];
 };
 
-/** Match photos. The Munich study-abroad gallery lists these too. */
+/** Match photos. The city galleries list these too. */
 export const allianzArenaPhotos: AlbumPhoto[] = [
   {
     src: "/images/study-abroad/15.webp",
@@ -47,12 +47,56 @@ export const allianzArenaPhotos: AlbumPhoto[] = [
   },
 ];
 
+export const bernabeuPhotos: AlbumPhoto[] = [
+  {
+    src: "/images/study-abroad/21.webp",
+    alt: "A Bernabéu museum wall showing Cristiano Ronaldo and the 2016 Champions League win in Milan.",
+    caption: "Bernabéu museum",
+  },
+  {
+    src: "/images/study-abroad/22.webp",
+    alt: "Josue posing next to a screen of Jude Bellingham at the Bernabéu.",
+    caption: "Bernabéu",
+  },
+  {
+    src: "/images/study-abroad/23.webp",
+    alt: "Josue in a Ronaldo number 7 jersey inside the Bernabéu.",
+    caption: "Bernabéu",
+  },
+];
+
+export const stamfordBridgePhotos: AlbumPhoto[] = [
+  {
+    src: "/images/study-abroad/27.webp",
+    alt: "A night soccer match at Stamford Bridge, with the stands full.",
+    caption: "Stamford Bridge",
+  },
+  {
+    src: "/images/study-abroad/28.webp",
+    alt: "Players on the pitch at Stamford Bridge during a match.",
+    caption: "Stamford Bridge",
+  },
+];
+
+export const portugalMatchPhotos: AlbumPhoto[] = [
+  {
+    src: "/images/study-abroad/62.webp",
+    alt: "A Portugal national team soccer match.",
+    caption: "Portugal match",
+  },
+  {
+    src: "/images/study-abroad/63.webp",
+    alt: "Another view of a Portugal national team soccer match.",
+    caption: "Portugal match",
+  },
+];
+
 export const photoAlbums: PhotoAlbum[] = [
   {
     id: "sports",
     emoji: "🏅",
     label: "Sports",
     note: "Some of my favorite teams are Madrid, the Lakers, and the Packers.",
-    photos: allianzArenaPhotos,
+    photos: [...allianzArenaPhotos, ...bernabeuPhotos, ...stamfordBridgePhotos, ...portugalMatchPhotos],
   },
 ];

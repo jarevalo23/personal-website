@@ -52,9 +52,10 @@ export const funItems: FunItem[] = [
   {
     category: "Abroad",
     title: "Study abroad",
-    description: "I studied abroad in Europe. Click the map to see photos from Madrid and Munich.",
+    description:
+      "I studied abroad in Europe. Click the map to see photos from Madrid, Munich, London, Barcelona, Portugal, and the Canary Islands.",
     emoji: "🗺️",
-    tags: ["Madrid", "Munich"],
+    tags: ["Madrid", "Munich", "London", "Barcelona", "Portugal", "Canary Islands"],
     gallery: "study-abroad",
   },
   {

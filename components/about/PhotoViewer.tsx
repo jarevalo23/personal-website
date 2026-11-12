@@ -22,6 +22,7 @@ export function PhotoViewer({ open, title, photos, onClose, closeLabel = "Close 
   const swipeRef = useRef<{ x: number; y: number } | null>(null);
   const titleId = useId();
   const liveId = useId();
+  const thumbRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const count = photos.length;
   const photoIndex = count > 0 ? Math.min(index, count - 1) : 0;
   const photo = count > 0 ? photos[photoIndex] : null;
@@ -35,6 +36,10 @@ export function PhotoViewer({ open, title, photos, onClose, closeLabel = "Close 
       closeRef.current?.focus();
     }
   }, [open]);
+
+  useEffect(() => {
+    thumbRefs.current[photoIndex]?.scrollIntoView({ inline: "center", block: "nearest", behavior: "auto" });
+  }, [photoIndex]);
 
   const finishClose = () => {
     onClose();
@@ -136,6 +141,25 @@ export function PhotoViewer({ open, title, photos, onClose, closeLabel = "Close 
             <figcaption className="border-t border-white/10 px-4 py-3 text-sm text-mist sm:px-5">
               {photo.caption ?? title}
             </figcaption>
+            {count > 1 && (
+              <div className="flex gap-1 overflow-x-auto border-t border-white/10 px-3 py-2" role="group" aria-label="Photo thumbnails">
+                {photos.map((item, i) => (
+                  <button
+                    key={item.src}
+                    type="button"
+                    ref={(el) => {
+                      thumbRefs.current[i] = el;
+                    }}
+                    aria-label={`Photo ${i + 1}, ${item.caption ?? title}`}
+                    aria-current={i === photoIndex ? "true" : undefined}
+                    onClick={() => setIndex(i)}
+                    className={`relative h-12 w-12 shrink-0 border ${i === photoIndex ? "border-fog" : "border-white/20"}`}
+                  >
+                    <Image src={item.src} alt="" fill sizes="48px" className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            )}
             <p id={liveId} className="sr-only" aria-live="polite">
               {title}, photo {photoIndex + 1} of {count}. {photo.alt} Use the arrow keys to change photos. Escape
               closes this view.

@@ -71,7 +71,7 @@ export const profile = {
 
   /** "Career history" in the scouting report — like a FIFA transfer history. */
   career: [
-    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun 2026", place: "Remote" },
+    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun – Sep 2026", place: "Remote" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern III", dates: "Jun – Aug 2025", place: "El Segundo, CA" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
     {

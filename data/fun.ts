@@ -36,7 +36,7 @@ export const funItems: FunItem[] = [
     description:
       "I play bass in a few music groups on campus, including Bucketlist and Primera Generación, my grupo. I started playing at church when I was 11.",
     emoji: "🎸",
-    tags: ["Bucketlist", "Primera Generación", "Bass", "Since age 11"],
+    tags: ["Bucketlist", "Primera Generación", "Bass"],
     link: { label: "Follow Bucketlist on Instagram", href: "https://www.instagram.com/therealbucketlist/" },
     // [BAND_VIDEO] Drop the clip at public/videos/bucketlist.mp4, then uncomment:
     // video: { src: "/videos/bucketlist.mp4", title: "Bucketlist live" },

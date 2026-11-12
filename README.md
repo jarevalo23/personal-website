@@ -46,6 +46,7 @@ All personal content lives in **`/data`**:
 | `data/projects.ts` | Projects: title, description, tech stack, links, screenshots, and position on the court |
 | `data/fun.ts` | Pool-lane items: hobbies, playlists, favorite teams, random facts… |
 | `data/albums.ts` | About Me photo albums: each emoji, its label, and the photos it opens |
+| `data/studyAbroad.ts` | Study-abroad map: each city, its pin, and its photos |
 | `data/music.ts` | The "Now Playing" radio: your Spotify playlist link, label and station name |
 
 ### Placeholders to fill in
@@ -71,7 +72,7 @@ Copy one object in `data/projects.ts` and edit it. `court: { x, y }` places its 
 
 The emoji buttons on About Me open photo albums. Everything they show comes from `data/albums.ts`. Image files live in `public/images/albums/`. The page uses `next/image`, so you don't set a width or height, and you don't edit a component.
 
-The Bass, Soccer, and Shows albums ship with labeled placeholder images. Replace those files, or point `src` at new ones, and delete a placeholder once nothing references it.
+Bass and Shows still use labeled placeholder images. Sports uses two real match photos. Replace a placeholder, or point `src` at a new file, and delete a placeholder once nothing references it. Study-abroad cities and pins live in `data/studyAbroad.ts`. Photos for that map go in `public/images/study-abroad/`.
 
 **Add photos to an emoji you already have**
 

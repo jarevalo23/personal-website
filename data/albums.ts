@@ -10,8 +10,8 @@
  *  Add a photo by appending to that album's `photos` array.
  *  Keep `emoji` unique. `alt` is required. `caption` is optional.
  *
- *  The albums below use labeled placeholders. Point `src` at a real photo
- *  (or replace the file) and delete a placeholder once nothing uses it.
+ *  Bass and Shows still use labeled placeholders. Sports points at real
+ *  photos in public/images/study-abroad. Delete a placeholder once nothing uses it.
  *  See the README section "Adding an emoji photo album".
  * ─────────────────────────────────────────────────────────────────────────────
  */
@@ -30,6 +30,8 @@ export type PhotoAlbum = {
   emoji: string;
   /** Name under the emoji, and the title of the viewer. */
   label: string;
+  /** Optional line shown with the albums. */
+  note?: string;
   photos: AlbumPhoto[];
 };
 
@@ -51,18 +53,19 @@ export const photoAlbums: PhotoAlbum[] = [
     ],
   },
   {
-    emoji: "⚽",
-    label: "Soccer",
+    emoji: "🏅",
+    label: "Sports",
+    note: "Some of my favorite teams are Madrid, the Lakers, and the Packers.",
     photos: [
       {
-        src: "/images/albums/soccer-1.png",
-        alt: "Placeholder graphic for the Soccer album, photo 1 of 2. It reads PLACEHOLDER and Soccer. No real photo yet.",
-        caption: "Placeholder. Swap this file for a real photo.",
+        src: "/images/study-abroad/15.webp",
+        alt: "A night soccer match at Allianz Arena, with red flags in the crowd.",
+        caption: "Allianz Arena",
       },
       {
-        src: "/images/albums/soccer-2.png",
-        alt: "Placeholder graphic for the Soccer album, photo 2 of 2. It reads PLACEHOLDER and Soccer. No real photo yet.",
-        caption: "Placeholder. Swap this file for a real photo.",
+        src: "/images/study-abroad/16.webp",
+        alt: "Another view of the night match at Allianz Arena.",
+        caption: "Allianz Arena",
       },
     ],
   },

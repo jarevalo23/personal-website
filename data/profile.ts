@@ -23,7 +23,7 @@ export const profile = {
   lastName: "Arevalo",
   /** Big number on the intro splash and player card. */
   jerseyNumber: 23,
-  tagline: "CS student at Stanford, class of 2027",
+  tagline: "Stanford CS, B.S. 2027, M.S. 2028",
 
   /** Public address for the copy-to-clipboard button and mailto fallback. */
   email: "jareval0@stanford.edu",
@@ -34,7 +34,7 @@ export const profile = {
   },
 
   /** Shown in the press room (contact page). */
-  availability: "Looking for software engineering and machine learning roles. I finish my B.S. in June 2027.",
+  availability: "Looking for software engineering and machine learning roles. I finish my B.S. in June 2027, start my master's this January, and finish it in June 2028.",
   responseTime: "Usually within 48 hours",
   location: "Los Angeles, CA",
 
@@ -80,13 +80,19 @@ export const profile = {
       dates: "Expected Jun 2027",
       place: "Stanford, CA",
     },
+    {
+      club: "Stanford University",
+      role: "M.S. Computer Science · AI emphasis",
+      dates: "Jan 2027 – Jun 2028",
+      place: "Stanford, CA",
+    },
   ],
 
   /** "Scouting report" — your bio, written like a scout's notes (from your resume). */
   scouting: {
     headline: "A little about me",
     summary: [
-      "I was born and raised in Los Angeles. My family is from El Salvador. I study computer science at Stanford, in the artificial intelligence concentration. I graduate with my B.S. in June 2027.",
+      "I was born and raised in Los Angeles. My family is from El Salvador. I'm finishing my B.S. in CS at Stanford in June 2027, and I start my master's in CS with an AI focus this January, winter quarter, graduating June 2028.",
       "I like building AI-powered systems, especially RAG pipelines and LLM workflows that turn messy real-world data into something useful. I've built them for regulatory documents, technical research, and writing tools, and I'm always learning more about where AI is headed.",
       "I spent two summers at The Aerospace Corporation. I built retrieval-augmented generation pipelines, semantic search, and engineering automation in Python.",
       "I've also done side work on computer vision for basketball broadcasts, and research on adaptive retrieval for language models.",
@@ -95,7 +101,7 @@ export const profile = {
       { label: "Preferred foot", value: "Python" },
       { label: "Weak foot", value: "★★★★☆ (TypeScript)" },
       { label: "Former club", value: "ShipAdvisor" },
-      { label: "Academy", value: "Stanford CS" },
+      { label: "Academy", value: "Stanford CS, B.S. and M.S." },
       { label: "Languages", value: "English · Spanish" },
       { label: "Hometown", value: "Los Angeles, CA" },
       { label: "Heritage", value: "El Salvador" },

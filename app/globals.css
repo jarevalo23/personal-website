@@ -599,6 +599,33 @@ html:has(dialog[open]) {
   animation: fade-in 250ms ease-out;
 }
 
+/*
+ * Study-abroad map: the whole map always fits the dialog without scrolling.
+ * The map box (SVG + pins, which are placed in percent) is as wide as the dialog
+ * allows, capped by the height left after the header, panel border and dialog
+ * padding, times the map's aspect ratio. Pins scale their position with the box.
+ */
+.study-map {
+  --map-header: 5.5rem;
+  --map-chrome: calc(var(--map-header) + 2px);
+  --map-max-w: calc(100vw - 2px);
+}
+.study-map-header {
+  height: var(--map-header);
+}
+.study-map-box {
+  max-width: 100%;
+  width: min(var(--map-max-w), calc((100vh - var(--map-chrome)) * var(--map-ratio)));
+  width: min(var(--map-max-w), calc((100dvh - var(--map-chrome)) * var(--map-ratio)));
+}
+@media (min-width: 40rem) {
+  .study-map {
+    /* sm:p-6 on the dialog = 3rem of padding on each axis. */
+    --map-chrome: calc(var(--map-header) + 2px + 3rem);
+    --map-max-w: calc(min(48rem, 100vw - 3rem) - 2px);
+  }
+}
+
 /* Cartoon pins on the study-abroad map. Centering stays on the button. */
 .map-pin {
   border-radius: 18px;
@@ -611,9 +638,9 @@ html:has(dialog[open]) {
 }
 /*
  * Pins with a landmark put the landmark on the city. Offsets are border + padding
- * + half the icon slot (w-5 / sm:w-8) for a leading icon, or border + padding +
+ * + half the icon slot (w-5 / @lg:w-8) for a leading icon, or border + padding +
  * slot + half the gap for a trailing one, which puts the city between label and icon
- * from sm up.
+ * when the map box is at least 32rem wide.
  */
 .map-pin-lead {
   transform: translate(-17px, -50%);
@@ -622,7 +649,8 @@ html:has(dialog[open]) {
 .map-pin-trail {
   transform: translate(calc(-50% + 6px), -23px);
 }
-@media (min-width: 40rem) {
+/* Matches the @lg container variant on the pins (the map box is the container). */
+@container (min-width: 32rem) {
   .map-pin-lead {
     transform: translate(-27px, -50%);
   }

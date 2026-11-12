@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { type CSSProperties, type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { CloseIcon } from "@/components/icons";
 import {
   europeCanaryInset,
@@ -16,7 +16,7 @@ import { PhotoViewer } from "./PhotoViewer";
 /** A small palace, drawn next to the Madrid pin. */
 function PalaceIcon() {
   return (
-    <svg viewBox="0 0 40 36" className="h-4 w-5 sm:h-7 sm:w-8" aria-hidden="true">
+    <svg viewBox="0 0 40 36" className="h-4 w-5 @lg:h-7 @lg:w-8" aria-hidden="true">
       <path d="M6 32 V16 H12 V10 H16 V16 H24 V10 H28 V16 H34 V32 Z" fill="#fff6e4" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
       <path d="M16 10 Q20 2 24 10" fill="#f2c14e" stroke="#4a3b32" strokeWidth="2.2" />
       <circle cx="20" cy="6" r="1.4" fill="#e07a5f" />
@@ -28,7 +28,7 @@ function PalaceIcon() {
 /** Twin onion domes, drawn next to the Munich pin. */
 function TwinDomeIcon() {
   return (
-    <svg viewBox="0 0 40 36" className="h-4 w-5 sm:h-7 sm:w-8" aria-hidden="true">
+    <svg viewBox="0 0 40 36" className="h-4 w-5 @lg:h-7 @lg:w-8" aria-hidden="true">
       <path d="M7 32 V16 H16 V32 M24 32 V16 H33 V32" fill="#f4d7b0" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
       <path d="M6 16 Q11.5 4 17 16 M23 16 Q28.5 4 34 16" fill="#3d9b8f" stroke="#4a3b32" strokeWidth="2.2" strokeLinejoin="round" />
       <path d="M11.5 8 V5 M28.5 8 V5" stroke="#4a3b32" strokeWidth="2" strokeLinecap="round" />
@@ -127,15 +127,19 @@ function Landmark({ id }: { id: string }) {
 /** Landmark art at pin size. */
 function PinLandmark({ id, viewBox }: { id: string; viewBox: string }) {
   return (
-    <svg viewBox={viewBox} className="h-4 w-auto sm:h-7" aria-hidden="true">
+    <svg viewBox={viewBox} className="h-4 w-auto @lg:h-7" aria-hidden="true">
       <Landmark id={id} />
     </svg>
   );
 }
 
-/** Fixed-width icon slot, so the CSS anchor offsets in globals.css land exactly on the city. */
+/**
+ * Fixed-width icon slot, so the CSS anchor offsets in globals.css land exactly on the city.
+ * Pin sizes follow the map box width (@lg container), not the viewport, so a map shrunk
+ * to fit a short window gets compact pins that don't crowd each other.
+ */
 function PinIconSlot({ children }: { children: ReactNode }) {
-  return <span className="flex w-5 shrink-0 justify-center sm:w-8">{children}</span>;
+  return <span className="flex w-5 shrink-0 justify-center @lg:w-8">{children}</span>;
 }
 
 /**
@@ -272,10 +276,10 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
       >
         {open && (
           <div
-            className="dialog-content panel panel-accent flex h-full w-full max-w-3xl flex-col overflow-hidden sm:mx-auto sm:h-auto sm:max-h-full"
+            className="study-map dialog-content panel panel-accent flex h-full w-full max-w-3xl flex-col overflow-hidden sm:mx-auto sm:h-auto sm:max-h-full sm:w-auto"
             onClick={(event) => event.stopPropagation()}
           >
-            <header className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3 sm:px-5">
+            <header className="study-map-header flex flex-none items-center justify-between gap-3 border-b border-white/10 px-4 sm:px-5">
               <div className="min-w-0">
                 <h2 id={titleId} className="font-display text-3xl sm:text-4xl">
                   Study abroad
@@ -295,8 +299,13 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
             </header>
             <div className="flex flex-1 items-center justify-center bg-[#79d0f5] sm:block sm:flex-none sm:bg-[#79d0f5]">
               <div
-                className="relative mx-auto w-full"
-                style={{ aspectRatio: `${europeView.width} / ${europeView.height}` }}
+                className="study-map-box @container relative mx-auto"
+                style={
+                  {
+                    aspectRatio: `${europeView.width} / ${europeView.height}`,
+                    "--map-ratio": `${europeView.width / europeView.height}`,
+                  } as CSSProperties
+                }
               >
               <EuropeMap />
               {studyAbroadCities.map((item, i) => (
@@ -319,8 +328,8 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
                   style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
                   className={`map-pin absolute flex items-center ${
                     item.id === "canaries"
-                      ? "min-h-0 px-1 py-0 sm:px-1.5 sm:py-0.5"
-                      : `min-h-6 sm:min-h-11 sm:px-2 sm:py-1 ${
+                      ? "min-h-0 px-1 py-0 @lg:px-1.5 @lg:py-0.5"
+                      : `min-h-6 @lg:min-h-11 @lg:px-2 @lg:py-1 ${
                           pinIcons[item.id]?.after ? "map-pin-trail px-2 py-1" : "map-pin-lead px-1 py-0"
                         }`
                   }`}
@@ -328,13 +337,13 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
                 >
                   <span
                     className={`map-pin-art flex items-center ${
-                      pinIcons[item.id]?.after ? "flex-col-reverse gap-0.5 sm:flex-row sm:gap-1.5" : "gap-1 sm:gap-1.5"
+                      pinIcons[item.id]?.after ? "flex-col-reverse gap-0.5 @lg:flex-row @lg:gap-1.5" : "gap-1 @lg:gap-1.5"
                     }`}
                   >
                     {pinIcons[item.id] && !pinIcons[item.id].after && <PinIconSlot>{pinIcons[item.id].icon}</PinIconSlot>}
                     <span
                       className={`font-semibold leading-none ${
-                        item.id === "canaries" ? "text-[10px] sm:text-[11px]" : "text-[10px] sm:text-sm"
+                        item.id === "canaries" ? "text-[10px] @lg:text-[11px]" : "text-[10px] @lg:text-sm"
                       }`}
                     >
                       {item.city}

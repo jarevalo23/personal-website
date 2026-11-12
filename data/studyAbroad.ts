@@ -1,9 +1,9 @@
 /**
  * Study-abroad photos on About. Each city is a pin on the Europe map.
  * `pin` is a percentage of the map (0 to 100). Photos live in
- * public/images/study-abroad. The same file can also be listed in data/albums.ts.
+ * public/images/study-abroad. The Allianz Arena shots come from data/albums.ts.
  */
-import type { AlbumPhoto } from "./albums";
+import { allianzArenaPhotos, type AlbumPhoto } from "./albums";
 
 export type StudyCity = {
   id: string;
@@ -49,8 +49,7 @@ export const studyAbroadCities: StudyCity[] = [
       shot("12", "More framed photographs in a gallery window.", "Munich"),
       shot("13", "The gilded interior of a church in Munich.", "Munich"),
       shot("14", "Red rooftops under a cloudy sky in Munich.", "Munich"),
-      shot("15", "A night soccer match at Allianz Arena, with red flags in the crowd.", "Allianz Arena"),
-      shot("16", "Another view of the night match at Allianz Arena.", "Allianz Arena"),
+      ...allianzArenaPhotos,
       shot("17", "The inside of a beer tent roof, with wreaths hanging from it.", "Oktoberfest"),
       shot("18", "Street food in a paper tray, with wooden forks.", "Munich"),
       shot("19", "The Oktoberfest fairgrounds, with a Ferris wheel and a crowded midway.", "Oktoberfest"),

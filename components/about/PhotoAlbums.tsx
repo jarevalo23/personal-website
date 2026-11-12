@@ -7,13 +7,13 @@ import { StudyAbroadAlbum } from "./StudyAbroad";
 
 /** Emoji buttons that open a photo viewer. Albums come from data/albums.ts. */
 export function PhotoAlbums() {
-  const [openEmoji, setOpenEmoji] = useState<string | null>(null);
-  const album = photoAlbums.find((item) => item.emoji === openEmoji) ?? null;
+  const [openId, setOpenId] = useState<string | null>(null);
+  const album = photoAlbums.find((item) => item.id === openId) ?? null;
   const notes = photoAlbums.map((item) => item.note).filter((note): note is string => Boolean(note));
 
   const open = (item: PhotoAlbum) => {
     if (item.photos.length === 0) return;
-    setOpenEmoji(item.emoji);
+    setOpenId(item.id);
   };
 
   if (photoAlbums.length === 0) return null;
@@ -24,19 +24,19 @@ export function PhotoAlbums() {
       <h2 id="albums-title" className="font-display mt-2 text-4xl sm:text-5xl">
         Photos
       </h2>
-      <p className="mt-3 max-w-xl text-fog/90">Tap an emoji. Bass and Shows are still placeholders.</p>
+      <p className="mt-3 max-w-xl text-fog/90">Sports and study abroad.</p>
       {notes.map((note) => (
         <p key={note} className="mt-2 max-w-xl text-fog/90">
           {note}
         </p>
       ))}
 
-      <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <ul className="mt-6 grid max-w-xl grid-cols-2 gap-3">
         {photoAlbums.map((item) => {
-          const selected = openEmoji === item.emoji;
+          const selected = openId === item.id;
           const empty = item.photos.length === 0;
           return (
-            <li key={item.emoji}>
+            <li key={item.id}>
               <button
                 type="button"
                 disabled={empty}
@@ -66,11 +66,11 @@ export function PhotoAlbums() {
       </ul>
 
       <PhotoViewer
-        key={album?.emoji ?? "closed"}
+        key={album?.id ?? "closed"}
         open={album !== null}
         title={album?.label ?? ""}
         photos={album?.photos ?? []}
-        onClose={() => setOpenEmoji(null)}
+        onClose={() => setOpenId(null)}
       />
     </section>
   );

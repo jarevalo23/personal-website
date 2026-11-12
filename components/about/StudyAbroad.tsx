@@ -134,7 +134,7 @@ function EuropeMap() {
         <path d="M-10 8 L-6 18 M10 8 L6 18" stroke="#3a2a22" strokeWidth="1.2" />
       </g>
       {europeLandmarks.map((mark) => (
-        <g key={mark.id} transform={`translate(${mark.x} ${mark.y}) scale(1.75)`}>
+        <g key={mark.id} transform={`translate(${mark.x} ${mark.y}) scale(${mark.scale ?? 1.75})`}>
           <Landmark id={mark.id} />
         </g>
       ))}
@@ -157,13 +157,12 @@ function EuropeMap() {
   );
 }
 
-/** Emoji that opens a map. Each pin opens that city's photos. */
-export function StudyAbroadAlbum() {
-  const [mapOpen, setMapOpen] = useState(false);
+/** Map dialog. About and Fun Stuff both open this. Each pin opens that city's photos. */
+export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [cityId, setCityId] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const pinRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const titleId = useId();
   const city: StudyCity | null = studyAbroadCities.find((item) => item.id === cityId) ?? null;
@@ -171,15 +170,16 @@ export function StudyAbroadAlbum() {
   useEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
-    if (mapOpen && !dialog.open) {
+    if (open && !dialog.open) {
+      triggerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
       dialog.showModal();
       closeRef.current?.focus();
     }
-  }, [mapOpen]);
+  }, [open]);
 
   const finishClose = () => {
-    setMapOpen(false);
     setCityId(null);
+    onClose();
     triggerRef.current?.focus();
   };
 
@@ -196,28 +196,6 @@ export function StudyAbroadAlbum() {
 
   return (
     <>
-      <button
-        type="button"
-        aria-haspopup="dialog"
-        aria-expanded={mapOpen}
-        onClick={(event) => {
-          triggerRef.current = event.currentTarget;
-          setCityId(null);
-          setMapOpen(true);
-        }}
-        className={`flex min-h-28 w-full flex-col items-center justify-center gap-1 border px-2 py-3 text-center transition-colors ${
-          mapOpen ? "border-fog bg-accent text-accent-ink" : "border-white/20 bg-ink-950/40 text-fog hover:border-fog"
-        }`}
-      >
-        <span className="text-4xl leading-none" aria-hidden="true">
-          🗺️
-        </span>
-        <span className="font-display text-2xl leading-none sm:text-3xl">Study abroad</span>
-        <span className={`text-sm font-semibold ${mapOpen ? "text-accent-ink/80" : "text-mist"}`}>
-          {studyAbroadCities.length} cities
-        </span>
-      </button>
-
       <dialog
         ref={dialogRef}
         aria-labelledby={titleId}
@@ -227,7 +205,7 @@ export function StudyAbroadAlbum() {
         }}
         className="album-dialog m-0 flex h-dvh max-h-none w-full max-w-none items-stretch justify-center overflow-hidden border-0 bg-transparent p-0 text-fog sm:items-center sm:p-6"
       >
-        {mapOpen && (
+        {open && (
           <div
             className="dialog-content panel panel-accent flex h-full w-full max-w-3xl flex-col overflow-hidden sm:mx-auto sm:h-auto sm:max-h-full"
             onClick={(event) => event.stopPropagation()}
@@ -297,6 +275,34 @@ export function StudyAbroadAlbum() {
         onClose={() => setCityId(null)}
         closeLabel="Back to the map"
       />
+    </>
+  );
+}
+
+/** Emoji that opens the study-abroad map. */
+export function StudyAbroadAlbum() {
+  const [mapOpen, setMapOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={mapOpen}
+        onClick={() => setMapOpen(true)}
+        className={`flex min-h-28 w-full flex-col items-center justify-center gap-1 border px-2 py-3 text-center transition-colors ${
+          mapOpen ? "border-fog bg-accent text-accent-ink" : "border-white/20 bg-ink-950/40 text-fog hover:border-fog"
+        }`}
+      >
+        <span className="text-4xl leading-none" aria-hidden="true">
+          🗺️
+        </span>
+        <span className="font-display text-2xl leading-none sm:text-3xl">Study abroad</span>
+        <span className={`text-sm font-semibold ${mapOpen ? "text-accent-ink/80" : "text-mist"}`}>
+          {studyAbroadCities.length} cities
+        </span>
+      </button>
+      <StudyAbroadMap open={mapOpen} onClose={() => setMapOpen(false)} />
     </>
   );
 }

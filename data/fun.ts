@@ -5,6 +5,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
+export type FunGallery = "sports" | "study-abroad";
+
 export type FunItem = {
   /** Short category label on the starting block, e.g. "Hobby". */
   category: string;
@@ -20,6 +22,11 @@ export type FunItem = {
    *  - a YouTube video (public or unlisted): { youtubeId: "ID from youtu.be/ID", title: "..." }
    */
   video?: { src: string; title: string; poster?: string } | { youtubeId: string; title: string };
+  /**
+   * Opens a shared gallery. "sports" is the Sports album in data/albums.ts.
+   * "study-abroad" is the map in data/studyAbroad.ts.
+   */
+  gallery?: FunGallery;
 };
 
 export const funItems: FunItem[] = [
@@ -54,6 +61,15 @@ export const funItems: FunItem[] = [
     description: "I've been to soccer games in five different countries.",
     emoji: "🏟️",
     tags: ["5 countries"],
+    gallery: "sports",
+  },
+  {
+    category: "Travel",
+    title: "Study abroad",
+    description: "I studied abroad. The photos are from Madrid and Munich.",
+    emoji: "🗺️",
+    tags: ["Madrid", "Munich"],
+    gallery: "study-abroad",
   },
   {
     category: "Hoops",

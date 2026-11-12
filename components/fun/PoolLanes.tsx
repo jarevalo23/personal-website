@@ -1,4 +1,8 @@
-import { funItems } from "@/data/fun";
+"use client";
+
+import { useState } from "react";
+import { GalleryDialogs } from "@/components/gallery/GalleryDialogs";
+import { funItems, type FunGallery, type FunItem } from "@/data/fun";
 import { LiteYouTube } from "./LiteYouTube";
 import { VideoClip } from "./VideoClip";
 
@@ -18,8 +22,70 @@ function LaneRope() {
   );
 }
 
+const galleryLabel: Record<FunGallery, string> = {
+  sports: "Photos",
+  "study-abroad": "Map",
+};
+
+function LaneFace({ item, index }: { item: FunItem; index: number }) {
+  return (
+    <>
+      <div
+        className="pointer-events-none absolute inset-x-24 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-ink-950/40 transition-colors duration-300 group-hover:bg-pool/25"
+        aria-hidden="true"
+      />
+      <div className="relative flex w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-pool text-accent-ink sm:w-20">
+        <span className="text-xs font-bold uppercase tracking-wider">Lane</span>
+        <span className="font-display text-4xl leading-none">{index + 1}</span>
+      </div>
+      <div className="relative flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
+        <span
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-pool/30 bg-ink-950/50 text-2xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
+          aria-hidden="true"
+        >
+          {item.emoji}
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase tracking-wider text-accent">{item.category}</p>
+          <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.title}</h3>
+          <p className="mt-1 text-sm text-mist">{item.description}</p>
+        </div>
+        {(item.tags?.length || item.link || item.gallery) && (
+          <div className="flex flex-wrap items-center gap-2 sm:max-w-[16rem] sm:justify-end">
+            {item.tags?.map((tag) => (
+              <span key={tag} className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold">
+                {tag}
+              </span>
+            ))}
+            {item.gallery && (
+              <span className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold">
+                {galleryLabel[item.gallery]}
+              </span>
+            )}
+            {item.link && !item.gallery && (
+              <a
+                href={item.link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-sm font-semibold text-accent"
+              >
+                {item.link.label} ↗<span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
+
+const laneClass =
+  "group relative flex items-stretch gap-4 overflow-hidden px-3 py-4 transition-colors duration-300 hover:bg-pool/[0.07] sm:gap-6 sm:px-4";
+
 /** Each fun item gets its own lane; content comes from data/fun.ts. */
 export function PoolLanes() {
+  const [gallery, setGallery] = useState<FunGallery | null>(null);
+
   return (
     <section aria-labelledby="lanes-title" className="mb-8">
       <div className="mb-4 flex items-baseline justify-between">
@@ -33,52 +99,21 @@ export function PoolLanes() {
         <ol>
           {funItems.map((item, i) => (
             <li key={item.title}>
-              <article className="group relative flex items-stretch gap-4 overflow-hidden px-3 py-4 transition-colors duration-300 hover:bg-pool/[0.07] sm:gap-6 sm:px-4">
-                {/* black lane line on the pool floor */}
-                <div
-                  className="pointer-events-none absolute inset-x-24 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-ink-950/40 transition-colors duration-300 group-hover:bg-pool/25"
-                  aria-hidden="true"
-                />
-                <div className="relative flex w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-pool text-accent-ink sm:w-20">
-                  <span className="text-xs font-bold uppercase tracking-wider">Lane</span>
-                  <span className="font-display text-4xl leading-none">{i + 1}</span>
-                </div>
-                <div className="relative flex min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:items-center">
-                  <span
-                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-pool/30 bg-ink-950/50 text-2xl transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110"
-                    aria-hidden="true"
-                  >
-                    {item.emoji}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wider text-accent">{item.category}</p>
-                    <h3 className="font-display text-2xl leading-tight sm:text-3xl">{item.title}</h3>
-                    <p className="mt-1 text-sm text-mist">{item.description}</p>
-                  </div>
-                  {(item.tags?.length || item.link) && (
-                    <div className="flex flex-wrap items-center gap-2 sm:max-w-[16rem] sm:justify-end">
-                      {item.tags?.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-pool/25 bg-pool/10 px-2.5 py-0.5 text-xs font-semibold"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                      {item.link && (
-                        <a
-                          href={item.link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="link-underline text-sm font-semibold text-accent"
-                        >
-                          {item.link.label} ↗<span className="sr-only"> (opens in a new tab)</span>
-                        </a>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </article>
+              {item.gallery ? (
+                <button
+                  type="button"
+                  aria-haspopup="dialog"
+                  aria-expanded={gallery === item.gallery}
+                  onClick={() => setGallery(item.gallery ?? null)}
+                  className={`${laneClass} w-full bg-transparent text-left text-fog [font-family:inherit]`}
+                >
+                  <LaneFace item={item} index={i} />
+                </button>
+              ) : (
+                <article className={laneClass}>
+                  <LaneFace item={item} index={i} />
+                </article>
+              )}
               {item.video && (
                 <div className="px-3 pb-4 sm:pl-[7.5rem] sm:pr-4">
                   <div className="max-w-xl">
@@ -95,6 +130,7 @@ export function PoolLanes() {
           ))}
         </ol>
       </div>
+      <GalleryDialogs gallery={gallery} onClose={() => setGallery(null)} />
     </section>
   );
 }

@@ -71,7 +71,7 @@ export const profile = {
 
   /** "Career history" in the scouting report — like a FIFA transfer history. */
   career: [
-    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun 2026 – Present", place: "Remote" },
+    { club: "ShipAdvisor", role: "Software Engineer", dates: "Jun 2026", place: "Remote" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern III", dates: "Jun – Aug 2025", place: "El Segundo, CA" },
     { club: "The Aerospace Corporation", role: "System Engineer Intern II", dates: "Jun – Sep 2024", place: "El Segundo, CA" },
     {
@@ -87,14 +87,14 @@ export const profile = {
     headline: "A little about me",
     summary: [
       "I was born and raised in Los Angeles. My family is from El Salvador. I study computer science at Stanford, in the artificial intelligence concentration. I graduate with my B.S. in June 2027.",
-      "I'm a software engineer at ShipAdvisor. I build AI workflows, offline-first inspection tools, and geospatial pipelines. Day to day that's TypeScript, Next.js, Supabase, and PostGIS.",
+      "I like building AI-powered systems, especially RAG pipelines and LLM workflows that turn messy real-world data into something useful. I've built them for regulatory documents, technical research, and writing tools, and I'm always learning more about where AI is headed.",
       "I spent two summers at The Aerospace Corporation. I built retrieval-augmented generation pipelines, semantic search, and engineering automation in Python.",
       "I've also done side work on computer vision for basketball broadcasts, and research on adaptive retrieval for language models.",
     ],
     attributes: [
       { label: "Preferred foot", value: "Python" },
       { label: "Weak foot", value: "★★★★☆ (TypeScript)" },
-      { label: "Current club", value: "ShipAdvisor" },
+      { label: "Former club", value: "ShipAdvisor" },
       { label: "Academy", value: "Stanford CS" },
       { label: "Languages", value: "English · Spanish" },
       { label: "Hometown", value: "Los Angeles, CA" },

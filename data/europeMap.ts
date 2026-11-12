@@ -10,7 +10,7 @@ export const europeLands: { name: string; fill: string; d: string }[] = [{"name"
 
 export const europeLabels: { name: string; x: number; y: number; font: number }[] = [{"name":"Spain","x":205,"y":812,"font":18},{"name":"Portugal","x":81.5,"y":796.2,"font":16},{"name":"France","x":366.8,"y":542.2,"font":22},{"name":"UK","x":222.8,"y":224,"font":22},{"name":"Ireland","x":77.1,"y":262.7,"font":16},{"name":"Belgium","x":422.9,"y":373.2,"font":12},{"name":"Netherlands","x":448.1,"y":302.8,"font":16},{"name":"Germany","x":577.4,"y":355.6,"font":22},{"name":"Switzerland","x":519.1,"y":530.6,"font":16},{"name":"Austria","x":678.7,"y":499.1,"font":16},{"name":"Italy","x":627,"y":686.1,"font":22},{"name":"Czechia","x":711.3,"y":411.3,"font":16},{"name":"Denmark","x":568.7,"y":131.5,"font":16}];
 
-export const europeLandmarks: { id: string; x: number; y: number }[] = [{"id":"tree","x":140.5,"y":805},{"id":"eiffel","x":356.8,"y":538.5},{"id":"bigben","x":248.6,"y":251.9},{"id":"windmill","x":443.2,"y":301.2},{"id":"gate","x":578.4,"y":351.3},{"id":"tower","x":608.1,"y":664.6}];
+export const europeLandmarks: { id: string; x: number; y: number }[] = [{"id":"tree","x":112,"y":790},{"id":"eiffel","x":320,"y":455},{"id":"bigben","x":275,"y":305},{"id":"windmill","x":400,"y":220},{"id":"gate","x":440,"y":278},{"id":"tower","x":578,"y":615}];
 
 export const europeBalloon = { x: 70.3, y: 577.5 };
 

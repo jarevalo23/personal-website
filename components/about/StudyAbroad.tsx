@@ -33,57 +33,75 @@ function Landmark({ id }: { id: string }) {
   if (id === "tree") {
     return (
       <g>
-        <rect x="-3" y="4" width="6" height="12" rx="1" fill="#8a5a32" />
-        <circle cx="0" cy="-2" r="12" fill="#2f9e62" />
-        <circle cx="-6" cy="0" r="7" fill="#3caf70" />
-        <circle cx="7" cy="1" r="6" fill="#278a54" />
+        <rect x="-5" y="8" width="10" height="22" rx="2" fill="#8a5a32" />
+        <circle cx="0" cy="-8" r="20" fill="#2f9e62" />
+        <circle cx="-12" cy="-2" r="12" fill="#3caf70" />
+        <circle cx="13" cy="-1" r="11" fill="#278a54" />
+        <circle cx="2" cy="-16" r="8" fill="#67c98a" />
       </g>
     );
   }
   if (id === "eiffel") {
     return (
-      <g fill="none" stroke="#3a2a22" strokeWidth="2" strokeLinejoin="round">
-        <path d="M0 16 L-12 16 M0 16 L12 16 M-10 16 L-4 -14 L4 -14 L10 16 M-7 4 H7 M-5 -4 H5" />
-        <path d="M-2 -14 H2 L0 -18 Z" fill="#3a2a22" />
+      <g fill="none" stroke="#3a2a22" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round">
+        <path d="M-22 28 H22" />
+        <path d="M-16 28 Q-14 18 -8 10 L0 -30 L8 10 Q14 18 16 28" />
+        <path d="M-12 28 L-6 10 M12 28 L6 10" />
+        <path d="M-14 16 H14 M-10 4 H10 M-6 -8 H6" />
+        <path d="M-3 -30 H3 L0 -38 Z" fill="#3a2a22" />
+        <path d="M-18 28 Q0 18 18 28" />
       </g>
     );
   }
   if (id === "bigben") {
     return (
-      <g>
-        <rect x="-6" y="-6" width="12" height="22" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.6" />
-        <path d="M-8 -6 H8 L0 -16 Z" fill="#6b2f86" />
-        <circle cx="0" cy="2" r="3.2" fill="#fff" stroke="#3a2a22" strokeWidth="1.2" />
-        <path d="M0 2 V-0.4 M0 2 H2" stroke="#3a2a22" strokeWidth="1" />
+      <g stroke="#3a2a22" strokeWidth="1.6" strokeLinejoin="round">
+        <rect x="-10" y="-8" width="20" height="40" fill="#f4e2b0" />
+        <path d="M-13 -8 H13 L0 -26 Z" fill="#6b2f86" />
+        <rect x="-3" y="-26" width="6" height="6" fill="#f4e2b0" />
+        <path d="M-1 -26 V-34 H1 V-26" fill="#3a2a22" />
+        <circle cx="0" cy="4" r="6" fill="#fff" />
+        <path d="M0 4 V-1 M0 4 H4" fill="none" />
+        <rect x="-4" y="16" width="3" height="6" fill="#6b2f86" />
+        <rect x="1" y="16" width="3" height="6" fill="#6b2f86" />
       </g>
     );
   }
   if (id === "windmill") {
     return (
-      <g>
-        <path d="M-6 16 L-3 2 H3 L6 16 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" />
-        <path d="M0 2 L0 -14 L5 -8 Z M0 2 L0 -14 L-5 -8 Z M0 2 L14 2 L8 6 Z M0 2 L14 2 L8 -2 Z" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" strokeLinejoin="round" />
+      <g stroke="#3a2a22" strokeWidth="1.6" strokeLinejoin="round">
+        <path d="M-10 28 L-4 4 H4 L10 28 Z" fill="#c46b4a" />
+        <rect x="-3" y="16" width="6" height="8" fill="#f4e2b0" />
+        <circle cx="0" cy="2" r="3" fill="#f0b429" />
+        <path d="M0 2 L2 -24 L-8 -16 Z" fill="#fff" />
+        <path d="M0 2 L-2 24 L8 16 Z" fill="#fff" />
+        <path d="M0 2 L24 -2 L16 -10 Z" fill="#fff" />
+        <path d="M0 2 L-24 2 L-16 10 Z" fill="#fff" />
       </g>
     );
   }
   if (id === "gate") {
     return (
-      <g fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.4">
-        <rect x="-14" y="2" width="4" height="14" />
-        <rect x="-6" y="2" width="4" height="14" />
-        <rect x="2" y="2" width="4" height="14" />
-        <rect x="10" y="2" width="4" height="14" />
-        <rect x="-16" y="-2" width="32" height="5" />
-        <path d="M-4 -2 Q0 -10 4 -2" fill="#6b2f86" />
+      <g fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" strokeLinejoin="round">
+        <rect x="-22" y="4" width="5" height="22" />
+        <rect x="-12" y="4" width="5" height="22" />
+        <rect x="-2" y="4" width="4" height="22" />
+        <rect x="7" y="4" width="5" height="22" />
+        <rect x="17" y="4" width="5" height="22" />
+        <rect x="-26" y="-2" width="52" height="7" />
+        <path d="M-8 -2 Q0 -14 8 -2" fill="#6b2f86" />
+        <path d="M-4 -8 L0 -16 L4 -8" fill="#e23b4a" />
       </g>
     );
   }
   return (
-    <g transform="rotate(8)">
-      <ellipse cx="0" cy="-8" rx="7" ry="3" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.3" />
-      <ellipse cx="0" cy="-2" rx="7" ry="3" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" />
-      <ellipse cx="0" cy="4" rx="7" ry="3" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.3" />
-      <ellipse cx="0" cy="10" rx="7" ry="3" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" />
+    <g transform="rotate(7)">
+      <ellipse cx="0" cy="-16" rx="11" ry="4.5" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" />
+      <ellipse cx="0" cy="-6" rx="11" ry="4.5" fill="#fff" stroke="#3a2a22" strokeWidth="1.5" />
+      <ellipse cx="0" cy="4" rx="11" ry="4.5" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" />
+      <ellipse cx="0" cy="14" rx="11" ry="4.5" fill="#fff" stroke="#3a2a22" strokeWidth="1.5" />
+      <ellipse cx="0" cy="24" rx="11" ry="4.5" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" />
+      <path d="M-6 -16 H6 M-6 -6 H6 M-6 4 H6 M-6 14 H6" stroke="#3a2a22" strokeWidth="1" />
     </g>
   );
 }
@@ -108,13 +126,15 @@ function EuropeMap() {
           <path key={land.name} d={land.d} fill={land.fill} />
         ))}
       </g>
-      <g transform={`translate(${europeBalloon.x} ${europeBalloon.y})`}>
-        <path d="M0 2 C-16 2 -18 -16 0 -28 C18 -16 16 2 0 2 Z" fill="#e23b4a" />
-        <path d="M0 2 C-8 2 -9 -8 0 -16 C9 -8 8 2 0 2 Z" fill="#f0b429" />
-        <path d="M-4 2 H4 L2 8 H-2 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1" />
+      <g transform={`translate(${europeBalloon.x} ${europeBalloon.y}) scale(1.35)`}>
+        <path d="M0 8 C-28 8 -32 -22 0 -46 C32 -22 28 8 0 8 Z" fill="#e23b4a" />
+        <path d="M0 8 C-16 8 -18 -10 0 -28 C18 -10 16 8 0 8 Z" fill="#f0b429" />
+        <path d="M-6 8 C-4 -8 4 -8 6 8" fill="none" stroke="#3a2a22" strokeWidth="1.4" />
+        <path d="M-8 8 H8 L5 18 H-5 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.4" />
+        <path d="M-10 8 L-6 18 M10 8 L6 18" stroke="#3a2a22" strokeWidth="1.2" />
       </g>
       {europeLandmarks.map((mark) => (
-        <g key={mark.id} transform={`translate(${mark.x} ${mark.y})`}>
+        <g key={mark.id} transform={`translate(${mark.x} ${mark.y}) scale(1.75)`}>
           <Landmark id={mark.id} />
         </g>
       ))}

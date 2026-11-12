@@ -105,7 +105,7 @@ export const profile = {
       { label: "Languages", value: "English · Spanish" },
       { label: "Hometown", value: "Los Angeles, CA" },
       { label: "Heritage", value: "El Salvador" },
-      { label: "Clubs", value: "Real Madrid · Lakers" },
+      { label: "Clubs", value: "Real Madrid · Lakers · Packers" },
     ],
     strengths: [
       "AI and LLM apps where the output gets checked, the source is cited, and a person can step in",

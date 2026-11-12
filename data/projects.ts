@@ -34,7 +34,8 @@ export type Project = {
   jersey: number;
   /** Fun "position" label on the roster card, e.g. "PG", "Sixth Man". */
   role: string;
-  year: string;
+  /** Season printed on the card. Leave it off if you don't want to guess a year. */
+  year?: string;
   status: "Shipped" | "In progress" | "Archived";
   /** One-liner shown in the hover preview. */
   summary: string;
@@ -56,17 +57,17 @@ export const projects: Project[] = [
     role: "Point Guard · Stanford CS131",
     year: "2026",
     status: "Shipped",
-    summary: "Turns NBA broadcast footage into top-down player tracks and offensive-spacing maps.",
+    summary: "NBA broadcast footage turned into top-down player tracks and spacing maps.",
     description: [
-      "Co-developed a computer-vision pipeline for Stanford's CS131 that converts NBA broadcast video into a top-down court map: YOLOv8 player and ball detection, multi-object tracking with team labels, and a homography from camera pixels to court feet. A trained court-landmark model finds the paint corners automatically, with a click-to-calibrate fallback.",
-      "Implemented offensive convex-hull analysis with NumPy, SciPy and OpenCV: it measures the area enclosed by the tracked offensive players and overlays that polygon on the court view to visualize spacing, alongside nearest-defender distances, double-team detection, player speed and pass events.",
+      "I co-developed a computer-vision pipeline for Stanford's CS131. It takes NBA broadcast video and builds a top-down court map. YOLOv8, through Ultralytics, detects the players and the ball. Tracking uses ByteTrack, with an IoU fallback when a track drops. Teams are labeled with jersey-color k-means. A homography maps camera pixels to feet on the court. A model we trained finds the paint corners on its own, and you can click to calibrate if it's off. The pipeline also reports player speed and pass events.",
+      "My part was the spacing analytics. With NumPy, SciPy, and OpenCV, I measure the convex hull around the offensive players and draw that polygon on the court. I also mark nearest-defender distance (open, contested, or tight) and detect double teams.",
     ],
     highlights: [
-      "Broadcast video → top-down court coordinates",
-      "Convex-hull offensive spacing, drawn on the court",
-      "Nearest-defender lines: open, contested or tight",
+      "Broadcast video in, top-down court coordinates out",
+      "ByteTrack with an IoU fallback, and teams from jersey-color k-means",
+      "Spacing: convex hull, nearest defender, and double teams",
     ],
-    tech: ["Python", "OpenCV", "YOLOv8", "NumPy", "SciPy"],
+    tech: ["Python", "OpenCV", "YOLOv8", "Ultralytics", "ByteTrack", "scikit-learn", "NumPy", "SciPy"],
     links: { github: "https://github.com/jarevalo23/CS131-Final-Project" },
     screenshots: [
       {
@@ -93,11 +94,11 @@ export const projects: Project[] = [
     role: "Research · Stanford CS197",
     year: "2026",
     status: "Shipped",
-    summary: "Research on learning how many passages to retrieve for Spectral Koopman Attention.",
+    summary: "Learning how many passages to retrieve for Spectral Koopman Attention.",
     description: [
-      "A three-person study of adaptive retrieval for Spectral Koopman Attention, investigating how to select document context for a system built around Koopman operators.",
-      "The team trained a PyTorch network to predict λ from query embeddings, adapting how many document passages are retrieved, and evaluated learned versus fixed λ on 61 validation queries.",
-      "After a first version lost to a constant baseline, the team rebuilt the data from scratch: hand-written queries over real SEC 10-K filings instead of synthetic text, and a ranking loss over a sweep of λ values instead of a single best label.",
+      "Three of us studied adaptive retrieval for Spectral Koopman Attention. We looked at how to choose document context for a system built around Koopman operators.",
+      "We trained a PyTorch network to predict λ from the query embedding. That λ changes how many passages get retrieved. We compared the learned λ with a fixed λ on 61 validation queries.",
+      "The first version lost to a constant baseline, so we rebuilt the data. The queries are hand-written, on real SEC 10-K filings, not synthetic text. The loss ranks a sweep of λ values instead of one best label.",
     ],
     highlights: ["Learned λ from query embeddings", "Evaluated on 61 validation queries", "Rebuilt on real 10-K filings"],
     tech: ["PyTorch", "NumPy"],
@@ -112,19 +113,19 @@ export const projects: Project[] = [
     role: "Shooter · Personal",
     year: "2026",
     status: "In progress",
-    summary: "An NBA-playoffs dashboard that flags +EV bets and player-prop edges against devigged market odds.",
+    summary: "An NBA playoffs dashboard that flags plus-EV bets and player-prop edges against devigged odds.",
     description: [
-      "A full-stack value-betting app: a FastAPI backend pulls odds from The Odds API, devigs the sharpest books to estimate a fair price, and flags moneyline, spread and total offers the market has mispriced.",
-      "A transparent player-prop model blends recent and baseline hit rates with matchup, pace and injury adjustments, and refuses to recommend a bet on a tiny sample. Every pick is logged to a predictions journal and graded, so a calibration page shows whether the model has actually earned trust.",
-      "One monorepo ships two builds: a public demo that runs on fixtures and spends zero API credits, and a passcode-gated build for friends with live odds.",
+      "A value-betting app. The FastAPI backend pulls odds from The Odds API, devigs the sharpest books to estimate a fair price, and flags moneyline, spread, and total offers the market has mispriced.",
+      "Player props use a hit-rate model. It blends a recent hit rate with a baseline hit rate, and a hard sample-size floor stops it from recommending a bet on a tiny sample. Every pick goes into a predictions journal and gets graded, so a calibration page can show how those grades compare.",
+      "One monorepo ships two builds. A public demo runs on fixtures and spends zero API credits. A passcode-gated build, for friends, uses live odds.",
     ],
     highlights: [
-      "Devigged fair odds from 5 books",
-      "Sample-size floor: no bets on thin data",
-      "Predictions journal + calibration tracking",
+      "Fair odds devigged from 5 books",
+      "Hard sample-size floor, so no bet on a tiny sample",
+      "Predictions journal and a calibration page",
     ],
     tech: ["Next.js", "TypeScript", "FastAPI", "Python", "Supabase"],
-    links: { github: "https://github.com/jarevalo23/sports-value-finder-" },
+    links: {},
     screenshots: [
       {
         src: "/images/projects/value-finder-props.jpg",
@@ -148,5 +149,47 @@ export const projects: Project[] = [
       },
     ],
     court: { x: 16, y: 45 },
+  },
+  {
+    slug: "marc",
+    title: "Marc",
+    jersey: 10,
+    role: "Personal",
+    status: "In progress",
+    summary: "Helps you write emails and messages that sound like you.",
+    description: [
+      "I built Marc to help you write emails and messages that sound like you. It learns your style from your own writing samples and a short interview. I kept privacy and cost in mind while building it.",
+    ],
+    highlights: [
+      "Emails and messages that sound like you",
+      "Learns your style from your writing and a short interview",
+      "Privacy and cost kept in mind",
+    ],
+    tech: ["Python", "FastAPI", "LLMs"],
+    links: {},
+    screenshots: [],
+    court: { x: 50, y: 62 },
+  },
+  {
+    slug: "whale-watcher",
+    title: "Whale Watcher",
+    jersey: 15,
+    role: "Personal",
+    status: "In progress",
+    summary: "A read-only Kalshi and Polymarket monitor for unusually large trades.",
+    description: [
+      "Whale Watcher is a read-only monitor for Kalshi and Polymarket. It flags trades that are unusually large and sends a phone alert.",
+      "It also measures a hypothetical. Take a $10 copy of that trade, after the delay to detect it, and after order book depth, fees, and slippage. Would it have made money?",
+      "It never places an order. If trading keys are present, it refuses to start.",
+    ],
+    highlights: [
+      "Flags unusually large trades and sends a phone alert",
+      "Checks a hypothetical $10 copy after delay, depth, fees, and slippage",
+      "Read-only, and it will not start if trading keys are present",
+    ],
+    tech: ["TypeScript", "Next.js 16", "React 19", "PostgreSQL", "Zod", "decimal.js", "Vitest"],
+    links: {},
+    screenshots: [],
+    court: { x: 65, y: 38 },
   },
 ];

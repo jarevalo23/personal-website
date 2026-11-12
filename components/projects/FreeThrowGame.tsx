@@ -428,7 +428,7 @@ export function FreeThrowGame() {
           </button>
           <p id="ft-help" className="text-xs leading-relaxed text-mist">
             Press and hold the button (or Space / Enter) and let go when the meter is in the green. The 24-second clock starts on
-            your first shot. Totally optional — every project is above.
+            your first shot. Totally optional. Every project is above.
           </p>
         </div>
       </div>

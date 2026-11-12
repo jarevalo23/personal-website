@@ -87,7 +87,7 @@ export function Hud() {
           href="/"
           transitionLabel="Main Menu"
           className="flex min-w-0 items-center gap-2"
-          aria-label={`${fullName} — home`}
+          aria-label={`${fullName}, home`}
         >
           <Crest initials={initials} className="h-6 w-5 shrink-0" />
           <span className="font-display truncate text-base tracking-wide">{fullName}</span>

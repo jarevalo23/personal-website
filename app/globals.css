@@ -577,6 +577,57 @@ html:has(dialog[open]) {
 .project-dialog[open]::backdrop {
   animation: fade-in 250ms ease-out;
 }
+
+/* Photo viewer on About. Native dialog, centered over a dim page. */
+.album-dialog {
+  border: 0;
+  background: transparent;
+  outline: none;
+}
+.album-dialog::backdrop {
+  background: rgb(6 4 18 / 0.94);
+}
+.album-dialog[open] .dialog-content {
+  animation: fade-in 250ms ease-out;
+}
+.album-dialog[open]::backdrop {
+  animation: fade-in 250ms ease-out;
+}
+
+/* Cartoon pins on the study-abroad map. Centering stays on the button. */
+.map-pin {
+  border-radius: 18px;
+  border: 3px solid #4a3b32;
+  background: #fff6e4;
+  color: #3d2e24;
+  box-shadow: 3px 3px 0 #4a3b32;
+  transform: translate(-50%, -100%);
+}
+.map-pin-art {
+  transform-origin: center bottom;
+}
+.map-pin:hover .map-pin-art,
+.map-pin:focus-visible .map-pin-art {
+  animation: pin-bounce 0.48s var(--ease-snap);
+}
+.map-pin:active .map-pin-art {
+  transform: scale(0.92);
+}
+@keyframes pin-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  35% {
+    transform: translateY(-8px) scale(1.06);
+  }
+  60% {
+    transform: translateY(0) scale(0.96);
+  }
+  80% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
 @keyframes drawer-in {
   from {
     transform: translate3d(48px, 0, 0);

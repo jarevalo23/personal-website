@@ -78,8 +78,8 @@ export function ScoutingReport() {
             </ol>
           </div>
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-mist">Plays like</h3>
-            <p className="mt-1 font-display text-2xl">{scouting.playsLike}</p>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-mist">Day to day</h3>
+            <p className="mt-1 text-fog">{scouting.playsLike}</p>
           </div>
           <div className="rounded-xl border-l-4 border-accent bg-accent/[0.07] p-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-accent">Scout&apos;s verdict</h3>

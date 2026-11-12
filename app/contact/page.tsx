@@ -31,7 +31,7 @@ export default function ContactPage() {
               <h2 id="presser-title" className="font-display mt-2 text-5xl">
                 Questions from the floor
               </h2>
-              <p className="mt-1 text-mist">Recruiters, collaborators, fellow sports nerds — the mic is yours.</p>
+              <p className="mt-1 text-mist">Recruiters, people I might work with, sports nerds. Ask away.</p>
             </div>
             <MicIcon className="hidden h-16 w-16 shrink-0 text-accent sm:block" />
           </div>

@@ -108,8 +108,8 @@ export function ContactForm() {
           Message received!
         </h3>
         <p className="mx-auto mt-2 max-w-sm text-mist">
-          Thanks{values.name ? `, ${values.name.trim()}` : ""} — I&apos;ll get back to you at{" "}
-          <span className="text-fog">{values.email.trim()}</span> after the final whistle.
+          Thanks{values.name ? `, ${values.name.trim()}` : ""}. I&apos;ll get back to you at{" "}
+          <span className="text-fog">{values.email.trim()}</span>.
         </p>
         <button type="button" onClick={reset} className="btn-ghost mt-6">
           Send another question
@@ -213,7 +213,7 @@ export function ContactForm() {
           aria-invalid={!!shown("message")}
           aria-describedby={shown("message") ? "cf-message-err" : undefined}
           className={`${inputClass("message")} resize-y`}
-          placeholder="Recruiting? Collaboration? Hot take on last night's game? The floor is yours."
+          placeholder="A role, a project, or a take on last night's game."
         />
         {shown("message") && (
           <p id="cf-message-err" className="mt-1.5 text-sm text-redcard">
@@ -225,8 +225,8 @@ export function ContactForm() {
       {(status === "error" || status === "unconfigured") && (
         <div role="alert" className="rounded-lg border border-redcard/40 bg-redcard/10 p-4 text-sm">
           {status === "unconfigured"
-            ? "The press room's phone line isn't connected yet. "
-            : "Something went wrong sending that — the line dropped. "}
+            ? "This form isn't hooked up yet. "
+            : "Something went wrong and that message didn't send. "}
           <a href={mailto} className="font-semibold text-fog underline underline-offset-4">
             Email me directly instead
           </a>

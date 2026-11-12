@@ -1,6 +1,7 @@
 /**
  * Study-abroad photos on About. Each city is a pin on the Europe map.
- * `pin` is a percentage of the map (0 to 100). Photos live in
+ * `pin` is a percentage of the map (0 to 100), projected from the city's real
+ * latitude and longitude with `mapPin`. Photos live in
  * public/images/study-abroad. The Allianz Arena shots come from data/albums.ts.
  */
 import {
@@ -10,6 +11,7 @@ import {
   stamfordBridgePhotos,
   type AlbumPhoto,
 } from "./albums";
+import { canaryInsetPin, mapPin } from "./europeMap";
 
 export type StudyCity = {
   id: string;
@@ -31,7 +33,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "madrid",
     city: "Madrid",
     country: "Spain",
-    pin: { x: 28.2, y: 83.6 },
+    pin: mapPin(40.4168, -3.7038),
     photos: [
       shot("01", "A bronze lion sculpture beside the Alfonso XII monument in Retiro Park, Madrid.", "Retiro Park"),
       shot("02", "A narrow street of apartment buildings in Madrid.", "Madrid"),
@@ -47,7 +49,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "munich",
     city: "Munich",
     country: "Germany",
-    pin: { x: 76.8, y: 56.3 },
+    pin: mapPin(48.1351, 11.582),
     photos: [
       shot("07", "The New Town Hall tower in Marienplatz, Munich.", "Marienplatz"),
       shot("08", "Two people sitting by a train window, with green fields outside.", "On the train"),
@@ -68,7 +70,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "london",
     city: "London",
     country: "United Kingdom",
-    pin: { x: 39.6, y: 43 },
+    pin: mapPin(51.5, -0.12),
     photos: [
       shot("24", "Cups of strawberries at Borough Market.", "Borough Market"),
       shot("25", "A latte in a glass cup on a blue saucer.", "Borough Market"),
@@ -83,7 +85,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "barcelona",
     city: "Barcelona",
     country: "Spain",
-    pin: { x: 46.9, y: 80.3 },
+    pin: mapPin(41.39, 2.17),
     photos: [
       shot("32", "The Sagrada Família, seen from below.", "Sagrada Família"),
       shot("33", "Casa Batlló lit up at night.", "Casa Batlló"),
@@ -93,7 +95,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "portugal",
     city: "Portugal",
     country: "Portugal",
-    pin: { x: 11.3, y: 89.1 },
+    pin: mapPin(38.72, -9.14),
     photos: [
       shot("52", "A yellow palace tower.", "Portugal"),
       shot("53", "Josue leaning over a red tower wall.", "Portugal"),
@@ -118,7 +120,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "canaries",
     city: "Canary Islands",
     country: "Spain",
-    pin: { x: 9, y: 8.5 },
+    pin: canaryInsetPin,
     photos: [
       shot("34", "A long table set in a garden.", "Canary Islands"),
       shot("35", "A mortar and pestle on a cutting board.", "Canary Islands"),

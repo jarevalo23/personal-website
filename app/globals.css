@@ -606,7 +606,29 @@ html:has(dialog[open]) {
   background: #fff6e4;
   color: #3d2e24;
   box-shadow: 3px 3px 0 #4a3b32;
-  transform: translate(-50%, -100%);
+  /* Centered on its coordinate (the Canary Islands pin). */
+  transform: translate(-50%, -50%);
+}
+/*
+ * Pins with a landmark put the landmark on the city. Offsets are border + padding
+ * + half the icon slot (w-5 / sm:w-8) for a leading icon, or border + padding +
+ * slot + half the gap for a trailing one, which puts the city between label and icon
+ * from sm up.
+ */
+.map-pin-lead {
+  transform: translate(-17px, -50%);
+}
+/* Phones stack the tram over the label: tram sits just north-east of the city. */
+.map-pin-trail {
+  transform: translate(calc(-50% + 6px), -23px);
+}
+@media (min-width: 40rem) {
+  .map-pin-lead {
+    transform: translate(-27px, -50%);
+  }
+  .map-pin-trail {
+    transform: translate(calc(-100% + 46px), -50%);
+  }
 }
 .map-pin-art {
   transform-origin: center bottom;

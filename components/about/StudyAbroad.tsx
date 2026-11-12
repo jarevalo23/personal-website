@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { CloseIcon } from "@/components/icons";
 import {
-  europeBalloon,
   europeCanaryInset,
   europeLabels,
   europeLandmarks,
@@ -17,7 +16,7 @@ import { PhotoViewer } from "./PhotoViewer";
 /** A small palace, drawn next to the Madrid pin. */
 function PalaceIcon() {
   return (
-    <svg viewBox="0 0 40 36" className="h-7 w-8" aria-hidden="true">
+    <svg viewBox="0 0 40 36" className="h-4 w-5 sm:h-7 sm:w-8" aria-hidden="true">
       <path d="M6 32 V16 H12 V10 H16 V16 H24 V10 H28 V16 H34 V32 Z" fill="#fff6e4" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
       <path d="M16 10 Q20 2 24 10" fill="#f2c14e" stroke="#4a3b32" strokeWidth="2.2" />
       <circle cx="20" cy="6" r="1.4" fill="#e07a5f" />
@@ -29,7 +28,7 @@ function PalaceIcon() {
 /** Twin onion domes, drawn next to the Munich pin. */
 function TwinDomeIcon() {
   return (
-    <svg viewBox="0 0 40 36" className="h-7 w-8" aria-hidden="true">
+    <svg viewBox="0 0 40 36" className="h-4 w-5 sm:h-7 sm:w-8" aria-hidden="true">
       <path d="M7 32 V16 H16 V32 M24 32 V16 H33 V32" fill="#f4d7b0" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
       <path d="M6 16 Q11.5 4 17 16 M23 16 Q28.5 4 34 16" fill="#3d9b8f" stroke="#4a3b32" strokeWidth="2.2" strokeLinejoin="round" />
       <path d="M11.5 8 V5 M28.5 8 V5" stroke="#4a3b32" strokeWidth="2" strokeLinecap="round" />
@@ -38,17 +37,6 @@ function TwinDomeIcon() {
 }
 
 function Landmark({ id }: { id: string }) {
-  if (id === "tree") {
-    return (
-      <g>
-        <rect x="-5" y="8" width="10" height="22" rx="2" fill="#8a5a32" />
-        <circle cx="0" cy="-8" r="20" fill="#2f9e62" />
-        <circle cx="-12" cy="-2" r="12" fill="#3caf70" />
-        <circle cx="13" cy="-1" r="11" fill="#278a54" />
-        <circle cx="2" cy="-16" r="8" fill="#67c98a" />
-      </g>
-    );
-  }
   if (id === "eiffel") {
     return (
       <g fill="none" stroke="#3a2a22" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round">
@@ -136,6 +124,34 @@ function Landmark({ id }: { id: string }) {
   );
 }
 
+/** Landmark art at pin size. */
+function PinLandmark({ id, viewBox }: { id: string; viewBox: string }) {
+  return (
+    <svg viewBox={viewBox} className="h-4 w-auto sm:h-7" aria-hidden="true">
+      <Landmark id={id} />
+    </svg>
+  );
+}
+
+/** Fixed-width icon slot, so the CSS anchor offsets in globals.css land exactly on the city. */
+function PinIconSlot({ children }: { children: ReactNode }) {
+  return <span className="flex w-5 shrink-0 justify-center sm:w-8">{children}</span>;
+}
+
+/**
+ * Each pin's cartoon landmark. The pin is anchored so the landmark sits on the city's
+ * coordinate. Portugal's tram trails the label instead (stacked above it on phones,
+ * where Lisbon is too close to the map edge), so it lands on land by Lisbon rather
+ * than in the Atlantic.
+ */
+const pinIcons: Record<string, { icon: ReactNode; after?: boolean }> = {
+  madrid: { icon: <PalaceIcon /> },
+  munich: { icon: <TwinDomeIcon /> },
+  london: { icon: <PinLandmark id="bigben" viewBox="-15 -36 30 70" /> },
+  barcelona: { icon: <PinLandmark id="sagrada" viewBox="-20 -28 42 54" /> },
+  portugal: { icon: <PinLandmark id="tram" viewBox="-14 -18 32 32" />, after: true },
+};
+
 /** Cartoon styling over a Mercator crop of Europe. Pins sit on top. */
 function EuropeMap() {
   return (
@@ -155,13 +171,6 @@ function EuropeMap() {
         {europeLands.map((land) => (
           <path key={land.name} d={land.d} fill={land.fill} fillRule="evenodd" />
         ))}
-      </g>
-      <g transform={`translate(${europeBalloon.x} ${europeBalloon.y}) scale(1.35)`}>
-        <path d="M0 8 C-28 8 -32 -22 0 -46 C32 -22 28 8 0 8 Z" fill="#e23b4a" />
-        <path d="M0 8 C-16 8 -18 -10 0 -28 C18 -10 16 8 0 8 Z" fill="#f0b429" />
-        <path d="M-6 8 C-4 -8 4 -8 6 8" fill="none" stroke="#3a2a22" strokeWidth="1.4" />
-        <path d="M-8 8 H8 L5 18 H-5 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.4" />
-        <path d="M-10 8 L-6 18 M10 8 L6 18" stroke="#3a2a22" strokeWidth="1.2" />
       </g>
       {europeLandmarks.map((mark) => (
         <g key={mark.id} transform={`translate(${mark.x} ${mark.y}) scale(${mark.scale ?? 1.75})`}>
@@ -196,12 +205,12 @@ function EuropeMap() {
         ))}
         <text
           x={europeCanaryInset.width / 2}
-          y={16}
+          y={19}
           fill="#fff"
           stroke="#16324a"
-          strokeWidth="2.4"
+          strokeWidth="2.6"
           paintOrder="stroke"
-          fontSize="11"
+          fontSize="13"
           fontWeight="700"
           textAnchor="middle"
           fontFamily="var(--font-barlow), sans-serif"
@@ -308,16 +317,29 @@ export function StudyAbroadMap({ open, onClose }: { open: boolean; onClose: () =
                     }
                   }}
                   style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
-                  className={`map-pin absolute flex items-center gap-1.5 px-2 py-1 ${
-                    item.id === "canaries" ? "min-h-0 px-1.5 py-0.5 text-[11px]" : "min-h-11"
+                  className={`map-pin absolute flex items-center ${
+                    item.id === "canaries"
+                      ? "min-h-0 px-1 py-0 sm:px-1.5 sm:py-0.5"
+                      : `min-h-6 sm:min-h-11 sm:px-2 sm:py-1 ${
+                          pinIcons[item.id]?.after ? "map-pin-trail px-2 py-1" : "map-pin-lead px-1 py-0"
+                        }`
                   }`}
                   aria-label={`${item.city}, ${item.country}, ${item.photos.length} photos`}
                 >
-                  <span className="map-pin-art flex items-center gap-1.5">
-                    {item.id === "madrid" ? <PalaceIcon /> : item.id === "munich" ? <TwinDomeIcon /> : null}
-                    <span className={`font-semibold leading-none ${item.id === "canaries" ? "text-[11px]" : "text-sm"}`}>
+                  <span
+                    className={`map-pin-art flex items-center ${
+                      pinIcons[item.id]?.after ? "flex-col-reverse gap-0.5 sm:flex-row sm:gap-1.5" : "gap-1 sm:gap-1.5"
+                    }`}
+                  >
+                    {pinIcons[item.id] && !pinIcons[item.id].after && <PinIconSlot>{pinIcons[item.id].icon}</PinIconSlot>}
+                    <span
+                      className={`font-semibold leading-none ${
+                        item.id === "canaries" ? "text-[10px] sm:text-[11px]" : "text-[10px] sm:text-sm"
+                      }`}
+                    >
                       {item.city}
                     </span>
+                    {pinIcons[item.id]?.after && <PinIconSlot>{pinIcons[item.id].icon}</PinIconSlot>}
                   </span>
                 </button>
               ))}

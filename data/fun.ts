@@ -57,11 +57,12 @@ export const funItems: FunItem[] = [
     gallery: "study-abroad",
   },
   {
-    category: "Fútbol",
-    title: "Real Madrid till I die",
-    description: "Madrid is my club, no debate. ¡Hala Madrid!",
+    category: "Teams",
+    title: "Madrid, Lakers, Packers",
+    description:
+      "My favorite teams are Real Madrid, the Lakers, and the Packers. LA born and raised, so it was always going to be the Lakers. ¡Hala Madrid!",
     emoji: "⚽",
-    tags: ["Hala Madrid"],
+    tags: ["Hala Madrid", "Purple & Gold", "Packers"],
     gallery: "sports",
   },
   {
@@ -70,14 +71,6 @@ export const funItems: FunItem[] = [
     description: "I've been to soccer games in five different countries.",
     emoji: "🏟️",
     tags: ["5 countries"],
-  },
-  {
-    category: "Hoops",
-    title: "Lakers forever",
-    description:
-      "LA born and raised, so it was always going to be the Lakers. My favorite teams are Madrid, the Lakers, and the Packers.",
-    emoji: "🏀",
-    tags: ["Purple & Gold"],
   },
   {
     category: "Multi-sport",

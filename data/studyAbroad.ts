@@ -32,18 +32,14 @@ export const studyAbroadCities: StudyCity[] = [
       shot("03", "A cobblestone street of apartment buildings in Madrid.", "Madrid"),
       shot("04", "An ornate corner building in Madrid.", "Madrid"),
       shot("05", "The Royal Palace in Madrid, seen from the Sabatini Gardens.", "Royal Palace"),
-      shot(
-        "06",
-        "A red and silver Frecciarossa train waiting at a station platform.",
-        "Train station",
-      ),
+      shot("06", "A red and silver Frecciarossa train waiting at a station platform in Madrid.", "Madrid"),
     ],
   },
   {
     id: "munich",
     city: "Munich",
     country: "Germany",
-    pin: { x: 48, y: 40 },
+    pin: { x: 46, y: 31 },
     photos: [
       shot("07", "The New Town Hall tower in Marienplatz, Munich.", "Marienplatz"),
       shot("08", "Two people sitting by a train window, with green fields outside.", "On the train"),

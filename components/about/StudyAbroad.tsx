@@ -5,28 +5,75 @@ import { CloseIcon } from "@/components/icons";
 import { studyAbroadCities, type StudyCity } from "@/data/studyAbroad";
 import { PhotoViewer } from "./PhotoViewer";
 
-/** A light Europe outline. Pins are HTML buttons laid over this drawing. */
+const land = {
+  fillRule: "evenodd" as const,
+  stroke: "#4a3b32",
+  strokeWidth: 5,
+  strokeLinejoin: "round" as const,
+  strokeLinecap: "round" as const,
+};
+
+/** A small palace, drawn next to the Madrid pin. */
+function PalaceIcon() {
+  return (
+    <svg viewBox="0 0 40 36" className="h-9 w-10" aria-hidden="true">
+      <path d="M6 32 V16 H12 V10 H16 V16 H24 V10 H28 V16 H34 V32 Z" fill="#fff6e4" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="M16 10 Q20 2 24 10" fill="#f2c14e" stroke="#4a3b32" strokeWidth="2.2" />
+      <circle cx="20" cy="6" r="1.4" fill="#e07a5f" />
+      <path d="M10 32 V22 H16 V32 M24 32 V22 H30 V32" fill="#f4d7b0" stroke="#4a3b32" strokeWidth="2" />
+    </svg>
+  );
+}
+
+/** Twin onion domes, drawn next to the Munich pin. */
+function TwinDomeIcon() {
+  return (
+    <svg viewBox="0 0 40 36" className="h-9 w-10" aria-hidden="true">
+      <path d="M7 32 V16 H16 V32 M24 32 V16 H33 V32" fill="#f4d7b0" stroke="#4a3b32" strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="M6 16 Q11.5 4 17 16 M23 16 Q28.5 4 34 16" fill="#3d9b8f" stroke="#4a3b32" strokeWidth="2.2" strokeLinejoin="round" />
+      <path d="M11.5 8 V5 M28.5 8 V5" stroke="#4a3b32" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Cartoon Europe. Pins are HTML buttons laid over this drawing. */
 function EuropeMap() {
   return (
     <svg viewBox="0 0 640 480" className="h-auto w-full" aria-hidden="true">
-      <rect width="640" height="480" fill="#120c37" />
-      <g fill="#2c2379" stroke="rgba(244,241,255,0.45)" strokeWidth="2">
-        <path d="M70 250 L155 225 L180 275 L155 345 L85 365 L48 305 Z" />
-        <path d="M155 168 L240 155 L255 230 L180 255 L148 220 Z" />
-        <path d="M148 78 L205 68 L218 145 L158 158 L128 115 Z" />
-        <path d="M92 108 L128 98 L136 148 L98 155 Z" />
-        <path d="M235 125 L325 115 L338 205 L250 220 L220 165 Z" />
-        <path d="M300 225 L345 218 L360 280 L325 365 L300 340 L312 275 L278 245 Z" />
-        <path d="M255 28 L330 18 L348 115 L270 125 L238 70 Z" />
-        <path d="M325 215 L420 200 L415 290 L330 285 Z" />
-        <path d="M400 300 L430 295 L425 360 L395 355 Z" />
+      <defs>
+        <pattern id="map-paper" width="6" height="6" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="2" r="0.45" fill="#fff8e8" />
+          <circle cx="4" cy="5" r="0.35" fill="#4a3b32" opacity="0.18" />
+        </pattern>
+      </defs>
+      <rect width="640" height="480" fill="#8ecae6" />
+      <g fill="none" stroke="#5aa7cf" strokeWidth="3" strokeLinecap="round">
+        <path d="M24 70 Q48 62 70 74 Q90 86 70 96" />
+        <path d="M30 150 Q60 140 88 154" />
+        <path d="M470 80 Q510 70 540 86 Q568 100 540 112" />
+        <path d="M500 180 Q540 168 575 184" />
+        <path d="M40 420 Q80 408 120 422" />
+        <path d="M520 400 Q560 388 600 404" />
+        <path d="M200 430 Q240 418 280 432" />
       </g>
-      <g fill="#bdb6e8" fontSize="16" fontFamily="var(--font-barlow), sans-serif">
-        <text x="55" y="348">Spain</text>
-        <text x="168" y="205">France</text>
-        <text x="250" y="175">Germany</text>
-        <text x="300" y="300">Italy</text>
-        <text x="145" y="120">UK</text>
+      <g {...land}>
+        <path d="M48 268 Q70 232 128 226 Q168 230 176 268 Q186 312 150 348 Q112 378 72 356 Q40 328 48 268 Z" fill="#f6c878" />
+        <path d="M150 176 Q188 150 236 158 Q262 176 248 224 Q230 258 184 252 Q146 236 150 176 Z" fill="#9dce8a" />
+        <path d="M128 86 Q156 62 196 70 Q220 92 206 140 Q184 162 150 150 Q122 128 128 86 Z" fill="#7ec8a3" />
+        <path d="M86 112 Q104 96 122 108 Q128 132 108 146 Q88 142 86 112 Z" fill="#6fbf8a" />
+        <path d="M228 128 Q268 108 324 118 Q348 142 332 188 Q310 222 258 214 Q220 190 228 128 Z" fill="#f3d38a" />
+        <path d="M286 214 Q318 206 336 228 Q352 268 330 318 Q314 368 296 352 Q286 300 300 260 Q278 236 286 214 Z" fill="#f0a07a" />
+        <path d="M248 36 Q292 16 338 28 Q360 58 340 108 Q300 128 258 112 Q232 80 248 36 Z" fill="#b7e0c2" />
+        <path d="M324 206 Q372 188 418 206 Q430 248 400 280 Q352 292 324 260 Q312 232 324 206 Z" fill="#e7b48a" />
+        <path d="M404 292 Q428 286 434 318 Q420 356 396 348 Q388 318 404 292 Z" fill="#e8c07a" />
+      </g>
+      <rect width="640" height="480" fill="url(#map-paper)" opacity="0.55" />
+      <g fill="#4a3b32" fontSize="16" fontFamily="var(--font-barlow), sans-serif">
+        <text x="86" y="352">Spain</text>
+        <text x="172" y="214">France</text>
+        <text x="250" y="204">Germany</text>
+        <text x="304" y="292">Italy</text>
+        <text x="148" y="116">UK</text>
       </g>
     </svg>
   );
@@ -125,7 +172,8 @@ export function StudyAbroadAlbum() {
                 <span className="keycap">Esc</span>
               </button>
             </header>
-            <div className="relative bg-ink-950">
+            <div className="flex flex-1 items-center justify-center bg-[#8ecae6] sm:block sm:flex-none sm:bg-transparent">
+              <div className="relative mx-auto aspect-[640/480] w-full">
               <EuropeMap />
               {studyAbroadCities.map((item, i) => (
                 <button
@@ -145,13 +193,16 @@ export function StudyAbroadAlbum() {
                     }
                   }}
                   style={{ left: `${item.pin.x}%`, top: `${item.pin.y}%` }}
-                  className="absolute flex min-h-11 -translate-x-1/2 -translate-y-1/2 items-center gap-2 border border-fog bg-accent px-3 text-accent-ink"
+                  className="map-pin absolute flex min-h-11 -translate-x-1/2 -translate-y-1/2 items-center gap-1.5 px-2 py-1"
                   aria-label={`${item.city}, ${item.country}, ${item.photos.length} photos`}
                 >
-                  <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-accent-ink" aria-hidden="true" />
-                  <span className="font-display text-xl leading-none">{item.city}</span>
+                  <span className="map-pin-art flex items-center gap-1.5">
+                    {item.id === "madrid" ? <PalaceIcon /> : <TwinDomeIcon />}
+                    <span className="text-base font-semibold leading-none">{item.city}</span>
+                  </span>
                 </button>
               ))}
+              </div>
             </div>
           </div>
         )}

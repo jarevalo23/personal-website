@@ -25,7 +25,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "madrid",
     city: "Madrid",
     country: "Spain",
-    pin: { x: 31.9, y: 87.5 },
+    pin: { x: 24.6, y: 83.8 },
     photos: [
       shot("01", "A bronze lion sculpture beside the Alfonso XII monument in Retiro Park, Madrid.", "Retiro Park"),
       shot("02", "A narrow street of apartment buildings in Madrid.", "Madrid"),
@@ -39,7 +39,7 @@ export const studyAbroadCities: StudyCity[] = [
     id: "munich",
     city: "Munich",
     country: "Germany",
-    pin: { x: 51.3, y: 71.8 },
+    pin: { x: 76.3, y: 52 },
     photos: [
       shot("07", "The New Town Hall tower in Marienplatz, Munich.", "Marienplatz"),
       shot("08", "Two people sitting by a train window, with green fields outside.", "On the train"),

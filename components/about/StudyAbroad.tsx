@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { CloseIcon } from "@/components/icons";
-import { europeLabels, europeLands, europeView, europeWaves } from "@/data/europeMap";
+import { europeBalloon, europeLabels, europeLandmarks, europeLands, europeView, europeWaves } from "@/data/europeMap";
 import { studyAbroadCities, type StudyCity } from "@/data/studyAbroad";
 import { PhotoViewer } from "./PhotoViewer";
 
@@ -29,32 +29,107 @@ function TwinDomeIcon() {
   );
 }
 
-/** Cartoon styling over real Natural Earth coastlines. Pins sit on top. */
+function Landmark({ id }: { id: string }) {
+  if (id === "tree") {
+    return (
+      <g>
+        <rect x="-3" y="4" width="6" height="12" rx="1" fill="#8a5a32" />
+        <circle cx="0" cy="-2" r="12" fill="#2f9e62" />
+        <circle cx="-6" cy="0" r="7" fill="#3caf70" />
+        <circle cx="7" cy="1" r="6" fill="#278a54" />
+      </g>
+    );
+  }
+  if (id === "eiffel") {
+    return (
+      <g fill="none" stroke="#3a2a22" strokeWidth="2" strokeLinejoin="round">
+        <path d="M0 16 L-12 16 M0 16 L12 16 M-10 16 L-4 -14 L4 -14 L10 16 M-7 4 H7 M-5 -4 H5" />
+        <path d="M-2 -14 H2 L0 -18 Z" fill="#3a2a22" />
+      </g>
+    );
+  }
+  if (id === "bigben") {
+    return (
+      <g>
+        <rect x="-6" y="-6" width="12" height="22" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.6" />
+        <path d="M-8 -6 H8 L0 -16 Z" fill="#6b2f86" />
+        <circle cx="0" cy="2" r="3.2" fill="#fff" stroke="#3a2a22" strokeWidth="1.2" />
+        <path d="M0 2 V-0.4 M0 2 H2" stroke="#3a2a22" strokeWidth="1" />
+      </g>
+    );
+  }
+  if (id === "windmill") {
+    return (
+      <g>
+        <path d="M-6 16 L-3 2 H3 L6 16 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.5" />
+        <path d="M0 2 L0 -14 L5 -8 Z M0 2 L0 -14 L-5 -8 Z M0 2 L14 2 L8 6 Z M0 2 L14 2 L8 -2 Z" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" strokeLinejoin="round" />
+      </g>
+    );
+  }
+  if (id === "gate") {
+    return (
+      <g fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.4">
+        <rect x="-14" y="2" width="4" height="14" />
+        <rect x="-6" y="2" width="4" height="14" />
+        <rect x="2" y="2" width="4" height="14" />
+        <rect x="10" y="2" width="4" height="14" />
+        <rect x="-16" y="-2" width="32" height="5" />
+        <path d="M-4 -2 Q0 -10 4 -2" fill="#6b2f86" />
+      </g>
+    );
+  }
+  return (
+    <g transform="rotate(8)">
+      <ellipse cx="0" cy="-8" rx="7" ry="3" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.3" />
+      <ellipse cx="0" cy="-2" rx="7" ry="3" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" />
+      <ellipse cx="0" cy="4" rx="7" ry="3" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1.3" />
+      <ellipse cx="0" cy="10" rx="7" ry="3" fill="#fff" stroke="#3a2a22" strokeWidth="1.3" />
+    </g>
+  );
+}
+
+/** Cartoon styling over a Mercator crop of Europe. Pins sit on top. */
 function EuropeMap() {
   return (
     <svg viewBox={`0 0 ${europeView.width} ${europeView.height}`} className="h-auto w-full" aria-hidden="true">
-      <defs>
-        <pattern id="map-paper" width="6" height="6" patternUnits="userSpaceOnUse">
-          <circle cx="1" cy="2" r="0.45" fill="#fff8e8" />
-          <circle cx="4" cy="5" r="0.35" fill="#4a3b32" opacity="0.18" />
-        </pattern>
-      </defs>
-      <rect width={europeView.width} height={europeView.height} fill="#8ecae6" />
-      <g fill="none" stroke="#5aa7cf" strokeWidth="3" strokeLinecap="round">
+      <rect width={europeView.width} height={europeView.height} fill="#79d0f5" />
+      <g fill="none" stroke="#4aa3d8" strokeWidth="3" strokeLinecap="round">
         {europeWaves.map((d) => (
           <path key={d} d={d} />
         ))}
       </g>
-      <g stroke="#4a3b32" strokeWidth="1.8" strokeLinejoin="round" strokeLinecap="round">
+      <g fill="none" stroke="#d7f6ff" strokeWidth="14" strokeLinejoin="round">
+        {europeLands.map((land) => (
+          <path key={`halo-${land.name}`} d={land.d} />
+        ))}
+      </g>
+      <g>
         {europeLands.map((land) => (
           <path key={land.name} d={land.d} fill={land.fill} />
         ))}
       </g>
-      <rect width={europeView.width} height={europeView.height} fill="url(#map-paper)" opacity="0.45" />
-      <g fill="#4a3b32" fontSize="15" fontFamily="var(--font-barlow), sans-serif">
+      <g transform={`translate(${europeBalloon.x} ${europeBalloon.y})`}>
+        <path d="M0 2 C-16 2 -18 -16 0 -28 C18 -16 16 2 0 2 Z" fill="#e23b4a" />
+        <path d="M0 2 C-8 2 -9 -8 0 -16 C9 -8 8 2 0 2 Z" fill="#f0b429" />
+        <path d="M-4 2 H4 L2 8 H-2 Z" fill="#f4e2b0" stroke="#3a2a22" strokeWidth="1" />
+      </g>
+      {europeLandmarks.map((mark) => (
+        <g key={mark.id} transform={`translate(${mark.x} ${mark.y})`}>
+          <Landmark id={mark.id} />
+        </g>
+      ))}
+      <g
+        fill="#fff"
+        stroke="#16324a"
+        strokeWidth="3"
+        paintOrder="stroke"
+        fontFamily="var(--font-barlow), sans-serif"
+        fontWeight="700"
+        textAnchor="middle"
+      >
         {europeLabels.map((label) => (
-          <text key={label.name} x={label.x} y={label.y}>
-            {label.name}
+          <text key={label.name} x={label.x} y={label.y} fontSize={label.font}>
+            {label.name.toUpperCase()}
           </text>
         ))}
       </g>
@@ -155,7 +230,7 @@ export function StudyAbroadAlbum() {
                 <span className="keycap">Esc</span>
               </button>
             </header>
-            <div className="flex flex-1 items-center justify-center bg-[#8ecae6] sm:block sm:flex-none sm:bg-transparent">
+            <div className="flex flex-1 items-center justify-center bg-[#79d0f5] sm:block sm:flex-none sm:bg-[#79d0f5]">
               <div
                 className="relative mx-auto w-full"
                 style={{ aspectRatio: `${europeView.width} / ${europeView.height}` }}
